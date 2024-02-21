@@ -1,0 +1,74 @@
+group 'com.tencent.ugsv_flutter'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.2.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 31
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion 19
+        multiDexEnabled true
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+}
+
+dependencies {
+    // android
+    implementation 'androidx.annotation:annotation:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.exifinterface:exifinterface:1.2.0'
+    implementation 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.google.android.material:material:1.0.0'
+
+    // tencent
+    api(project(":ugckit"))
+    implementation rootProject.ext.liteavSdk
+    implementation 'com.tencent.mediacloud:TencentEffect_S1-04:latest.release'
+    implementation 'com.qcloud.cos:cos-android-nobeacon:5.9.15'
+    implementation 'com.qcloud.cos:quic:1.5.39'
+
+    // third party
+    implementation('com.blankj:utilcode:1.30.7', {
+        exclude group: 'com.google.code.gson', module: 'gson'
+    })
+    implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'
+    implementation 'com.google.code.gson:gson:2.3.1'
+    implementation 'com.squareup.okio:okio:1.14.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'
+    implementation 'org.greenrobot:eventbus:3.0.0'
+}

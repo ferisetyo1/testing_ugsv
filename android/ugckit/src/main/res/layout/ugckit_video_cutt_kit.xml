@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="18dp"
+    android:layout_marginLeft="18dp"
+    android:layout_marginRight="18dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_bgm"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:drawablePadding="5dp"
+        android:drawableTop="@drawable/music"
+        android:gravity="center"
+        android:text="Musik"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:fontFamily="@font/poppins"
+        android:shadowColor="@color/ugckit_color_gray4"
+        android:textColor="@color/ugckit_white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_filter"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:drawablePadding="5dp"
+        android:drawableTop="@drawable/filters"
+        android:gravity="center"
+        android:text="Filter"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:fontFamily="@font/poppins"
+        android:shadowColor="@color/ugckit_color_gray4"
+        android:textColor="@color/ugckit_white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_motion"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:drawablePadding="5dp"
+        android:drawableTop="@drawable/effect"
+        android:gravity="center"
+        android:text="Efek"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:fontFamily="@font/poppins"
+        android:shadowColor="@color/ugckit_color_gray4"
+        android:textColor="@color/ugckit_white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_speed"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:drawablePadding="5dp"
+        android:drawableTop="?attr/editerMenuSpeedIcon"
+        android:gravity="center"
+        android:text="@string/ugckit_speed"
+        android:visibility="gone"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:fontFamily="@font/poppins"
+        android:shadowColor="@color/ugckit_color_gray4"
+        android:textColor="@color/ugckit_white"
+        android:textSize="12sp" />
+
+
+
+    <TextView
+        android:id="@+id/tv_paster"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:drawablePadding="5dp"
+        android:drawableTop="@drawable/sticker"
+        android:gravity="center"
+        android:text="@string/ugckit_paster"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:fontFamily="@font/poppins"
+        android:shadowColor="@color/ugckit_color_gray4"
+        android:textColor="@color/ugckit_white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_subtitle"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:drawablePadding="5dp"
+        android:drawableTop="@drawable/subtitle"
+        android:gravity="center"
+        android:text="@string/ugckit_subtitle"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:fontFamily="@font/poppins"
+        android:shadowColor="@color/ugckit_color_gray4"
+        android:textColor="@color/ugckit_white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_transition"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:drawablePadding="5dp"
+        android:drawableTop="?attr/editerMenuTransitionIcon"
+        android:gravity="center"
+        android:text="@string/ugckit_transition"
+        android:visibility="gone"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:fontFamily="@font/poppins"
+        android:shadowColor="@color/ugckit_color_gray4"
+        android:textColor="@color/ugckit_white"
+        android:textSize="12sp" />
+</LinearLayout>

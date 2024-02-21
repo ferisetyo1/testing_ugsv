@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@drawable/bg_selector"
+        android:width="48dp"
+        android:height="48dp"/>
+        <item android:drawable="@drawable/ucgkit_ic_block"
+            android:height="32dp"
+            android:width="32dp"
+            android:gravity="center"/>
+
+</layer-list>

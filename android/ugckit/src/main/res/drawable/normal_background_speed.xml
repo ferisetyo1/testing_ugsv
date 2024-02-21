@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/ugckit_transparent" />
+    <corners android:radius="8dp"/>
+    <size android:width="40dp" />
+    <padding
+        android:bottom="6dp"
+        android:top="6dp" />
+</shape>

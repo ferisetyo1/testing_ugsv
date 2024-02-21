@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="right"
+    android:gravity="right"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/layout_music"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_music"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/music"
+            />
+
+        <ImageView
+            android:id="@+id/iv_music_mask"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ugckit_record_round_bg"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_music"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="Musik"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:fontFamily="@font/poppins"
+            android:shadowColor="@color/ugckit_color_gray4"
+            android:textColor="@color/ugckit_white"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <com.tencent.qcloud.ugckit.module.record.AspectView
+        android:id="@+id/aspect_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_music"
+        android:layout_marginTop="10dp" />
+
+    <com.tencent.qcloud.ugckit.module.record.SpeedView
+        android:id="@+id/speed_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_beauty"
+        android:layout_marginTop="10dp" />
+
+
+    <RelativeLayout
+        android:id="@+id/layout_beauty"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/aspect_view"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/iv_beauty"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_filters"
+            android:adjustViewBounds="true"
+            android:outlineProvider="background"
+            android:outlineSpotShadowColor="@color/ugckit_text_weak"
+            android:outlineAmbientShadowColor="@color/ugckit_text_weak"
+            android:elevation="6dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_beauty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_beauty"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="Filter"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:fontFamily="@font/poppins"
+            android:shadowColor="@color/ugckit_color_gray4"
+            android:textColor="@color/ugckit_white"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_te_beauty"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/iv_te_beauty"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onClick"
+            android:src="@drawable/ic_beauty" />
+
+        <TextView
+            android:id="@+id/tv_te_beauty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_te_beauty"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:layout_marginTop="4dp"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:shadowColor="@color/ugckit_color_gray4"
+            android:fontFamily="@font/poppins"
+            android:text="Percantik"
+            android:textColor="@color/ugckit_white"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_sound_effect"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/iv_sound_effect"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_mic" />
+
+        <ImageView
+            android:id="@+id/iv_sound_effect_mask"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ugckit_record_round_bg"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_sound_effect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_sound_effect"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="Suara"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:shadowColor="@color/ugckit_color_gray4"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/ugckit_white"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+</LinearLayout>

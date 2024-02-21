@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/beauty_rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <TextView
+            android:id="@+id/beauty_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginHorizontal="20dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Percantik"
+            android:layout_centerVertical="true"
+            android:textColor="@android:color/black"
+            android:textSize="12dp"
+
+            />
+
+        <ImageView
+            android:id="@+id/beauty_iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingHorizontal="20dp"
+            android:src="@drawable/round_close_24" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="#D1D1D1"/>
+
+    <RelativeLayout
+        android:id="@+id/beauty_rl_seek_bar"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_below="@+id/beauty_rl_title"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/beauty_tv_seek_bar_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="20dp"
+            android:text="Skala"
+            android:fontFamily="@font/poppins"
+            android:textColor="@android:color/black" />
+
+        <SeekBar
+            android:id="@+id/beauty_seek_bar_third"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminate="false"
+            android:max="9"
+            android:layout_toRightOf="@+id/beauty_tv_seek_bar_hint"
+            android:layout_toLeftOf="@+id/beauty_tv_seek_bar_value"
+            android:maxHeight="6dp"
+            android:minHeight="6dp"
+            android:paddingStart="28dp"
+            android:paddingLeft="28dp"
+            android:paddingEnd="12dp"
+            android:paddingRight="12dp"
+            android:progress="0"
+            android:progressDrawable="@drawable/beauty_rebuild_seekbar_progress_drawable"
+            android:thumb="@drawable/beauty_rebuild_seekbar_progress_thumb" />
+
+        <TextView
+            android:id="@+id/beauty_tv_seek_bar_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="20dp"
+            android:text="0"
+            android:fontFamily="@font/poppins"
+            android:textColor="@android:color/black" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/beauty_rl_item"
+        android:layout_width="match_parent"
+        android:layout_height="116dp"
+        android:layout_below="@+id/beauty_rl_seek_bar"
+        android:orientation="horizontal">
+
+        <com.tencent.liteav.demo.beauty.view.TCHorizontalScrollView
+            android:id="@+id/beauty_horizontal_picker_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="5dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@android:id/content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal" />
+        </com.tencent.liteav.demo.beauty.view.TCHorizontalScrollView>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_bottom_bar_background">#FD5D40</color>
+    <color name="colorAccent">#0accac</color>
+    <color name="colorActivityBackground">#F3F3F3</color>
+    <color name="colorTransparentGray">#88ffffff</color>
+    <color name="colorDarkTransparentGray">#a4000000</color>
+
+    <color name="background_gray3">#D4D4D4</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <!--蒙版-->
+
+    <!--app主色调，背景色-->
+    <color name="colorPrimary">#FFFFFF</color>
+    <!--背景色-->
+    <!--app主题色，应用于导航，按钮-->
+    <!--主题色激活态，如按钮高亮-->
+    <!--红色标签/提示-->
+    <!--红色标签/提示高亮-->
+    <!--黄色色标签/提示-->
+    <!--黄色色标签/提示高亮-->
+    <!--黄色蒙版-->
+    <!--红色-->
+    <color name="colorRed">#FF3333</color>
+    <!--文字白色-->
+    <color name="colorTextWhite">#FFFFFF</color>
+    <!--文字G1-->
+    <!--文字G2-->
+    <!--文字G3-->
+    <!--文字G4-->
+    <!--文字black-->
+    <!--gray1-->
+    <!--light gray-->
+    <!--gray2-->
+    <!--gray3-->
+    <color name="colorGray3">#C8C8C8</color>
+    <!--gray4-->
+    <color name="colorGray4">#787878</color>
+    <!--gray5-->
+    <!--gray6-->
+    <!--gray7-->
+    <!--gray8-->
+    <!--green-->
+
+    <!--蒙版-->
+
+    <!-- 40%不透明度 -->
+
+
+    <!--?xml version="1.0" encoding="UTF-8"?-->
+
+    <!--动态滤镜的颜色-->
+
+    <!--5-->
+    <!--6-->
+    <!--7-->
+    <!--8-->
+    <!--9-->
+    <!--10-->
+    <!--11-->
+
+    <color name="editer_bottom">#1F2531</color>
+
+    <!-- 裁剪范围颜色 -->
+    <color name="actionsheet_gray">#8F8F8F</color>
+    <color name="login_color_white">#ffffff</color>
+    <color name="login_color_blue">#FF006EFD</color>
+    <color name="login_main_text">#333333</color>
+    <color name="login_color_black">#000000</color>
+    <color name="login_color_input_no_match">#FA585E</color>
+    <color name="login_color_tab_select">#006EFF</color>
+    <color name="login_color_bg_dialog">#66000000</color>
+    <color name="login_color_line">#DDDDDD</color>
+
+    <color name="app_color_tab_select">#006EFF</color>
+    <color name="app_color_input_normal">#BBBBBB</color>
+    <color name="app_color_input_no_match">#FA585E</color>
+    <color name="app_color_line">#EEEEEE</color>
+    <color name="app_dialog_bg">#66000000</color>
+    <color name="app_color_white">#FFFFFF</color>
+    <color name="app_color_black">#000000</color>
+    <color name="login_transparent">#00000000</color>
+</resources>
