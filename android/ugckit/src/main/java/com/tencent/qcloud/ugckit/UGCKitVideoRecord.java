@@ -369,6 +369,18 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
 
         // 音乐试听
         RecordMusicManager.getInstance().startPreviewMusic();
+
+        RecordMusicManager.getInstance().startMusic();
+
+        lastTextButton= getTitleBar().getRightButton().getText();
+        lastDrawableButton= getTitleBar().getRightButton().getBackground();
+
+        getTitleBar().setOnRightClickListener((v)->{
+            onMusicSelect();
+        } );
+
+        getTitleBar().setTitle("Terapkan", ITitleBarLayout.POSITION.RIGHT);
+        getTitleBar().setEnableRightButton(true);
     }
 
     @Override
@@ -637,6 +649,16 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
             getRecordMusicPannel().setVisibility(View.VISIBLE);
 
             RecordMusicManager.getInstance().startMusic();
+
+            lastTextButton= getTitleBar().getRightButton().getText();
+            lastDrawableButton= getTitleBar().getRightButton().getBackground();
+
+            getTitleBar().setOnRightClickListener((v)->{
+                onMusicSelect();
+            } );
+
+            getTitleBar().setTitle("Terapkan", ITitleBarLayout.POSITION.RIGHT);
+            getTitleBar().setEnableRightButton(true);
         } else {
             if (mOnMusicListener != null) {
                 mOnMusicListener.onChooseMusic(UGCKitRecordConfig.getInstance().musicInfo.position);
@@ -652,13 +674,6 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         getRecordRightLayout().setVisibility(View.GONE);
         // 显示音效Pannel
         getSoundEffectPannel().setVisibility(View.VISIBLE);
-
-        lastTextButton= getTitleBar().getRightButton().getText();
-        lastDrawableButton= getTitleBar().getRightButton().getBackground();
-
-        getTitleBar().setOnRightClickListener((v)->{
-            onMusicSelect();
-        } );
     }
 
     @Override
@@ -746,6 +761,13 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
 
         // 停止音乐试听
         RecordMusicManager.getInstance().stopPreviewMusic();
+
+        getTitleBar().setTitle(lastTextButton.toString(), ITitleBarLayout.POSITION.RIGHT);
+        getTitleBar().getRightButton().setBackground(lastDrawableButton);
+
+        getTitleBar().setOnRightClickListener((v)->{
+            onLanjutPressed();
+        });
     }
 
     /**
