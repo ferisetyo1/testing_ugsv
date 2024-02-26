@@ -54,6 +54,7 @@ public class TCVideoPickerActivity extends FragmentActivity
                 } else {
                     startVideoJoinActivity(list);
                 }
+                setResult(RESULT_OK);
                 finish();
             }
         });

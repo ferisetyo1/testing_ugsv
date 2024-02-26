@@ -257,7 +257,7 @@ public class NumberProgressBar extends View {
         if (mIfDrawText && getProgress() > 0)
             canvas.drawText(mCurrentDrawText, mDrawTextStart, mDrawTextEnd, mTextPaint);
 
-        String mActivityText="Activity";
+        String mActivityText="Memproses video";
         float mActivityWidth=mTextPaint.measureText(mActivityText);
 
         if (  mReachedRectF.right- dp2px(8) - mDrawTextWidth > mActivityWidth){

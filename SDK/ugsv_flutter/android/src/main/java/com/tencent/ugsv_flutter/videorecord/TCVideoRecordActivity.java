@@ -6,12 +6,15 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
+
 import com.tencent.qcloud.ugckit.UGCKitConstants;
 import com.tencent.qcloud.ugckit.UGCKitVideoRecord;
 import com.tencent.qcloud.ugckit.basic.UGCKitResult;
@@ -44,6 +47,8 @@ public class TCVideoRecordActivity extends FragmentActivity
     private PermissionManager mCameraPermissionManager;
 
     private PermissionManager mStoragePermissionManager;
+
+    final int request_open_galery = 1099;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +99,7 @@ public class TCVideoRecordActivity extends FragmentActivity
         });
         mUGCKitVideoRecord.setOnPickerClicked(() -> {
             Intent intent = new Intent(this, TCVideoPickerActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, request_open_galery);
         });
         mAudioPermissionManager = new PermissionManager(this, PermissionManager.PermissionType.AUDIO);
         mCameraPermissionManager = new PermissionManager(this, PermissionManager.PermissionType.CAMERA);
@@ -155,6 +160,12 @@ public class TCVideoRecordActivity extends FragmentActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mUGCKitVideoRecord.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == request_open_galery) {
+            if (resultCode == RESULT_OK){
+                finish();
+            }
+            return;
+        }
         if (requestCode != UGCKitConstants.ACTIVITY_MUSIC_REQUEST_CODE) {
             return;
         }
@@ -184,7 +195,7 @@ public class TCVideoRecordActivity extends FragmentActivity
             } else if (requestCode == REQUEST_CODE_AUDIO) {
                 mAudioPermissionManager.onRequestPermissionsResult(requestCode, grantResults);
             } else if (requestCode == REQUEST_CODE_STORAGE) {
-                mStoragePermissionManager.onRequestPermissionsResult(requestCode,grantResults);
+                mStoragePermissionManager.onRequestPermissionsResult(requestCode, grantResults);
             }
         }
     }

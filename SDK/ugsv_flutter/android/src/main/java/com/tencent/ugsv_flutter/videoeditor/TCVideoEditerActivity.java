@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -150,6 +151,7 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
     }
 
     private void startPreviewActivity(UGCKitResult ugcKitResult) {
+        Log.d("startPreviewActivity", String.valueOf(ugcKitResult.isPublish));
         if (TextUtils.isEmpty(ugcKitResult.outputPath)) {
             return;
         }
