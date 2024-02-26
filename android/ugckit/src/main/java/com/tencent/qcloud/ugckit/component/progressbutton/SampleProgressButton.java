@@ -13,6 +13,7 @@ import android.graphics.Shader;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import android.graphics.Typeface;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
@@ -163,6 +164,7 @@ public class SampleProgressButton extends View {
         mTextPaint.setTextSize(this.mTextSize);
         mFontMetrics = mTextPaint.getFontMetrics();
         mTextPaint.setColor(this.mTextColor);
+        mTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
 
         float textCenterVerticalBaselineY = getHeight() / 2 - mFontMetrics.descent + (mFontMetrics.descent - mFontMetrics.ascent) / 2;
         canvas.drawText(this.mText, (getMeasuredWidth() - mTextPaint.measureText(this.mText)) / 2, textCenterVerticalBaselineY,
