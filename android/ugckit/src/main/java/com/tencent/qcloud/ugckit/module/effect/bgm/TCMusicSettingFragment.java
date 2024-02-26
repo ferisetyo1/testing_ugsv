@@ -100,7 +100,6 @@ public class TCMusicSettingFragment extends Fragment {
         editer.setBGMVolume(bgmVolume);
         editer.setVideoVolume(micVolume);
 
-
         mMusicInfo.videoVolume = micVolume;
         mMusicInfo.bgmVolume = bgmVolume;
         mMusicInfo.startTime = 0;

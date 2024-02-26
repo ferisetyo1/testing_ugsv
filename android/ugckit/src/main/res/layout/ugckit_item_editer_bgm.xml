@@ -19,6 +19,17 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ugckit_ic_music_default" />
 
+        <ImageView
+            android:id="@+id/btn_play_music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignStart="@id/ic_cover"
+            android:layout_alignTop="@id/ic_cover"
+            android:layout_alignBottom="@id/ic_cover"
+            android:layout_alignEnd="@id/ic_cover"
+            android:src="@drawable/ic_play_music" />
+
         <FrameLayout
             android:id="@+id/layout_use"
             android:layout_width="90dp"

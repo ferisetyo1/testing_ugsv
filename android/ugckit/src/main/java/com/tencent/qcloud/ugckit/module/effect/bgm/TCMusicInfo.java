@@ -6,10 +6,13 @@ public class TCMusicInfo {
     public String name;
     public String url;
     public int    status = STATE_UNDOWNLOAD;
+    public int    statusMusic = MUSIC_STATE_STOP;
     public int    progress;
     @Nullable
     public String localPath;
 
+    public static final int MUSIC_STATE_STOP = 1;
+    public static final int MUSIC_STATE_PLAYING  = 2;
     public static final int STATE_UNDOWNLOAD  = 1;
     public static final int STATE_DOWNLOADING = 2;
     public static final int STATE_DOWNLOADED  = 3;

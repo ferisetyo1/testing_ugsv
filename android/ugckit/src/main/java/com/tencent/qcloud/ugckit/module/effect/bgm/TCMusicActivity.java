@@ -3,13 +3,16 @@ package com.tencent.qcloud.ugckit.module.effect.bgm;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.graphics.drawable.GradientDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -28,13 +31,18 @@ import java.util.List;
 public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     private final String TAG = "TCMusicActivity";
 
-    private LinearLayout                     mLayoutBack;
-    private SwipeRefreshLayout               mSwipeRefreshLayout;
-    private RecyclerView                     mRecyclerView;
-    private View                             mEmptyView;
-    private TCMusicAdapter                   mTCMusicAdapter;
+    private LinearLayout mLayoutBack;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private RecyclerView mRecyclerView;
+    private View mEmptyView;
+    private TCMusicAdapter mTCMusicAdapter;
     private TCMusicManager.LoadMusicListener mLoadMusicListener;
-    private List<TCMusicInfo>                mTCMusicInfoList;
+    private List<TCMusicInfo> mTCMusicInfoList;
+
+    private MediaPlayer player;
+    private CountDownTimer countDownTimer;
+
+    private int selectedMusic = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +69,7 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
     }
 
     private void initListener() {
+        player = new MediaPlayer();
         mLoadMusicListener = new TCMusicManager.LoadMusicListener() {
             @Override
             public void onBgmList(@Nullable final ArrayList<TCMusicInfo> tcBgmInfoList) {
@@ -164,6 +173,65 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
                     backToEditActivity(position, musicInfo.localPath);
                 }
             }
+
+            @Override
+            public void onClickPlayBtn(int position) {
+                TCMusicInfo musicInfo = mTCMusicInfoList.get(position);
+                try {
+                    if (selectedMusic != -1 && selectedMusic != position) {
+                        TCMusicInfo prevmusicInfo = mTCMusicInfoList.get(selectedMusic);
+                        if (prevmusicInfo.statusMusic != TCMusicInfo.MUSIC_STATE_STOP) {
+                            prevmusicInfo.statusMusic = TCMusicInfo.MUSIC_STATE_STOP;
+                            mTCMusicAdapter.updateItem(selectedMusic, prevmusicInfo);
+                        }
+                    }
+                    if (player.isPlaying()) {
+                        countDownTimer.cancel();
+                        countDownTimer.onFinish();
+                    }
+                    player.reset();
+                    if (musicInfo.localPath.isEmpty()) {
+                        player.setDataSource(musicInfo.url);
+                    } else {
+                        player.setDataSource(musicInfo.localPath);
+                    }
+                    player.prepare();
+                    selectedMusic = position;
+                    countDownTimer = new CountDownTimer(10000, 1000) {
+                        @Override
+                        public void onTick(long l) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            if (player != null && player.isPlaying()) {
+                                player.stop();
+                                musicInfo.statusMusic=TCMusicInfo.MUSIC_STATE_STOP;
+                                mTCMusicAdapter.updateItem(selectedMusic, musicInfo);
+                            }
+                        }
+                    };
+                    player.setOnPreparedListener((player1)->{
+                        player1.start();
+                        countDownTimer.start();
+                        musicInfo.statusMusic=TCMusicInfo.MUSIC_STATE_PLAYING;
+                        mTCMusicAdapter.updateItem(selectedMusic, musicInfo);
+                    });
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onClickStop(int position) {
+                if (player.isPlaying()) {
+                    countDownTimer.cancel();
+                    countDownTimer.onFinish();
+                }
+            }
         });
         mRecyclerView.setAdapter(mTCMusicAdapter);
         mEmptyView = findViewById(R.id.tv_bgm_empty);
@@ -191,6 +259,9 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
     }
 
     private void backToEditActivity(int position, String path) {
+        if (player!=null){
+            player.release();
+        }
         Intent intent = new Intent();
         intent.putExtra(UGCKitConstants.MUSIC_POSITION, position);
         intent.putExtra(UGCKitConstants.MUSIC_PATH, path);
@@ -239,5 +310,7 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
             this.mSpace = space;
         }
     }
+
+
 
 }
