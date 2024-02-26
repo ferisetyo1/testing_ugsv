@@ -41,6 +41,7 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:textColor="#FF0025"
                     android:textSize="16sp"
+                    android:textAllCaps="false"
                     android:background="@drawable/button_negative"
                     android:text="Batal"/>
                 <Button
@@ -51,6 +52,7 @@
                     android:layout_marginStart="6dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:textColor="@color/white"
+                    android:textAllCaps="false"
                     android:textSize="16sp"
                     android:background="@drawable/button_positive"
                     android:text="Ya, Buang"/>

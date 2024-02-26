@@ -25,11 +25,14 @@ import com.tencent.qcloud.ugckit.module.record.UGCKitRecordConfig;
 import com.tencent.qcloud.ugckit.module.record.interfaces.IVideoRecordKit;
 import com.tencent.qcloud.ugckit.utils.ToastUtil;
 import com.tencent.ugsv_flutter.R;
+import com.tencent.ugsv_flutter.ResultPass;
 import com.tencent.ugsv_flutter.manager.PermissionManager;
 import com.tencent.ugsv_flutter.videochoose.TCVideoPickerActivity;
 import com.tencent.ugsv_flutter.videoeditor.TCVideoEditerActivity;
 
 import static com.tencent.ugsv_flutter.manager.PermissionManager.*;
+
+import io.flutter.plugin.common.MethodChannel;
 
 /**
  * 小视频录制界面
@@ -120,8 +123,10 @@ public class TCVideoRecordActivity extends FragmentActivity
     }
 
     private void startEditActivity(UGCKitResult ugcKitResult) {
+        ResultPass result= (ResultPass) getIntent().getSerializableExtra("result");
         Intent intent = new Intent(this, TCVideoEditerActivity.class);
         intent.putExtra(UGCKitConstants.VIDEO_PATH, ugcKitResult.outputPath);
+        intent.putExtra("result",result);
         startActivity(intent);
     }
 

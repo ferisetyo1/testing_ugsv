@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class UGSV {
@@ -17,6 +18,7 @@ class UGSV {
             "method": call.method,
             "outputPath": call.arguments["outputPath"],
           });
+          debugPrint("print-onEditCompleted");
           _editorEventNotifier.add(json);
           break;
         }
@@ -49,8 +51,10 @@ class UGSV {
     _apiChannel.invokeMethod("openVideoChooser", {});
   }
 
-  static openVideoRecorder() {
-    _apiChannel.invokeMethod("openVideoRecorder", {});
+  static Future<String?> openVideoRecorder() async {
+    final result = await _apiChannel.invokeMethod("openVideoRecorder", {});
+    debugPrint("openVideoRecorder $result");
+    return result;
   }
 
   static Future<bool> hasLastRecordPart() async {

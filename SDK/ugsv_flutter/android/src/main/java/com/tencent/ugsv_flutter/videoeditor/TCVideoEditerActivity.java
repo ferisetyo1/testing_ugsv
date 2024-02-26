@@ -23,6 +23,7 @@ import com.tencent.qcloud.ugckit.utils.ToastUtil;
 // import com.tencent.qcloud.xiaoshipin.mainui.TCMainActivity;
 import com.tencent.ugsv_flutter.FlutterCallback;
 import com.tencent.ugsv_flutter.R;
+import com.tencent.ugsv_flutter.UgsvFlutterPlugin;
 import com.tencent.ugsv_flutter.manager.PermissionManager;
 import com.tencent.ugsv_flutter.videopublish.TCVideoPublisherActivity;
 
@@ -66,7 +67,11 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
                 args.put("outputPath", ugcKitResult.outputPath);
                 FlutterCallback.call("onEditCompleted", args);
                 startPreviewActivity(ugcKitResult);
+                if (UgsvFlutterPlugin.result !=null){
+                    UgsvFlutterPlugin.result.success(ugcKitResult.outputPath);
+                }
             } else {
+                UgsvFlutterPlugin.result.error("FAILED","FAILED",null);
                 ToastUtil.toastShortMessage("edit video failed. error code:" + ugcKitResult.errorCode + ",desc msg:" + ugcKitResult.descMsg);
             }
         }
@@ -151,7 +156,6 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
     }
 
     private void startPreviewActivity(UGCKitResult ugcKitResult) {
-        Log.d("startPreviewActivity", String.valueOf(ugcKitResult.isPublish));
         if (TextUtils.isEmpty(ugcKitResult.outputPath)) {
             return;
         }

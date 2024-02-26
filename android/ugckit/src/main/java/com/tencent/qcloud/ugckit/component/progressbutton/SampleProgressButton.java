@@ -11,6 +11,8 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -59,7 +61,7 @@ public class SampleProgressButton extends View {
             mBackgroundColor = typedArray.getInteger(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonBackgroundColor, Color.GRAY);
             mForegroundColor = typedArray.getInteger(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonForegroundColor, Color.RED);
             mNormalColor = typedArray.getInteger(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonNormalColor, Color.BLUE);
-            mTextColor = typedArray.getInteger(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonTextcolor, Color.WHITE);
+            mTextColor = typedArray.getInteger(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonTextcolor, Color.parseColor("#FF0025"));
             mMaxProgress = typedArray.getInteger(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonMax, 100);
             mProgress = typedArray.getInteger(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonProgress, 0);
             mText = typedArray.getString(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonText);
@@ -73,8 +75,9 @@ public class SampleProgressButton extends View {
         mBackgroundBounds = new RectF();
 
         mBackgroundPaintNormal = new Paint();
-        mBackgroundPaintNormal.setAntiAlias(true);
-        mBackgroundPaintNormal.setStyle(Paint.Style.FILL);
+        mBackgroundPaintNormal.setAntiAlias(false);
+        mBackgroundPaintNormal.setStyle(Paint.Style.STROKE);
+        mBackgroundPaintNormal.setStrokeWidth(2);
 
         mBackgroundPaintProgress = new Paint();
         mBackgroundPaintProgress.setAntiAlias(true);
@@ -91,6 +94,9 @@ public class SampleProgressButton extends View {
                 new float[]{mProgressPercent, mProgressPercent + 0.001f},
                 Shader.TileMode.CLAMP
         );
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setClipToOutline(false);
+        }
     }
 
     public int getForegroundColor() {
@@ -133,10 +139,10 @@ public class SampleProgressButton extends View {
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
 
-        mBackgroundBounds.left = 0;
-        mBackgroundBounds.top = 0;
-        mBackgroundBounds.right = getMeasuredWidth();
-        mBackgroundBounds.bottom = getMeasuredHeight();
+        mBackgroundBounds.left = 2;
+        mBackgroundBounds.top = 2;
+        mBackgroundBounds.right = getMeasuredWidth()-2;
+        mBackgroundBounds.bottom = getMeasuredHeight()-2;
 
         int cornerRadius = getMeasuredHeight() / 2;
 
@@ -178,6 +184,10 @@ public class SampleProgressButton extends View {
 
     public void setText(String text) {
         this.mText = text;
+        invalidate();
+    }
+    public void setTextColor(int color) {
+        this.mTextColor = color;
         invalidate();
     }
 

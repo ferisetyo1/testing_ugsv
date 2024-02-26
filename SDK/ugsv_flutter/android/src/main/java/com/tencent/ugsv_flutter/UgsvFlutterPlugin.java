@@ -3,7 +3,11 @@ package com.tencent.ugsv_flutter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+import androidx.activity.*;
+
 import com.tencent.qcloud.ugckit.UGCKit;
 import com.tencent.qcloud.ugckit.UGCKitConstants;
 import com.tencent.qcloud.ugckit.module.record.draft.RecordDraftInfo;
@@ -32,6 +36,8 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
     private MethodChannel apiChannel;
     private Activity mainActivity;
 
+    public static MethodChannel.Result result;
+
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         apiChannel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "ugsv_flutter");
@@ -53,6 +59,7 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
             }
             case "openVideoRecorder": {
                 openVideoRecorder();
+                UgsvFlutterPlugin.result = result;
                 break;
             }
             case "hasLastRecordPart": {
@@ -90,7 +97,7 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
         TCConfigManager.init(applicationContext);
         UGCKit.init(applicationContext);
         TCUserMgr.getInstance().initContext(applicationContext);
-        mainActivity = binding.getActivity();
+        mainActivity =  binding.getActivity();
     }
 
     @Override
@@ -100,7 +107,7 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
 
     @Override
     public void onReattachedToActivityForConfigChanges(@NonNull @NotNull ActivityPluginBinding binding) {
-        mainActivity = binding.getActivity();
+        mainActivity =  binding.getActivity();
     }
 
     @Override
