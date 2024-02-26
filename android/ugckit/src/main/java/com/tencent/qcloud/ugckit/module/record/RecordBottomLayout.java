@@ -6,7 +6,10 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,11 +17,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.tencent.qcloud.ugckit.UGCKitVideoPicker;
+import com.tencent.qcloud.ugckit.module.picker.data.PickerManagerKit;
+import com.tencent.qcloud.ugckit.module.picker.data.TCVideoFileInfo;
+import com.tencent.qcloud.ugckit.utils.BackgroundTasks;
 import com.tencent.qcloud.ugckit.utils.UIAttributeUtil;
 import com.tencent.qcloud.ugckit.R;
 import com.tencent.ugc.TXUGCRecord;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class RecordBottomLayout extends RelativeLayout implements View.OnClickListener {
@@ -77,6 +86,9 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
         mImageTorch.setOnClickListener(this);
 
         mImageChooser = findViewById(R.id.iv_chooser);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mImageChooser.setClipToOutline(true);
+        }
         mImageChooser.setOnClickListener(this);
 
         mImageCameraSwitch = (ImageView) findViewById(R.id.iv_switch_camera);
@@ -117,7 +129,19 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
             mImageTorch.setImageResource(mTorchOffImage);
         }
 
+        getLastVideo();
+
 //        checkButtonDelete();
+    }
+
+    private void getLastVideo() {
+        BackgroundTasks.getInstance().runOnUiThread(() -> {
+            ArrayList<TCVideoFileInfo> listVideo = PickerManagerKit.getInstance(getContext()).getLastVideo();
+            if (!listVideo.isEmpty()) {
+                TCVideoFileInfo video = listVideo.get(0);
+                Glide.with(getContext()).load(video.getFileUri()).into(mImageChooser);
+            }
+        });
     }
 
     @Override
@@ -130,14 +154,14 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
         } else if (id == R.id.iv_switch_camera) {
             switchCamera();
         } else if (id == R.id.iv_chooser) {
-            if (onPickerClicked!=null){
+            if (onPickerClicked != null) {
                 onPickerClicked.onClick();
             }
         }
     }
 
     public void setOnPickerClicked(OnPickerClicked onPickerClicked) {
-        this.onPickerClicked=onPickerClicked;
+        this.onPickerClicked = onPickerClicked;
     }
 
 
@@ -281,7 +305,7 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
         void onReRecord();
     }
 
-    public interface  OnPickerClicked{
+    public interface OnPickerClicked {
         void onClick();
     }
 

@@ -169,7 +169,7 @@ public class VideoGenerateKit extends BaseGenerateKit implements TXVideoGenerate
 
         TXVideoEditer editer = VideoEditerSDK.getInstance().getEditer();
         if (editer != null) {
-            editer.setTailWaterMark(tailWaterMarkBitmap, rect, DURATION_TAILWATERMARK);
+//            editer.setTailWaterMark(tailWaterMarkBitmap, rect, DURATION_TAILWATERMARK);
         }
     }
 
