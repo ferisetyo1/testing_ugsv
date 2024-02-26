@@ -81,11 +81,11 @@
                 android:id="@+id/bgm_range_slider"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:leftThumbDrawable="@drawable/ugckit_ic_progress_left"
+                app:leftThumbDrawable="@drawable/ic_thumb_slider_left"
                 app:leftThumbIndex="0"
                 app:lineColor="@color/ugckit_color_accent"
                 app:lineHeight="3dp"
-                app:rightThumbDrawable="@drawable/ugckit_ic_progress_right"
+                app:rightThumbDrawable="@drawable/ic_thumb_slider_right"
                 app:thumbWidth="19dp"
                 app:tickCount="100" />
         </RelativeLayout>

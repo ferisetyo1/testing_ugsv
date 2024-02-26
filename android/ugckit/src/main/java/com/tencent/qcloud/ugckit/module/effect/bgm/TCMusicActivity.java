@@ -94,6 +94,7 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
                         info.status = TCMusicInfo.STATE_DOWNLOADED;
                         info.localPath = filePath;
                         mTCMusicAdapter.updateItem(position, info);
+                        backToEditActivity(position, info.localPath);
                     }
                 });
             }

@@ -24,6 +24,7 @@ import com.tencent.qcloud.ugckit.basic.ITitleBarLayout;
 import com.tencent.qcloud.ugckit.basic.JumpActivityMgr;
 import com.tencent.qcloud.ugckit.basic.OnUpdateUIListener;
 import com.tencent.qcloud.ugckit.basic.UGCKitResult;
+import com.tencent.qcloud.ugckit.component.dialogfragment.ValidationDialogFragment;
 import com.tencent.qcloud.ugckit.module.PlayerManagerKit;
 import com.tencent.qcloud.ugckit.module.VideoGenerateKit;
 import com.tencent.qcloud.ugckit.module.editer.AbsVideoEditUI;
@@ -104,29 +105,18 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
 
     @Override
     public void backPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        AlertDialog alertDialog = builder.setCancelable(false).setMessage("Buang editan kamu?")
-                .setPositiveButton(R.string.ugckit_btn_back, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        Log.i(TAG, "[UGCKit][VideoEdit]backPressed call stopPlay");
-                        PlayerManagerKit.getInstance().stopPlay();
-                        // 取消设置的特效
-                        VideoEditerSDK.getInstance().releaseSDK();
-                        VideoEditerSDK.getInstance().clear();
-                        if (mOnEditListener != null) {
-                            mOnEditListener.onEditCanceled();
-                        }
-                    }
-                })
-                .setNegativeButton(getContext().getString(R.string.ugckit_wrong_click), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).create();
-        alertDialog.show();
+        ValidationDialogFragment dialog=ValidationDialogFragment.newInstance("Buang editan Kamu?","Ya, Buang","Batal");
+        dialog.setListener(()->{
+            Log.i(TAG, "[UGCKit][VideoEdit]backPressed call stopPlay");
+            PlayerManagerKit.getInstance().stopPlay();
+            // 取消设置的特效
+            VideoEditerSDK.getInstance().releaseSDK();
+            VideoEditerSDK.getInstance().clear();
+            if (mOnEditListener != null) {
+                mOnEditListener.onEditCanceled();
+            }
+        });
+        dialog.show(((FragmentActivity)getContext()).getSupportFragmentManager(),"validation");
     }
 
     /**

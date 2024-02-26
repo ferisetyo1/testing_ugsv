@@ -143,10 +143,6 @@ public class ValidationDialogFragment extends DialogFragment implements View.OnC
         this.listener = listener;
     }
 
-    public void showDialog(){
-        getDialog().show();
-    }
-
 
     public interface OnValidationListener {
         void onClickPositive();

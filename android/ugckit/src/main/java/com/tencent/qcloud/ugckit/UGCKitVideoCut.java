@@ -63,6 +63,7 @@ public class UGCKitVideoCut extends AbsVideoCutUI implements PlayerManagerKit.On
         VideoEditerSDK.getInstance().initSDK();
 
         // 点击"下一步"
+        getTitleBar().setEnableRightButton(true);
         getTitleBar().setOnRightClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

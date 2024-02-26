@@ -26,6 +26,7 @@ import com.tencent.qcloud.ugckit.basic.OnUpdateUIListener;
 import com.tencent.qcloud.ugckit.basic.UGCKitResult;
 import com.tencent.qcloud.ugckit.component.dialog.ProgressDialogUtil;
 import com.tencent.qcloud.ugckit.component.dialogfragment.ProgressFragmentUtil;
+import com.tencent.qcloud.ugckit.component.dialogfragment.ValidationDialogFragment;
 import com.tencent.qcloud.ugckit.module.ProcessKit;
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK;
 import com.tencent.qcloud.ugckit.module.effect.bgm.view.SoundEffectsPannel;
@@ -789,30 +790,19 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
     }
 
     private void showDeleteMusicDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        AlertDialog alertDialog = builder.setTitle(getResources().getString(R.string.ugckit_tips)).setCancelable(false).setMessage(R.string.ugckit_delete_bgm_or_not)
-                .setPositiveButton(R.string.ugckit_confirm_delete, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        RecordMusicManager.getInstance().deleteMusic();
-                        if (mXMagic != null && mBeautyType == 1) {  //当删除背景音乐的时候进行判断，如果当前是在高级美颜中，则消除静音
-                            mXMagic.setAudioMute(false);
-                        }
-                        // 录制添加BGM后是录制不了人声的，而音效是针对人声有效的
-                        getRecordRightLayout().setSoundEffectIconEnable(true);
+        ValidationDialogFragment dialog=ValidationDialogFragment.newInstance("Buang latar belakang musik ini?","Ya, Buang","Batal");
+        dialog.setListener(()->{
+            RecordMusicManager.getInstance().deleteMusic();
+            if (mXMagic != null && mBeautyType == 1) {  //当删除背景音乐的时候进行判断，如果当前是在高级美颜中，则消除静音
+                mXMagic.setAudioMute(false);
+            }
+            // 录制添加BGM后是录制不了人声的，而音效是针对人声有效的
+            getRecordRightLayout().setSoundEffectIconEnable(true);
 
 //                        getRecordMusicPannel().setMusicName("");
-                        getRecordMusicPannel().setVisibility(View.GONE);
-                    }
-                })
-                .setNegativeButton(getResources().getString(R.string.ugckit_btn_cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).create();
-        alertDialog.show();
+            getRecordMusicPannel().setVisibility(View.GONE);
+        });
+        dialog.show(((FragmentActivity)getContext()).getSupportFragmentManager(),"showDeleteMusicDialog");
     }
 
     /************************************   音乐Pannel回调接口 End    ********************************************/

@@ -148,11 +148,11 @@
                 android:id="@+id/bgm_range_slider"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:leftThumbDrawable="@drawable/ugckit_ic_music_left"
+                app:leftThumbDrawable="@drawable/ic_thumb_slider_left"
                 app:leftThumbIndex="0"
                 app:lineColor="#FF584C"
                 app:lineHeight="3dp"
-                app:rightThumbDrawable="@drawable/ugckit_ic_music_right"
+                app:rightThumbDrawable="@drawable/ic_thumb_slider_right"
                 app:thumbWidth="19dp"
                 app:tickCount="100" />
         </RelativeLayout>
