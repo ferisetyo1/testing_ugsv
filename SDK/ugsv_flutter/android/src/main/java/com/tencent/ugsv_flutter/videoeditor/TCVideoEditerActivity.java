@@ -67,11 +67,13 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
                 args.put("outputPath", ugcKitResult.outputPath);
                 FlutterCallback.call("onEditCompleted", args);
                 startPreviewActivity(ugcKitResult);
-                if (UgsvFlutterPlugin.result !=null){
+                if (UgsvFlutterPlugin.result != null){
                     UgsvFlutterPlugin.result.success(ugcKitResult.outputPath);
                 }
             } else {
-                UgsvFlutterPlugin.result.error("FAILED","FAILED",null);
+                if (UgsvFlutterPlugin.result != null){
+                    UgsvFlutterPlugin.result.error("FAILED","FAILED",null);
+                }
                 ToastUtil.toastShortMessage("edit video failed. error code:" + ugcKitResult.errorCode + ",desc msg:" + ugcKitResult.descMsg);
             }
         }
