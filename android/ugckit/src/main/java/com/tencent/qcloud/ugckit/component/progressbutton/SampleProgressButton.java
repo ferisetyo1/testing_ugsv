@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.RectF;
 import android.graphics.Shader;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -24,25 +25,25 @@ import com.tencent.qcloud.ugckit.R;
  */
 public class SampleProgressButton extends View {
 
-    public static final int STATE_NORMAL   = 1;
+    public static final int STATE_NORMAL = 1;
     public static final int STATE_PROGRESS = 2;
 
-    private FontMetrics    mFontMetrics;
-    private Paint          mTextPaint;
-    private Paint          mBackgroundPaintNormal;
-    private Paint          mBackgroundPaintProgress;
-    private RectF          mBackgroundBounds;
+    private FontMetrics mFontMetrics;
+    private Paint mTextPaint;
+    private Paint mBackgroundPaintNormal;
+    private Paint mBackgroundPaintProgress;
+    private RectF mBackgroundBounds;
     private LinearGradient mProgressBgGradient;
-    private int            mForegroundColor;
-    private int            mBackgroundColor;
-    private int            mNormalColor;
-    private int            mProgress    = 0;
-    private int            mTextColor   = Color.WHITE;
-    private float          mTextSize    = 10;
-    private int            mMaxProgress = 100;
-    private int            mState       = STATE_NORMAL;
+    private int mForegroundColor;
+    private int mBackgroundColor;
+    private int mNormalColor;
+    private int mProgress = 0;
+    private int mTextColor = Color.WHITE;
+    private float mTextSize = 10;
+    private int mMaxProgress = 100;
+    private int mState = STATE_NORMAL;
     @Nullable
-    private String         mText        = "";
+    private String mText = "";
 
     public SampleProgressButton(@NonNull Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -58,8 +59,8 @@ public class SampleProgressButton extends View {
         TypedArray typedArray = null;
         try {
             typedArray = context.obtainStyledAttributes(attrs, R.styleable.UGCKitSampleProgressButton);
-            mBackgroundColor = typedArray.getInteger(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonBackgroundColor, Color.GRAY);
-            mForegroundColor = typedArray.getInteger(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonForegroundColor, Color.RED);
+            mBackgroundColor = typedArray.getInteger(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonBackgroundColor, Color.parseColor("#FFE5E9"));
+            mForegroundColor = typedArray.getInteger(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonForegroundColor, Color.parseColor("#FF0025"));
             mNormalColor = typedArray.getInteger(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonNormalColor, Color.BLUE);
             mTextColor = typedArray.getInteger(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonTextcolor, Color.parseColor("#FF0025"));
             mMaxProgress = typedArray.getInteger(R.styleable.UGCKitSampleProgressButton_sampleProgressButtonMax, 100);
@@ -141,18 +142,19 @@ public class SampleProgressButton extends View {
 
         mBackgroundBounds.left = 2;
         mBackgroundBounds.top = 2;
-        mBackgroundBounds.right = getMeasuredWidth()-2;
-        mBackgroundBounds.bottom = getMeasuredHeight()-2;
+        mBackgroundBounds.right = getMeasuredWidth() - 2;
+        mBackgroundBounds.bottom = getMeasuredHeight() - 2;
 
         int cornerRadius = getMeasuredHeight() / 2;
 
-        if (mState == STATE_NORMAL) {
-            mBackgroundPaintNormal.setColor(mNormalColor);
-            canvas.drawRoundRect(mBackgroundBounds, cornerRadius, cornerRadius, mBackgroundPaintNormal);
-        } else {
+
+        if (mState != STATE_NORMAL) {
             mBackgroundPaintProgress.setShader(mProgressBgGradient);
             canvas.drawRoundRect(mBackgroundBounds, cornerRadius, cornerRadius, mBackgroundPaintProgress);
         }
+
+        mBackgroundPaintNormal.setColor(mNormalColor);
+        canvas.drawRoundRect(mBackgroundBounds, cornerRadius, cornerRadius, mBackgroundPaintNormal);
 
         if ("".equals(mText) || mText == null) {
             return;
@@ -186,6 +188,7 @@ public class SampleProgressButton extends View {
         this.mText = text;
         invalidate();
     }
+
     public void setTextColor(int color) {
         this.mTextColor = color;
         invalidate();

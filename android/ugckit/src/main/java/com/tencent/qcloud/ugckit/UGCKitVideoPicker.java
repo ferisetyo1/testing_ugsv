@@ -45,7 +45,8 @@ public class UGCKitVideoPicker extends AbsPickerUI {
     public void initDefault() {
         // 设置标题
         getTitleBar().setTitle(getResources().getString(R.string.ugckit_video_choose), ITitleBarLayout.POSITION.MIDDLE);
-        getTitleBar().setVisible(false, ITitleBarLayout.POSITION.RIGHT);
+        getTitleBar().setVisible(true, ITitleBarLayout.POSITION.RIGHT);
+        getTitleBar().setEnableRightButton(true);
         getPickerListLayout().setOnItemAddListener(new ItemView.OnAddListener() {
             @Override
             public void onAdd(TCVideoFileInfo fileInfo) {
