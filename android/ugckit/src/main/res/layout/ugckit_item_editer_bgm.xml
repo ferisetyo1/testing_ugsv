@@ -17,17 +17,15 @@
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/ugckit_ic_music_default" />
+            android:src="@drawable/ic_default_music" />
 
         <ImageView
             android:id="@+id/btn_play_music"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignEnd="@+id/ic_cover"
             android:layout_alignStart="@id/ic_cover"
-            android:layout_alignTop="@id/ic_cover"
-            android:layout_alignBottom="@id/ic_cover"
-            android:layout_alignEnd="@id/ic_cover"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_play_music" />
 
         <FrameLayout
