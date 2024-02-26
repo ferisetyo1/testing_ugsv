@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.ugckit.UGCKitVideoPicker;
+import com.tencent.qcloud.ugckit.component.dialogfragment.ValidationDialogFragment;
 import com.tencent.qcloud.ugckit.module.picker.data.PickerManagerKit;
 import com.tencent.qcloud.ugckit.module.picker.data.TCVideoFileInfo;
 import com.tencent.qcloud.ugckit.utils.BackgroundTasks;
@@ -232,18 +235,21 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
             // 选中最后一段视频，更新进度条颜色
             mRecordProgressView.selectLast();
         } else {
-            isSelectDeleteLastPartFlag = false;
-            // 删除最后一段视频，更新进度条颜色
-            mRecordProgressView.deleteLast();
+            ValidationDialogFragment dialog = new ValidationDialogFragment();
+            dialog.setListener(() -> {
+                isSelectDeleteLastPartFlag = false;
+                // 删除最后一段视频，更新进度条颜色
+                mRecordProgressView.deleteLast();
 
-            VideoRecordSDK.getInstance().deleteLastPart();
+                VideoRecordSDK.getInstance().deleteLastPart();
 
-            long duration = VideoRecordSDK.getInstance().getPartManager().getDuration();
-            float timeSecond = duration / 1000;
-            mTextProgressTime.setText(String.format(Locale.CHINA, "%.1f", timeSecond) + getResources().getString(R.string.ugckit_unit_second));
+                long duration = VideoRecordSDK.getInstance().getPartManager().getDuration();
+                float timeSecond = duration / 1000;
+                mTextProgressTime.setText(String.format(Locale.CHINA, "%.1f", timeSecond) + getResources().getString(R.string.ugckit_unit_second));
 
-            mOnDeleteLastPartListener.onUpdateTitle(timeSecond >= UGCKitRecordConfig.getInstance().mMinDuration / 1000);
-
+                mOnDeleteLastPartListener.onUpdateTitle(timeSecond >= UGCKitRecordConfig.getInstance().mMinDuration / 1000);
+            });
+            dialog.show(((FragmentActivity)getContext()).getSupportFragmentManager(),"");
         }
         // 删除分段后再次判断size
         checkButtonDelete();
