@@ -248,6 +248,8 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
                 mTextProgressTime.setText(String.format(Locale.CHINA, "%.1f", timeSecond) + getResources().getString(R.string.ugckit_unit_second));
 
                 mOnDeleteLastPartListener.onUpdateTitle(timeSecond >= UGCKitRecordConfig.getInstance().mMinDuration / 1000);
+                // 删除分段后再次判断size
+                checkButtonDelete();
             });
             dialog.show(((FragmentActivity)getContext()).getSupportFragmentManager(),"");
         }
