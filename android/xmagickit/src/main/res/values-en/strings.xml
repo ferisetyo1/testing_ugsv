@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tencent Effect</string>
+    <string name="app_name">Sapa Beta</string>
     <string name="not_support">Not supported by the current device</string>
     <string name="not_support_beauty">The current device does not support beauty filters</string>
     <string name="not_auth">Insufficient permission</string>

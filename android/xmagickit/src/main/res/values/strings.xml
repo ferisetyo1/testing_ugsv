@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TencentEffect</string>
+    <string name="app_name">Sapa Beta</string>
     <string name="not_support">当前设备不支持</string>
     <string name="not_support_beauty">当前设备不支持美颜</string>
     <string name="not_auth">权限不足</string>
