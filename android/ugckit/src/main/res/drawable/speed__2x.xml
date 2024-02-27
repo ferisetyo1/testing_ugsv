@@ -11,16 +11,16 @@
         android:fillColor="#ffffff"
         android:fillType="evenOdd"
         android:strokeWidth=".5"
-        android:strokeColor="#80000000"/>
+        android:strokeColor="#CAD0D8"/>
     <path
         android:pathData="M15.753,22L14.743,20.59L13.943,22H11.793L13.663,19.09L11.713,16.39H13.913L14.923,17.8L15.733,16.39H17.883L15.973,19.25L17.953,22H15.753Z"
         android:fillColor="#ffffff"
         android:strokeWidth=".5"
-        android:strokeColor="#80000000"/>
+        android:strokeColor="#CAD0D8"/>
     <path
         android:pathData="M6.33,20.43C6.977,19.923 7.507,19.487 7.92,19.12C8.333,18.753 8.68,18.377 8.96,17.99C9.24,17.597 9.38,17.223 9.38,16.87C9.38,16.657 9.33,16.49 9.23,16.37C9.137,16.25 8.997,16.19 8.81,16.19C8.617,16.19 8.467,16.273 8.36,16.44C8.253,16.6 8.203,16.837 8.21,17.15H6.31C6.33,16.557 6.46,16.067 6.7,15.68C6.94,15.287 7.253,15 7.64,14.82C8.027,14.633 8.457,14.54 8.93,14.54C9.75,14.54 10.36,14.743 10.76,15.15C11.16,15.557 11.36,16.083 11.36,16.73C11.36,17.423 11.127,18.073 10.66,18.68C10.2,19.287 9.623,19.83 8.93,20.31H11.43V21.9H6.33V20.43Z"
         android:fillColor="#ffffff"
         android:strokeWidth=".5"
-        android:strokeColor="#80000000"/>
+        android:strokeColor="#CAD0D8"/>
   </group>
 </vector>
