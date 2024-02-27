@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PickerManagerKit {
     private static final String TAG = "PickerManagerKit";
@@ -74,6 +75,7 @@ public class PickerManagerKit {
             while (cursor.moveToNext());
         }
         cursor.close();
+        Collections.reverse(videos);
         return videos;
     }
 
