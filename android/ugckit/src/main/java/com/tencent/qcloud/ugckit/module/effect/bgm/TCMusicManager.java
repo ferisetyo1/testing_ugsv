@@ -48,12 +48,8 @@ public class TCMusicManager {
                 Log.i(TAG, "http request success:  result = " + result);
                 try {
                     JSONObject jsonObject = new JSONObject(result);
-                    JSONObject bgmObject = jsonObject.getJSONObject("bgm");
-                    if (bgmObject == null && mLoadMusicListener != null) {
-                        mLoadMusicListener.onBgmList(null);
-                        return;
-                    }
-                    JSONArray list = bgmObject.getJSONArray("list");
+//                    JSONObject bgmObject = jsonObject.getJSONObject("data");
+                    JSONArray list = jsonObject.getJSONArray("data");
                     Type listType = new TypeToken<ArrayList<TCMusicInfo>>() {
                     }.getType();
                     ArrayList<TCMusicInfo> bgmInfoList = new Gson().fromJson(list.toString(), listType);

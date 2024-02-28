@@ -2,8 +2,16 @@ package com.tencent.qcloud.ugckit.module.effect.bgm;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class TCMusicInfo {
+    private int id;
+    @SerializedName("audio_title")
     public String name;
+    @SerializedName("artist_name")
+    public String artistName;
+    public String thumbnail;
+    @SerializedName("file_url")
     public String url;
     public int    status = STATE_UNDOWNLOAD;
     public int    statusMusic = MUSIC_STATE_STOP;

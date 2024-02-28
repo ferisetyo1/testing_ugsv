@@ -2,6 +2,7 @@ package com.tencent.qcloud.ugckit.module.effect.bgm;
 
 import android.content.Context;
 import android.graphics.Color;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,11 +22,13 @@ import com.tencent.qcloud.ugckit.component.progressbutton.SampleProgressButton;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TCMusicAdapter extends BaseRecyclerAdapter<TCMusicAdapter.LinearMusicViewHolder> implements View.OnClickListener {
-    private static final String                 TAG = "TCMusicAdapter";
-    private              Context                mContext;
-    private              List<TCMusicInfo>      mBGMList;
-    private              OnClickSubItemListener mOnClickSubItemListener;
+    private static final String TAG = "TCMusicAdapter";
+    private Context mContext;
+    private List<TCMusicInfo> mBGMList;
+    private OnClickSubItemListener mOnClickSubItemListener;
 
     @NonNull
     private SparseArray<LinearMusicViewHolder> mProgressButtonIndexMap = new SparseArray<LinearMusicViewHolder>();
@@ -67,17 +70,22 @@ public class TCMusicAdapter extends BaseRecyclerAdapter<TCMusicAdapter.LinearMus
 
 
         holder.tvName.setText(info.name);
+        holder.tvArtist.setText(info.artistName);
         holder.itemView.setTag(position);
         holder.setPosition(position);
-        if (info.statusMusic==TCMusicInfo.MUSIC_STATE_PLAYING){
+        Glide.with(holder.itemView.getContext()).asBitmap()
+                .error(R.drawable.ic_default_music)
+                .load(info.thumbnail)
+                .into(holder.thumbnail);
+        if (info.statusMusic == TCMusicInfo.MUSIC_STATE_PLAYING) {
             holder.btnPlay.setImageResource(R.drawable.ic_music_pause);
-        }else{
+        } else {
             holder.btnPlay.setImageResource(R.drawable.ic_play_music);
         }
-        holder.btnPlay.setOnClickListener((v)->{
-            if (info.statusMusic==TCMusicInfo.MUSIC_STATE_PLAYING){
+        holder.btnPlay.setOnClickListener((v) -> {
+            if (info.statusMusic == TCMusicInfo.MUSIC_STATE_PLAYING) {
                 mOnClickSubItemListener.onClickStop(position);
-            }else{
+            } else {
                 mOnClickSubItemListener.onClickPlayBtn(position);
             }
         });
@@ -119,17 +127,18 @@ public class TCMusicAdapter extends BaseRecyclerAdapter<TCMusicAdapter.LinearMus
         Log.d(TAG, "onBindVH   info.status:" + info.status);
 
         holder.tvName.setText(info.name);
+        holder.tvArtist.setText(info.artistName);
         holder.itemView.setTag(position);
         holder.setPosition(position);
-        if (info.statusMusic==TCMusicInfo.MUSIC_STATE_PLAYING){
+        if (info.statusMusic == TCMusicInfo.MUSIC_STATE_PLAYING) {
             holder.btnPlay.setImageResource(R.drawable.ic_music_pause);
-        }else{
+        } else {
             holder.btnPlay.setImageResource(R.drawable.ic_play_music);
         }
-        holder.btnPlay.setOnClickListener((v)->{
-            if (info.statusMusic==TCMusicInfo.MUSIC_STATE_PLAYING){
+        holder.btnPlay.setOnClickListener((v) -> {
+            if (info.statusMusic == TCMusicInfo.MUSIC_STATE_PLAYING) {
                 mOnClickSubItemListener.onClickStop(position);
-            }else{
+            } else {
                 mOnClickSubItemListener.onClickPlayBtn(position);
             }
         });
@@ -139,14 +148,18 @@ public class TCMusicAdapter extends BaseRecyclerAdapter<TCMusicAdapter.LinearMus
 
     public static class LinearMusicViewHolder extends RecyclerView.ViewHolder {
         private SampleProgressButton btnUse;
-        private TextView             tvName;
-        private ImageView            btnPlay;
-        private OnItemClickListener  onItemClickListener;
-        private int                  position;
+        private TextView tvName;
+        private TextView tvArtist;
+        private ImageView btnPlay;
+        private CircleImageView thumbnail;
+        private OnItemClickListener onItemClickListener;
+        private int position;
 
         public LinearMusicViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.bgm_tv_name);
+            tvArtist = (TextView) itemView.findViewById(R.id.bgm_tv_artist_name);
+            thumbnail = (CircleImageView) itemView.findViewById(R.id.ic_cover);
             btnPlay = (ImageView) itemView.findViewById(R.id.btn_play_music);
             btnUse = (SampleProgressButton) itemView.findViewById(R.id.btn_use);
             btnUse.setOnClickListener(new View.OnClickListener() {
@@ -186,6 +199,7 @@ public class TCMusicAdapter extends BaseRecyclerAdapter<TCMusicAdapter.LinearMus
         void onClickUseBtn(SampleProgressButton button, int position);
 
         void onClickPlayBtn(int position);
+
         void onClickStop(int position);
     }
 
