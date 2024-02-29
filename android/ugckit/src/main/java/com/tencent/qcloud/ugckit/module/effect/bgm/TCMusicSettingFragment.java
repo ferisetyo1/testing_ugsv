@@ -72,6 +72,7 @@ public class TCMusicSettingFragment extends Fragment {
             return;
         }
         mMusicInfo = new MusicInfo();
+        mMusicInfo.id = data.getIntExtra(UGCKitConstants.MUSIC_ID,-1);
         mMusicInfo.path = data.getStringExtra(UGCKitConstants.MUSIC_PATH);
         mMusicInfo.name = data.getStringExtra(UGCKitConstants.MUSIC_NAME);
         mMusicInfo.position = data.getIntExtra(UGCKitConstants.MUSIC_POSITION, -1);

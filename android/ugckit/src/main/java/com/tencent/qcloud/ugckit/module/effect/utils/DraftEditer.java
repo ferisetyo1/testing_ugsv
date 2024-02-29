@@ -13,6 +13,7 @@ public class DraftEditer {
     @Nullable
     private        String      bgmPath;
     private        int         bgmPos;
+    private        int         bgmId;
     private        float       bgmVolume;
     private        float       videoVolume;
     private        long        bgmStartTime;
@@ -101,6 +102,14 @@ public class DraftEditer {
         this.bgmDuration = bgmDuration;
     }
 
+    public int getBgmId() {
+        return bgmId;
+    }
+
+    public void setBgmId(int bgmId) {
+        this.bgmId = bgmId;
+    }
+
     public void clear() {
         this.bgmPath = null;
         this.bgmPos = -1;
@@ -121,11 +130,13 @@ public class DraftEditer {
         musicInfo.duration = getBgmDuration();
         musicInfo.startTime = getBgmStartTime();
         musicInfo.endTime = getBgmEndTime();
+        musicInfo.id = getBgmId();
         return musicInfo;
     }
 
     public void saveRecordMusicInfo(@NonNull MusicInfo musicInfo) {
         setBgmPath(musicInfo.path);
+        setBgmId(musicInfo.id);
         setBgmName(musicInfo.name);
         setBgmDuration(musicInfo.duration);
         setBgmPos(musicInfo.position);

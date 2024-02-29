@@ -28,6 +28,7 @@ public class ConfigureLoader {
         mDraftEditer = DraftEditer.getInstance();
         mEffectEditer = EffectEditer.getInstance();
 
+        mDraftEditer.setBgmId(mEffectEditer.getBgmId());
         mDraftEditer.setBgmName(mEffectEditer.getBgmName());
         mDraftEditer.setBgmPath(mEffectEditer.getBgmPath());
         mDraftEditer.setBgmPos(mEffectEditer.getBgmPos());
@@ -42,6 +43,7 @@ public class ConfigureLoader {
      * 将草稿箱变更的配置保存
      */
     public void saveConfigFromDraft() {
+        mEffectEditer.setBgmId(mDraftEditer.getBgmId());
         mEffectEditer.setBgmName(mDraftEditer.getBgmName());
         mEffectEditer.setBgmPath(mDraftEditer.getBgmPath());
         mEffectEditer.setBgmPos(mDraftEditer.getBgmPos());

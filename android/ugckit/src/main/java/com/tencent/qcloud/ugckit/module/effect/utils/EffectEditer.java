@@ -11,6 +11,7 @@ public class EffectEditer {
     @Nullable
     private        String       bgmPath;
     private        int          bgmPos;
+    private        int          bgmId;
     private        float        bgmVolume;
     private        float        videoVolume;
     private        long         bgmStartTime;
@@ -100,6 +101,14 @@ public class EffectEditer {
         this.bgmDuration = bgmDuration;
     }
 
+    public int getBgmId() {
+        return bgmId;
+    }
+
+    public void setBgmId(int bgmId) {
+        this.bgmId = bgmId;
+    }
+
     public void clear() {
         this.bgmPath = null;
         this.bgmPos = -1;
@@ -107,5 +116,6 @@ public class EffectEditer {
         this.videoVolume = 1f;
         this.bgmStartTime = -1;
         this.bgmEndTime = -1;
+        this.bgmId = -1;
     }
 }

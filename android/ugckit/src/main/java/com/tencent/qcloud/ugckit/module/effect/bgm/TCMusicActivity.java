@@ -266,6 +266,7 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
         intent.putExtra(UGCKitConstants.MUSIC_POSITION, position);
         intent.putExtra(UGCKitConstants.MUSIC_PATH, path);
         intent.putExtra(UGCKitConstants.MUSIC_NAME, mTCMusicInfoList.get(position).name);
+        intent.putExtra(UGCKitConstants.MUSIC_ID, mTCMusicInfoList.get(position).id);
         setResult(UGCKitConstants.ACTIVITY_MUSIC_REQUEST_CODE, intent);
         finish();
     }
@@ -283,6 +284,9 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (player!=null){
+            player.release();
+        }
         TCMusicManager.getInstance().setOnLoadMusicListener(null);
     }
 

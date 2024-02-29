@@ -29,6 +29,7 @@ import com.tencent.qcloud.ugckit.module.PlayerManagerKit;
 import com.tencent.qcloud.ugckit.module.VideoGenerateKit;
 import com.tencent.qcloud.ugckit.module.editer.AbsVideoEditUI;
 import com.tencent.qcloud.ugckit.module.editer.UGCKitEditConfig;
+import com.tencent.qcloud.ugckit.module.effect.utils.EffectEditer;
 import com.tencent.qcloud.ugckit.module.record.AudioFocusManager;
 import com.tencent.qcloud.ugckit.utils.LogReport;
 import com.tencent.qcloud.ugckit.component.dialog.ActionSheetDialog;
@@ -105,8 +106,8 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
 
     @Override
     public void backPressed() {
-        ValidationDialogFragment dialog=ValidationDialogFragment.newInstance("Buang editan Kamu?","Ya, Buang","Batal");
-        dialog.setListener(()->{
+        ValidationDialogFragment dialog = ValidationDialogFragment.newInstance("Buang editan Kamu?", "Ya, Buang", "Batal");
+        dialog.setListener(() -> {
             Log.i(TAG, "[UGCKit][VideoEdit]backPressed call stopPlay");
             PlayerManagerKit.getInstance().stopPlay();
             // 取消设置的特效
@@ -116,7 +117,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
                 mOnEditListener.onEditCanceled();
             }
         });
-        dialog.show(((FragmentActivity)getContext()).getSupportFragmentManager(),"validation");
+        dialog.show(((FragmentActivity) getContext()).getSupportFragmentManager(), "validation");
     }
 
     /**
@@ -273,6 +274,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
                 ugcKitResult.errorCode = retCode;
                 ugcKitResult.descMsg = descMsg;
                 ugcKitResult.isPublish = VideoEditerSDK.getInstance().isPublish();
+                ugcKitResult.musicId = EffectEditer.getInstance().getBgmId();
                 if (listener != null) {
                     listener.onEditCompleted(ugcKitResult);
                 }

@@ -85,6 +85,7 @@ public class TCVideoRecordActivity extends FragmentActivity
             public void onRecordCompleted(UGCKitResult ugcKitResult) {
                 if (ugcKitResult.errorCode == 0) {
                     startEditActivity(ugcKitResult);
+                    Log.d("onRecordCompleted",String.valueOf(ugcKitResult.musicId));
                     finish();
                 } else {
                     ToastUtil.toastShortMessage("record video failed. error code:" + ugcKitResult.errorCode + ",desc msg:" + ugcKitResult.descMsg);
@@ -124,6 +125,7 @@ public class TCVideoRecordActivity extends FragmentActivity
     private void startEditActivity(UGCKitResult ugcKitResult) {
         Intent intent = new Intent(this, TCVideoEditerActivity.class);
         intent.putExtra(UGCKitConstants.VIDEO_PATH, ugcKitResult.outputPath);
+        intent.putExtra(UGCKitConstants.MUSIC_ID, ugcKitResult.musicId);
         startActivity(intent);
     }
 
@@ -176,6 +178,7 @@ public class TCVideoRecordActivity extends FragmentActivity
         }
         MusicInfo musicInfo = new MusicInfo();
 
+        musicInfo.id=data.getIntExtra(UGCKitConstants.MUSIC_ID,-1);
         musicInfo.path = data.getStringExtra(UGCKitConstants.MUSIC_PATH);
         musicInfo.name = data.getStringExtra(UGCKitConstants.MUSIC_NAME);
         musicInfo.position = data.getIntExtra(UGCKitConstants.MUSIC_POSITION, -1);

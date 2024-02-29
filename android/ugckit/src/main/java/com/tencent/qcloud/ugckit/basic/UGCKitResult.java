@@ -18,6 +18,8 @@ public class UGCKitResult {
      */
     public String outputPath;
 
+    public int musicId;
+
     /**
      * 是否需要发布
      */

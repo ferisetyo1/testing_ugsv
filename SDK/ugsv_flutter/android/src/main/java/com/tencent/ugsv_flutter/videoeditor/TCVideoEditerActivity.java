@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
+
 import com.tencent.qcloud.ugckit.UGCKitConstants;
 import com.tencent.qcloud.ugckit.UGCKitVideoEdit;
 import com.tencent.qcloud.ugckit.basic.UGCKitResult;
@@ -55,6 +57,7 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
     private TextView mTvSubtitle;
     // 转场
     private TextView mTextTransition;
+    public int musicId = -1;
 
     private PermissionManager mStoragePermissionManager;
 
@@ -67,12 +70,15 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
                 args.put("outputPath", ugcKitResult.outputPath);
                 FlutterCallback.call("onEditCompleted", args);
                 startPreviewActivity(ugcKitResult);
-                if (UgsvFlutterPlugin.result != null){
-                    UgsvFlutterPlugin.result.success(ugcKitResult.outputPath);
+                if (UgsvFlutterPlugin.result != null) {
+                    Map<String, String> newArgs = new HashMap<>();
+                    newArgs.put("outputPath", ugcKitResult.outputPath);
+                    newArgs.put("musicId", String.valueOf(ugcKitResult.musicId == -1 ? (musicId == -1 ? -1 : musicId) : ugcKitResult.musicId));
+                    UgsvFlutterPlugin.result.success(newArgs);
                 }
             } else {
-                if (UgsvFlutterPlugin.result != null){
-                    UgsvFlutterPlugin.result.error("FAILED","FAILED",null);
+                if (UgsvFlutterPlugin.result != null) {
+                    UgsvFlutterPlugin.result.error("FAILED", "FAILED", null);
                 }
                 ToastUtil.toastShortMessage("edit video failed. error code:" + ugcKitResult.errorCode + ",desc msg:" + ugcKitResult.descMsg);
             }
@@ -129,6 +135,7 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
 
     private void initData() {
         mVideoPath = getIntent().getStringExtra(UGCKitConstants.VIDEO_PATH);
+        musicId = getIntent().getIntExtra(UGCKitConstants.MUSIC_ID, -1);
     }
 
     @Override

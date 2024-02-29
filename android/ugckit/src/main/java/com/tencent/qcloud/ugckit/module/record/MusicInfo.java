@@ -6,6 +6,8 @@ import androidx.annotation.Nullable;
  * 录制-音乐信息
  */
 public class MusicInfo {
+
+    public int id;
     /**
      * 音乐名称
      */

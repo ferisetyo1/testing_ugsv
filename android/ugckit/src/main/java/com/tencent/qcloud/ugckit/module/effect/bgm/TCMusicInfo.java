@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 
 public class TCMusicInfo {
-    private int id;
+    public int id;
     @SerializedName("audio_title")
     public String name;
     @SerializedName("artist_name")
