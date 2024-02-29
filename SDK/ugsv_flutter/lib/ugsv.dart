@@ -51,10 +51,15 @@ class UGSV {
     _apiChannel.invokeMethod("openVideoChooser", {});
   }
 
-  static Future<String?> openVideoRecorder() async {
+  static openVideoRecorder() async {
     final result = await _apiChannel.invokeMethod("openVideoRecorder", {});
-    debugPrint("openVideoRecorder $result");
-    return result is String ? result : null;
+    if (result == null) {
+      return null;
+    }
+    debugPrint("openVideoRecorder ${result["outputPath"]}"); //type string
+    debugPrint(
+        "openVideoRecorder ${result["musicId"]}"); //type string (default -1)
+    // return json;
   }
 
   static Future<bool> hasLastRecordPart() async {
