@@ -86,7 +86,7 @@
             android:minHeight="4dp"
             android:progress="50"
             android:progressDrawable="@drawable/ugckit_seekbar_progress_drawable"
-            android:thumb="@android:color/transparent" />
+            android:thumbTint="@color/white" />
     </LinearLayout>
 
     <HorizontalScrollView
