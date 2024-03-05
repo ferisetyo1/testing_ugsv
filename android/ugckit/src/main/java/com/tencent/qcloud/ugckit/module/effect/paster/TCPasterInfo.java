@@ -46,6 +46,6 @@ public class TCPasterInfo {
     }
 
     public Bitmap bitmapEmote(Context context){
-        return BitmapJi.create(context,emote,32);
+        return BitmapJi.create(context,emote,100);
     }
 }
