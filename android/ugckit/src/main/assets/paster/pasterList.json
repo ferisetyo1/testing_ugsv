@@ -1,20 +1,24 @@
 {
   "pasterList": [
     {
-      "icon": "cat/icon.png",
-      "name": "cat"
+      "icon": "noted.png",
+      "name": "noted"
     },
     {
-      "icon": "happy/icon.png",
-      "name": "happy"
+      "icon": "tetap_semangat.png",
+      "name": "semangat"
     },
     {
-      "icon": "lovely/icon.png",
-      "name": "lovely"
+      "icon": "we_are_super_team.png",
+      "name": "super team"
     },
     {
-      "icon": "rainbow/icon.png",
-      "name": "rainbow"
+      "icon": "wingwing.png",
+      "name": "wing wing"
+    },
+    {
+      "icon": "wing_frend.png",
+      "name": "wing frend"
     }
   ]
 }

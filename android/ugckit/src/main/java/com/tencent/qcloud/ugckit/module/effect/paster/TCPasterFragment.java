@@ -418,73 +418,77 @@ public class TCPasterFragment extends Fragment implements BaseRecyclerAdapter.On
     // 选择贴纸
     @Override
     public void onItemClick(@NonNull TCPasterInfo tcPasterInfo, int position) {
-        int index = mFloatLayerViewGroup.getSelectedViewIndex();
-        Log.i(TAG, "onItemClick: index = " + index);
-        RangeSliderViewContainer lastSlider = mVideoProgressController.getRangeSliderView(index);
-        if (lastSlider != null) {
-            lastSlider.setEditComplete();
-        } else {
-            Log.e(TAG, "onItemClick: slider view is null");
-        }
-
-        String pasterPath = null;
-        Bitmap bitmap = null;
-        int pasterType = tcPasterInfo.getPasterType();
-        if (pasterType == PasterView.TYPE_CHILD_VIEW_ANIMATED_PASTER) {
-            AnimatedPasterConfig animatedPasterConfig = getAnimatedPasterParamFromPath(mAnimatedPasterSDcardFolder + tcPasterInfo.getName() + File.separator);
-            if (animatedPasterConfig == null) {
-                Log.e(TAG, "onItemClick, animatedPasterConfig is null");
-                return;
+        try {
+            int index = mFloatLayerViewGroup.getSelectedViewIndex();
+            Log.i(TAG, "onItemClick: index = " + index);
+            RangeSliderViewContainer lastSlider = mVideoProgressController.getRangeSliderView(index);
+            if (lastSlider != null) {
+                lastSlider.setEditComplete();
+            } else {
+                Log.e(TAG, "onItemClick: slider view is null");
             }
-            int keyFrameIndex = animatedPasterConfig.keyframe;
-            String keyFrameName = animatedPasterConfig.frameArray.get(keyFrameIndex - 1).pictureName;
 
-            if (!TextUtils.isEmpty(mAnimatedPasterSDcardFolder)) {
-                pasterPath = mAnimatedPasterSDcardFolder + tcPasterInfo.getName() + File.separator + keyFrameName + ".png";
-                bitmap = BitmapFactory.decodeFile(pasterPath);
+            String pasterPath = null;
+            Bitmap bitmap = null;
+            int pasterType = tcPasterInfo.getPasterType();
+            if (pasterType == PasterView.TYPE_CHILD_VIEW_ANIMATED_PASTER) {
+                AnimatedPasterConfig animatedPasterConfig = getAnimatedPasterParamFromPath(mAnimatedPasterSDcardFolder + tcPasterInfo.getName() + File.separator);
+                if (animatedPasterConfig == null) {
+                    Log.e(TAG, "onItemClick, animatedPasterConfig is null");
+                    return;
+                }
+                int keyFrameIndex = animatedPasterConfig.keyframe;
+                String keyFrameName = animatedPasterConfig.frameArray.get(keyFrameIndex - 1).pictureName;
+
+                if (!TextUtils.isEmpty(mAnimatedPasterSDcardFolder)) {
+                    pasterPath = mAnimatedPasterSDcardFolder + tcPasterInfo.getName() + File.separator + keyFrameName + ".png";
+                    bitmap = BitmapFactory.decodeFile(pasterPath);
+                }
+            } else if (pasterType == PasterView.TYPE_CHILD_VIEW_PASTER) {
+                if (!TextUtils.isEmpty(mPasterSDcardFolder)) {
+                    pasterPath = tcPasterInfo.getIconPath();
+                    bitmap = BitmapFactory.decodeFile(pasterPath);
+                }
             }
-        } else if (pasterType == PasterView.TYPE_CHILD_VIEW_PASTER) {
-            if (!TextUtils.isEmpty(mPasterSDcardFolder)) {
-                pasterPath = mPasterSDcardFolder + tcPasterInfo.getName() + File.separator + tcPasterInfo.getName() + ".png";
-                bitmap = BitmapFactory.decodeFile(pasterPath);
+            // 更新一下默认配置的时间
+            updateDefaultTime();
+
+            PasterView pasterOperationView = TCPasterOperationViewFactory.newOperationView(getActivity());
+            pasterOperationView.setPasterPath(pasterPath);
+            pasterOperationView.setChildType(tcPasterInfo.getPasterType());
+            pasterOperationView.setIconPath(tcPasterInfo.getIconPath());
+            pasterOperationView.setCenterX(mFloatLayerViewGroup.getWidth() / 2);
+            pasterOperationView.setCenterY(mFloatLayerViewGroup.getHeight() / 2);
+            pasterOperationView.setStartToEndTime(mDefaultWordStartTime, mDefaultWordEndTime);
+            pasterOperationView.setIOperationViewClickListener(this);
+            pasterOperationView.setPasterName(tcPasterInfo.getName());
+            pasterOperationView.showDelete(false);
+            pasterOperationView.showEdit(false);
+
+            RangeSliderViewContainer rangeSliderView = new RangeSliderViewContainer(getActivity());
+            rangeSliderView.init(mVideoProgressController, mDefaultWordStartTime, mDefaultWordEndTime - mDefaultWordStartTime, mDuration);
+            rangeSliderView.setDurationChangeListener(mOnDurationChangeListener);
+            mVideoProgressController.addRangeSliderView(ViewConst.VIEW_TYPE_PASTER, rangeSliderView);
+            mVideoProgressController.setCurrentTimeMs(mDefaultWordStartTime);
+
+            mFloatLayerViewGroup.addOperationView(pasterOperationView);
+            if (bitmap != null) {
+                pasterOperationView.setImageBitamp(bitmap);
             }
+            mPasterPannel.dismiss();
+
+            // 更新下方的贴纸列表
+            mAddPasterInfoList.add(tcPasterInfo);
+            mAddPasterAdapter.notifyDataSetChanged();
+            mAddPasterAdapter.setCurrentSelectedPos(mAddPasterInfoList.size() - 1);
+
+            mCurrentSelectedPos = mAddPasterInfoList.size() - 1;
+
+            addPasterListVideo();
+            saveIntoManager();
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        // 更新一下默认配置的时间
-        updateDefaultTime();
-
-        PasterView pasterOperationView = TCPasterOperationViewFactory.newOperationView(getActivity());
-        pasterOperationView.setPasterPath(pasterPath);
-        pasterOperationView.setChildType(tcPasterInfo.getPasterType());
-        pasterOperationView.setIconPath(tcPasterInfo.getIconPath());
-        pasterOperationView.setCenterX(mFloatLayerViewGroup.getWidth() / 2);
-        pasterOperationView.setCenterY(mFloatLayerViewGroup.getHeight() / 2);
-        pasterOperationView.setStartToEndTime(mDefaultWordStartTime, mDefaultWordEndTime);
-        pasterOperationView.setIOperationViewClickListener(this);
-        pasterOperationView.setPasterName(tcPasterInfo.getName());
-        pasterOperationView.showDelete(false);
-        pasterOperationView.showEdit(false);
-
-        RangeSliderViewContainer rangeSliderView = new RangeSliderViewContainer(getActivity());
-        rangeSliderView.init(mVideoProgressController, mDefaultWordStartTime, mDefaultWordEndTime - mDefaultWordStartTime, mDuration);
-        rangeSliderView.setDurationChangeListener(mOnDurationChangeListener);
-        mVideoProgressController.addRangeSliderView(ViewConst.VIEW_TYPE_PASTER, rangeSliderView);
-        mVideoProgressController.setCurrentTimeMs(mDefaultWordStartTime);
-
-        mFloatLayerViewGroup.addOperationView(pasterOperationView);
-        if (bitmap != null) {
-            pasterOperationView.setImageBitamp(bitmap);
-        }
-        mPasterPannel.dismiss();
-
-        // 更新下方的贴纸列表
-        mAddPasterInfoList.add(tcPasterInfo);
-        mAddPasterAdapter.notifyDataSetChanged();
-        mAddPasterAdapter.setCurrentSelectedPos(mAddPasterInfoList.size() - 1);
-
-        mCurrentSelectedPos = mAddPasterInfoList.size() - 1;
-
-        addPasterListVideo();
-        saveIntoManager();
     }
 
     // 动态、静态切换

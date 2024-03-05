@@ -495,7 +495,7 @@ public class VideoRecordSDK implements TXRecordCommon.ITXVideoRecordListener {
     public void onRecordComplete(@NonNull TXRecordCommon.TXRecordResult result) {
         Log.d(TAG, "onRecordComplete");
         if (result.retCode < 0) {
-            ToastUtil.toastShortMessage(UGCKit.getAppContext().getResources().getString(R.string.ugckit_video_record_activity_on_record_complete_fail_tip) + result.descMsg);
+            ToastUtil.toastShortMessage("Tahan lama untuk merekam");
         } else {
             mCurrentState = STATE_STOP;
             pauseRecord();

@@ -81,7 +81,7 @@ public class PasterPannel extends LinearLayout implements IPasterPannel, View.On
         mPasterAdapter = new PasterAdapter(pasterInfoList);
         mPasterAdapter.setOnItemClickListener(mOnItemClickListener);
 
-        GridLayoutManager manager = new GridLayoutManager(mContext, 1, GridLayoutManager.HORIZONTAL, false);
+        GridLayoutManager manager = new GridLayoutManager(mContext, 4);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mPasterAdapter);
     }
