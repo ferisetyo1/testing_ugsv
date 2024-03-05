@@ -1,6 +1,8 @@
 package com.tencent.qcloud.ugckit.module.effect.paster;
 
 
+import android.graphics.Bitmap;
+
 /**
  * 用于保存 贴纸控件相关参数的类
  * <p>
@@ -12,11 +14,13 @@ public class TCPasterViewInfo {
     private float  viewCenterY;// 控件的x y
     private float  imageRotation;
     private float  imageScale;
+    private Bitmap bitmap;
     private String pasterPath;
     private String iconPath;
     private String name;
     private long   startTime;
     private long   endTime;
+    private String emote;
 
     public String getIconPath() {
         return iconPath;
@@ -96,5 +100,21 @@ public class TCPasterViewInfo {
 
     public void setViewType(int viewType) {
         this.viewType = viewType;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+
+    public String getEmote() {
+        return emote;
+    }
+
+    public void setEmote(String emote) {
+        this.emote = emote;
     }
 }

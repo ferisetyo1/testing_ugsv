@@ -14,6 +14,8 @@ public class PasterView extends FloatLayerView {
     private String mPasterPath;  //预览界面上显示的图片
     private String mIconPath;    //缩略图
 
+    private String emote;
+
     public PasterView(Context context, AttributeSet attrs) {
         super(context, attrs, 0);
     }
@@ -58,4 +60,11 @@ public class PasterView extends FloatLayerView {
         this.mPasterPath = mPasterPath;
     }
 
+    public String getEmote() {
+        return emote;
+    }
+
+    public void setEmote(String emote) {
+        this.emote = emote;
+    }
 }

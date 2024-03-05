@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.tencent.qcloud.ugckit.UGCKit;
 import com.tencent.qcloud.ugckit.module.effect.BaseRecyclerAdapter;
 import com.tencent.qcloud.ugckit.R;
+import com.tencent.qcloud.ugckit.module.effect.paster.view.PasterView;
 
 
 import java.util.List;
@@ -64,9 +65,17 @@ public class AddPasterAdapter extends BaseRecyclerAdapter<AddPasterAdapter.AddPa
         if (getItemViewType(position) == TYPE_FOOTER) {
             return;
         }
-        String pasterPath = mPasterInfoList.get(position).getIconPath();
+        TCPasterInfo tcPasterInfo = mPasterInfoList.get(position);
+        String pasterPath = tcPasterInfo.getIconPath();
         if (!TextUtils.isEmpty(pasterPath)) {
             holder.ivAddPaster.setImageBitmap(BitmapFactory.decodeFile(pasterPath));
+        }
+        if (tcPasterInfo.getPasterType()== PasterView.TYPE_CHILD_VIEW_ANIMATED_PASTER){
+            try{
+                holder.ivAddPaster.setImageBitmap(tcPasterInfo.bitmapEmote(holder.itemView.getContext()));
+            }catch (Exception e){
+
+            }
         }
         holder.tvAddPasterText.setText(UGCKit.getAppContext().getResources().getString(R.string.ugckit_add_paster_adapter_paster) + String.valueOf(position + 1));
         if (mCoverIcon != 0) {

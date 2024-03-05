@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.google.android.material.tabs.TabLayout;
 import com.tencent.qcloud.ugckit.module.effect.paster.IPasterPannel;
 import com.tencent.qcloud.ugckit.module.effect.paster.TCPasterInfo;
 import com.tencent.qcloud.ugckit.utils.UIAttributeUtil;
@@ -31,10 +32,8 @@ import java.util.List;
  */
 public class PasterPannel extends LinearLayout implements IPasterPannel, View.OnClickListener {
     private Context                            mContext;
-    private int                                mSelectColor;
     private int                                mCurrentTab;
-    private TextView                           mTextPaster;
-    private TextView                           mTextAnimatedPaster;
+    private TabLayout tabs;
     private RecyclerView                       mRecyclerView;
     private PasterAdapter                      mPasterAdapter;
     private ImageView                          mImageSure;
@@ -60,28 +59,42 @@ public class PasterPannel extends LinearLayout implements IPasterPannel, View.On
     private void init(@NonNull Context context) {
         mContext = context;
         LayoutInflater.from(context).inflate(R.layout.ugckit_layout_paster_select, this);
-        mTextPaster = (TextView) findViewById(R.id.tv_paster);
-        mTextPaster.setOnClickListener(this);
-
-        mTextAnimatedPaster = (TextView) findViewById(R.id.tv_animated_paster);
-        mTextAnimatedPaster.setOnClickListener(this);
+        tabs=findViewById(R.id.tabs_paster);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.paster_recycler_view);
         mImageSure = (ImageView) findViewById(R.id.paster_btn_done);
         mImageSure.setOnClickListener(this);
 
-        mCurrentTab = TAB_ANIMATED_PASTER;
+        mCurrentTab = TAB_PASTER;
 
-        mSelectColor = context.getResources().getColor(R.color.ugckit_text_color);
-        mTextAnimatedPaster.setTextColor(mSelectColor);
-        mTextPaster.setTextColor(context.getResources().getColor(R.color.ugckit_text_weak));
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition()==0){
+                    mOnTabChangedListener.onTabChanged(TAB_PASTER);
+                }else{
+                    mOnTabChangedListener.onTabChanged(TAB_ANIMATED_PASTER);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
     }
 
-    public void setPasterInfoList(List<TCPasterInfo> pasterInfoList) {
+    public void setPasterInfoList(List<TCPasterInfo> pasterInfoList,int spanCount) {
         mPasterAdapter = new PasterAdapter(pasterInfoList);
         mPasterAdapter.setOnItemClickListener(mOnItemClickListener);
 
-        GridLayoutManager manager = new GridLayoutManager(mContext, 4);
+        GridLayoutManager manager = new GridLayoutManager(mContext, spanCount);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mPasterAdapter);
     }
@@ -89,29 +102,7 @@ public class PasterPannel extends LinearLayout implements IPasterPannel, View.On
     @Override
     public void onClick(@NonNull View view) {
         int i = view.getId();
-        if (i == R.id.tv_animated_paster) {
-            if (mCurrentTab == TAB_ANIMATED_PASTER) {
-                return;
-            }
-            mCurrentTab = TAB_ANIMATED_PASTER;
-            mTextAnimatedPaster.setTextColor(mSelectColor);
-            mTextPaster.setTextColor(mContext.getResources().getColor(R.color.ugckit_text_weak));
-            if (mOnTabChangedListener != null) {
-                mOnTabChangedListener.onTabChanged(mCurrentTab);
-            }
-
-        } else if (i == R.id.tv_paster) {
-            if (mCurrentTab == TAB_PASTER) {
-                return;
-            }
-            mCurrentTab = TAB_PASTER;
-            mTextAnimatedPaster.setTextColor(mContext.getResources().getColor(R.color.ugckit_text_weak));
-            mTextPaster.setTextColor(mSelectColor);
-            if (mOnTabChangedListener != null) {
-                mOnTabChangedListener.onTabChanged(mCurrentTab);
-            }
-
-        } else if (i == R.id.paster_btn_done) {
+        if (i == R.id.paster_btn_done) {
             exitAnimator();
         }
     }
@@ -206,22 +197,6 @@ public class PasterPannel extends LinearLayout implements IPasterPannel, View.On
     @Override
     public void setOnAddClickListener(IPasterPannel.OnAddClickListener listener) {
         mOnAddClickListener = listener;
-    }
-
-    public void setTabTextColor(int selectedColor, int normalColor) {
-        int[] colors = new int[]{selectedColor, normalColor};
-        int[][] states = new int[2][];
-        states[0] = new int[]{android.R.attr.state_selected, android.R.attr.state_enabled};
-        states[1] = new int[]{android.R.attr.state_enabled};
-        ColorStateList colorList = new ColorStateList(states, colors);
-
-        mTextPaster.setTextColor(colorList);
-        mTextAnimatedPaster.setTextColor(colorList);
-    }
-
-    public void setTabTextSize(int size) {
-        mTextPaster.setTextSize(size);
-        mTextAnimatedPaster.setTextSize(size);
     }
 
     public void setCancelIconResource(int resid) {

@@ -42,7 +42,7 @@ public interface IPasterPannel {
      *
      * @param pasterInfoList 静态贴纸列表或动态贴纸列表
      */
-    void setPasterInfoList(List<TCPasterInfo> pasterInfoList);
+    void setPasterInfoList(List<TCPasterInfo> pasterInfoList,int spanCount);
 
     /**
      * 显示贴纸面板

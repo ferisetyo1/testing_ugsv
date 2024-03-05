@@ -5,10 +5,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
-    app:controlDrawable="@drawable/ugckit_ic_word_rotation"
+    app:controlDrawable="@drawable/float_resize_btn"
     app:controlLocation="right_bottom"
     app:deleteDrawable="@drawable/ugckit_ic_word_close"
-    app:editDrawable="@drawable/ugckit_ic_word_edit"
+    app:editDrawable="@drawable/float_delete_button"
     app:frameColor="@color/ugckit_white"
-    app:frameWidth="0.5dp"
+    app:frameWidth="2dp"
     app:scale="1.0" />

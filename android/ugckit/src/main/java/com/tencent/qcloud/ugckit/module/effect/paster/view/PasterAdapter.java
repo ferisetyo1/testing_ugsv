@@ -3,6 +3,8 @@ package com.tencent.qcloud.ugckit.module.effect.paster.view;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +49,15 @@ public class PasterAdapter extends RecyclerView.Adapter<PasterAdapter.PasterView
     @Override
     public void onBindViewHolder(@NonNull PasterViewHolder holder, int position) {
         holder.itemView.setOnClickListener(this);
-        Glide.with(holder.itemView.getContext()).load(mPasterInfoList.get(position).getIconPath()).into(holder.ivPaster);
+        TCPasterInfo tcPasterInfo = mPasterInfoList.get(position);
+        if (tcPasterInfo.getPasterType()==PasterView.TYPE_CHILD_VIEW_ANIMATED_PASTER){
+            Context context = holder.itemView.getContext();
+            Glide.with(context).load(tcPasterInfo.bitmapEmote(context)).into(holder.ivPasterEmoticon);
+            holder.ivPasterEmoticon.setVisibility(View.VISIBLE);
+        }else{
+            holder.ivPaster.setVisibility(View.VISIBLE);
+            Glide.with(holder.itemView.getContext()).load(tcPasterInfo.getIconPath()).into(holder.ivPaster);
+        }
     }
 
     @Override
@@ -69,10 +79,12 @@ public class PasterAdapter extends RecyclerView.Adapter<PasterAdapter.PasterView
 
     class PasterViewHolder extends RecyclerView.ViewHolder {
         ImageView ivPaster;
+        ImageView ivPasterEmoticon;
 
         public PasterViewHolder(@NonNull View itemView) {
             super(itemView);
             ivPaster = (ImageView) itemView.findViewById(R.id.iv_paster);
+            ivPasterEmoticon = (ImageView) itemView.findViewById(R.id.iv_paster_emoticon);
         }
     }
 

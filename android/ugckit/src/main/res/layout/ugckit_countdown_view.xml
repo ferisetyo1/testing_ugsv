@@ -12,6 +12,5 @@
         android:gravity="center"
         android:text="3"
         android:textColor="@color/ugckit_color_red2"
-        android:textSize="220dp"
         android:visibility="gone" />
 </RelativeLayout>

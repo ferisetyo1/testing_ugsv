@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:minHeight="220dp"
     android:background="@color/white"
     android:orientation="vertical">
@@ -9,42 +10,45 @@
     <RelativeLayout
         android:id="@+id/ll_paster_category"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs_paster"
+            android:layout_width="0dp"
+            android:layout_toEndOf="@+id/paster_btn_done"
+            android:layout_alignParentEnd="true"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:orientation="horizontal">
+            app:tabIndicator="@drawable/ugckit_indicator"
+            app:tabIndicatorColor="#181C21"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorHeight="4dp"
+            app:tabSelectedTextColor="#181C21"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            app:tabTextColor="#B0B9C4">
 
-            <TextView
-                android:id="@+id/tv_animated_paster"
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_stiker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ugckit_dynamic_paster"
-                android:textColor="@color/ugckit_text_color"
-                android:textSize="16dp" />
+                android:text="Stiker" />
 
-            <TextView
-                android:id="@+id/tv_paster"
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_emoji"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="44dp"
-                android:text="@string/ugckit_static_paster"
-                android:textColor="@color/ugckit_text_color"
-                android:textSize="16dp" />
-        </LinearLayout>
+                android:text="Emoji" />
+
+        </com.google.android.material.tabs.TabLayout>
 
         <ImageView
             android:id="@+id/paster_btn_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:src="@drawable/round_close_24" />
+            android:layout_marginStart="15dp"
+            android:src="@drawable/round_arrow_back_ios_24" />
     </RelativeLayout>
 
     <View

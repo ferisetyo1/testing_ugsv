@@ -1,0 +1,28 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="28dp"
+    android:height="28dp"
+    android:viewportWidth="28"
+    android:viewportHeight="28">
+  <path
+      android:pathData="M0,14C0,6.268 6.268,0 14,0C21.732,0 28,6.268 28,14C28,21.732 21.732,28 14,28C6.268,28 0,21.732 0,14Z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startX="-0"
+          android:startY="29.509"
+          android:endX="30.078"
+          android:endY="-2.45"
+          android:type="linear">
+        <item android:offset="0" android:color="#FF8F0015"/>
+        <item android:offset="0.24" android:color="#FFCA001D"/>
+        <item android:offset="0.484" android:color="#FFFF0025"/>
+        <item android:offset="0.708" android:color="#FFFF4D17"/>
+        <item android:offset="1" android:color="#FFFFC700"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <path
+      android:pathData="M12.301,8.859H15.699C15.386,8.238 14.743,7.813 14,7.813C13.257,7.813 12.614,8.238 12.301,8.859ZM17.293,8.859H20.75C21.164,8.859 21.5,9.195 21.5,9.609C21.5,10.023 21.164,10.359 20.75,10.359H20.003L18.747,19.736C18.598,20.853 17.644,21.687 16.517,21.687H11.533C10.406,21.687 9.453,20.853 9.303,19.736L8.047,10.359H7.25C6.836,10.359 6.5,10.023 6.5,9.609C6.5,9.195 6.836,8.859 7.25,8.859H10.707C11.086,7.394 12.417,6.313 14,6.313C15.583,6.313 16.914,7.394 17.293,8.859ZM9.561,10.359H18.49L17.261,19.537C17.211,19.909 16.893,20.187 16.517,20.187H11.533C11.158,20.187 10.84,19.909 10.79,19.537L9.561,10.359ZM13.25,13.463C13.25,13.049 12.914,12.713 12.5,12.713C12.086,12.713 11.75,13.049 11.75,13.463V17.213C11.75,17.627 12.086,17.963 12.5,17.963C12.914,17.963 13.25,17.627 13.25,17.213V13.463ZM15.5,12.713C15.914,12.713 16.25,13.049 16.25,13.463V17.213C16.25,17.627 15.914,17.963 15.5,17.963C15.086,17.963 14.75,17.627 14.75,17.213V13.463C14.75,13.049 15.086,12.713 15.5,12.713Z"
+      android:fillColor="#505D6D"
+      android:fillType="evenOdd"/>
+</vector>
