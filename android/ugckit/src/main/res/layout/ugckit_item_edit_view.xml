@@ -17,11 +17,11 @@
         android:id="@+id/range_slider"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        seekbar:leftThumbDrawable="?attr/editerCutSliderLeftIcon"
+        seekbar:leftThumbDrawable="@drawable/ic_thumb_slider_left"
         seekbar:leftThumbIndex="0"
         seekbar:lineColor="?attr/editerCutViewColor"
         seekbar:lineHeight="3dp"
-        seekbar:rightThumbDrawable="?attr/editerCutSliderRightIcon"
+        seekbar:rightThumbDrawable="@drawable/ic_thumb_slider_right"
         seekbar:thumbWidth="10dp"
         seekbar:tickCount="100" />
 </RelativeLayout>

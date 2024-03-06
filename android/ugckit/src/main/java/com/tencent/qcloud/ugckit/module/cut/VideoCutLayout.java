@@ -103,7 +103,7 @@ public class VideoCutLayout extends RelativeLayout implements IVideoCutLayout, V
         if (selectDuration >= MAX_DURATION) {
             selectDuration = MAX_DURATION;
         }
-        mTextDuration.setText(getResources().getString(R.string.ugckit_video_cutter_activity_load_video_success_already_picked) + selectDuration + "s");
+        mTextDuration.setText("Durasi video: "+ selectDuration + "d");
 
         long cutTimeMs = videoInfo.duration;
         if (cutTimeMs > MAX_DURATION * 1000) {
