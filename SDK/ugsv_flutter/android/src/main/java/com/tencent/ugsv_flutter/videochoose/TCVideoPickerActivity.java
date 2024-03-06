@@ -100,6 +100,7 @@ public class TCVideoPickerActivity extends FragmentActivity
 
     @Override
     public void onStoragePermissionGranted() {
+        mUGCKitVideoPicker.getPickerListLayout().showProgressBar();
         mUGCKitVideoPicker.loadVideoList();
     }
 }

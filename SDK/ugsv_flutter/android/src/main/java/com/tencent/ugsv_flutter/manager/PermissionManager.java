@@ -59,7 +59,16 @@ public class PermissionManager {
         long now = System.currentTimeMillis();
         long oldTime = 0L;
         if (mPermissionType.equals(PermissionType.STORAGE)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= 34) {
+                if(mContext.checkSelfPermission("android.permission.READ_MEDIA_VISUAL_USER_SELECTED") != PackageManager.PERMISSION_GRANTED) checkAndRequestPermission("android.permission.READ_MEDIA_VISUAL_USER_SELECTED", REQUEST_CODE_STORAGE);
+                else onStoragePermissionGrantedListener.onStoragePermissionGranted();
+            } else if (Build.VERSION.SDK_INT >= 33) {
+                if(mContext.checkSelfPermission("android.permission.READ_MEDIA_VIDEO")!=PackageManager.PERMISSION_GRANTED) checkAndRequestPermission(new String[]{"android.permission.READ_MEDIA_IMAGES","android.permission.READ_MEDIA_VIDEO"}, REQUEST_CODE_STORAGE);
+                else onStoragePermissionGrantedListener.onStoragePermissionGranted();
+            } else if(Build.VERSION.SDK_INT>=32){
+                if(mContext.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)checkAndRequestPermission(Manifest.permission.READ_EXTERNAL_STORAGE, REQUEST_CODE_STORAGE);
+                else onStoragePermissionGrantedListener.onStoragePermissionGranted();
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 oldTime = (long) sharedPreferenceUtils.getSharedPreference(SHARED_PREFERENCE_KEY_STORAGE, 0L);
                 if (mContext.checkSelfPermission(PERMISSION_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     if ((now - oldTime) >= FORTY_EIGHT_HOURS) {
@@ -108,6 +117,27 @@ public class PermissionManager {
     public boolean checkAndRequestPermission(String permission, int requestCode) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             String[] permissions = {permission};
+            //验证是否许可权限
+            for (String str : permissions) {
+                if (mContext.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
+                    FragmentActivity tempActivity = (FragmentActivity) mContext;
+                    //申请权限
+                    tempActivity.requestPermissions(permissions, requestCode);
+                    return false;
+                }
+            }
+        } else {
+            if (mPermissionType.equals(PermissionType.STORAGE)) {
+                onStoragePermissionGrantedListener.onStoragePermissionGranted();
+            } else if (mPermissionType.equals(PermissionType.CAMERA)) {
+                onCameraPermissionGrantedListener.onCameraPermissionGranted();
+            }
+        }
+        return true;
+    }
+    public boolean checkAndRequestPermission(String[] permission, int requestCode) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            String[] permissions = permission;
             //验证是否许可权限
             for (String str : permissions) {
                 if (mContext.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {

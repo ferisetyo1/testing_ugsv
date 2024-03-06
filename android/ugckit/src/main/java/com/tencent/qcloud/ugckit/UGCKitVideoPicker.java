@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.tencent.qcloud.ugckit.basic.ITitleBarLayout;
 import com.tencent.qcloud.ugckit.module.picker.data.ItemView;
@@ -15,6 +16,7 @@ import com.tencent.qcloud.ugckit.module.picker.data.PickerManagerKit;
 import com.tencent.qcloud.ugckit.module.picker.data.TCVideoFileInfo;
 import com.tencent.qcloud.ugckit.module.picker.view.AbsPickerUI;
 import com.tencent.qcloud.ugckit.module.picker.view.PickedLayout;
+import com.tencent.qcloud.ugckit.utils.ToastUtil;
 
 import java.util.ArrayList;
 
@@ -63,6 +65,7 @@ public class UGCKitVideoPicker extends AbsPickerUI {
             public void run() {
                 ArrayList<TCVideoFileInfo> list = PickerManagerKit.getInstance(mActivity).getAllVideo();
                 getPickerListLayout().updateItems(list);
+                getPickerListLayout().hideProgressBar();
             }
         });
     }

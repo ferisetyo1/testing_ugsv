@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +22,7 @@ public class PickerListLayout extends RelativeLayout implements IPickerListLayou
     private static final int                      VIDEO_SPAN_COUNT = 4;
     private              Activity                 mActivity;
     private              RecyclerView             mRecyclerView;
+    private ProgressBar progressBar;
     private              TCVideoEditerListAdapter mAdapter;
     private              ItemView.OnAddListener   mOnAddListener;
 
@@ -44,12 +46,21 @@ public class PickerListLayout extends RelativeLayout implements IPickerListLayou
         inflate(mActivity, R.layout.ugckit_picture_list_layout, this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar2);
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, VIDEO_SPAN_COUNT));
 
         mAdapter = new TCVideoEditerListAdapter(mActivity);
         mAdapter.setOnItemAddListener(this);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setMultiplePick(true, false);
+    }
+
+    public void showProgressBar(){
+        progressBar.setVisibility(VISIBLE);
+    }
+
+    public void hideProgressBar(){
+        progressBar.setVisibility(GONE);
     }
 
     @Override

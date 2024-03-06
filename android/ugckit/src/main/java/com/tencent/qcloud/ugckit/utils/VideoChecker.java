@@ -9,11 +9,12 @@ import android.text.TextUtils;
 import com.tencent.qcloud.ugckit.R;
 import com.tencent.qcloud.ugckit.module.picker.data.TCVideoFileInfo;
 
+import java.io.IOException;
 import java.util.List;
 
 public class VideoChecker {
 
-    public static boolean isVideoDamaged(Context context, TCVideoFileInfo info) {
+    public static boolean isVideoDamaged(Context context, TCVideoFileInfo info) throws IOException {
         if (info.getDuration() == 0) {
             //数据库获取到的时间为0，使用Retriever再次确认是否损坏
             MediaMetadataRetriever retriever = new MediaMetadataRetriever();
@@ -35,7 +36,7 @@ public class VideoChecker {
         return false;
     }
 
-    public static boolean isVideoDamaged(Context context, List<TCVideoFileInfo> list) {
+    public static boolean isVideoDamaged(Context context, List<TCVideoFileInfo> list) throws IOException {
         for (TCVideoFileInfo info : list) {
             if (isVideoDamaged(context, info)) {
                 return true;

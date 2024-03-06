@@ -35,6 +35,7 @@ public class PickerManagerKit {
 
     @NonNull
     public ArrayList<TCVideoFileInfo> getAllVideo() {
+        Log.d("getAllVideo","init");
         ArrayList<TCVideoFileInfo> videos = new ArrayList<TCVideoFileInfo>();
         String[] mediaColumns = new String[]{
                 MediaStore.Video.VideoColumns._ID,
