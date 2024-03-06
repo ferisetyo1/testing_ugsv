@@ -125,7 +125,7 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
         mTorchOnImage = UIAttributeUtil.getResResources(mActivity, R.attr.recordTorchOnIcon, R.drawable.ugckit_selector_torch_open);
 
         if (mFrontCameraFlag) {
-            mImageTorch.setVisibility(View.GONE);
+            mImageTorch.setVisibility(View.INVISIBLE);
             mImageTorch.setImageResource(mTorchDisableImage);
         } else {
             mImageTorch.setVisibility(View.VISIBLE);
@@ -175,7 +175,7 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
         mFrontCameraFlag = !mFrontCameraFlag;
         mIsTorchOpenFlag = false;
         if (mFrontCameraFlag) {
-            mImageTorch.setVisibility(View.GONE);
+            mImageTorch.setVisibility(View.INVISIBLE);
             mImageTorch.setImageResource(mTorchDisableImage);
         } else {
             mImageTorch.setVisibility(View.VISIBLE);
@@ -212,7 +212,7 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
         if (mIsTorchOpenFlag) {
             mIsTorchOpenFlag = false;
             if (mFrontCameraFlag) {
-                mImageTorch.setVisibility(View.GONE);
+                mImageTorch.setVisibility(View.INVISIBLE);
                 mImageTorch.setImageResource(mTorchDisableImage);
             } else {
                 mImageTorch.setImageResource(mTorchOffImage);
@@ -332,7 +332,7 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
     public void pauseRecord() {
         mImageDeleteLastPart.setVisibility(View.VISIBLE);
         mImageCameraSwitch.setVisibility(View.VISIBLE);
-        mImageTorch.setVisibility(mFrontCameraFlag ? View.GONE : VISIBLE);
+        mImageTorch.setVisibility(mFrontCameraFlag ? View.INVISIBLE : VISIBLE);
         mRecordModeView.setVisibility(View.VISIBLE);
         mRecordModeDot.setVisibility(View.VISIBLE);
         mRecordLyt.setVisibility(View.VISIBLE);

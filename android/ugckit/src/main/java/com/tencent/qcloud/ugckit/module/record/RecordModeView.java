@@ -26,8 +26,8 @@ public class RecordModeView extends RelativeLayout implements View.OnClickListen
      * 拍摄方式选择，目前支持三种（单击拍照，单击录制，长按录制）
      */
     public static final int RECORD_MODE_TAKE_PHOTO = 1;
-    //    public static final int RECORD_MODE_CLICK      = 2;
-    public static final int RECORD_MODE_LONG_TOUCH = 3;
+        public static final int RECORD_MODE_CLICK      = 2;
+//    public static final int RECORD_MODE_LONG_TOUCH = 3;
 
     private Activity mActivity;
     private TextView mTextPhoto;
@@ -119,7 +119,7 @@ public class RecordModeView extends RelativeLayout implements View.OnClickListen
             mTextTouch.setTypeface(Typeface.DEFAULT_BOLD);
 
             if (mOnRecordModeListener != null) {
-                mOnRecordModeListener.onRecordModeSelect(RecordModeView.RECORD_MODE_LONG_TOUCH);
+                mOnRecordModeListener.onRecordModeSelect(RecordModeView.RECORD_MODE_CLICK);
             }
         }
         float x1 = mLayoutRecordMode.getTranslationX();

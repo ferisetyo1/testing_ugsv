@@ -76,7 +76,7 @@ public class UGCKitRecordConfig {
     /**
      * 录制模式
      */
-    public int mRecordMode = RecordModeView.RECORD_MODE_LONG_TOUCH;
+    public int mRecordMode = RecordModeView.RECORD_MODE_CLICK;
 
 
     /**
@@ -125,7 +125,7 @@ public class UGCKitRecordConfig {
         mFrontCamera = true;
         mTouchFocus = false;
         mAspectRatio = TXRecordCommon.VIDEO_ASPECT_RATIO_9_16;
-        mRecordMode = RecordModeView.RECORD_MODE_LONG_TOUCH;
+        mRecordMode = RecordModeView.RECORD_MODE_CLICK;
         mRenderMode = TXRecordCommon.VIDEO_RENDER_MODE_ADJUST_RESOLUTION;
         mBeautyParams = null;
         musicInfo = new MusicInfo();

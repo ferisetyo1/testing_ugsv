@@ -110,13 +110,13 @@ public class RecordButton extends RelativeLayout implements IRecordButton, View.
                     case RecordModeView.RECORD_MODE_TAKE_PHOTO:
                         startTakePhotoAnim();
                         break;
-//                    case RecordModeView.RECORD_MODE_CLICK:
-//                        toggleRecordAnim();
-//                        break;
-                    case RecordModeView.RECORD_MODE_LONG_TOUCH:
-                        startRecordAnim();
-                        mIsRecording = true;
+                    case RecordModeView.RECORD_MODE_CLICK:
+                        toggleRecordAnim();
                         break;
+//                    case RecordModeView.RECORD_MODE_LONG_TOUCH:
+//                        startRecordAnim();
+//                        mIsRecording = true;
+//                        break;
                 }
                 break;
             }
@@ -125,9 +125,9 @@ public class RecordButton extends RelativeLayout implements IRecordButton, View.
                     case RecordModeView.RECORD_MODE_TAKE_PHOTO:
                         endTakePhotoAnim();
                         break;
-                    case RecordModeView.RECORD_MODE_LONG_TOUCH:
-                        pauseRecordAnim();
-                        break;
+//                    case RecordModeView.RECORD_MODE_LONG_TOUCH:
+//                        pauseRecordAnim();
+//                        break;
                 }
                 break;
             }
@@ -158,14 +158,14 @@ public class RecordButton extends RelativeLayout implements IRecordButton, View.
                 mViewPhotoModeOutter.setVisibility(VISIBLE);
                 mViewPhotoModeInner.setVisibility(VISIBLE);
                 break;
-//            case RecordModeView.RECORD_MODE_CLICK:
-//                mViewTapModeOutter.setVisibility(VISIBLE);
-//                mViewTapModeInner.setVisibility(VISIBLE);
-//                break;
-            case RecordModeView.RECORD_MODE_LONG_TOUCH:
-                mViewPressModeOutter.setVisibility(VISIBLE);
-                mViewPressModeInner.setVisibility(VISIBLE);
+            case RecordModeView.RECORD_MODE_CLICK:
+                mViewTapModeOutter.setVisibility(VISIBLE);
+                mViewTapModeInner.setVisibility(VISIBLE);
                 break;
+//            case RecordModeView.RECORD_MODE_LONG_TOUCH:
+//                mViewPressModeOutter.setVisibility(VISIBLE);
+//                mViewPressModeInner.setVisibility(VISIBLE);
+//                break;
         }
     }
 
@@ -242,9 +242,9 @@ public class RecordButton extends RelativeLayout implements IRecordButton, View.
      */
     public void startRecordAnim() {
 //        if (mRecordMode == RecordModeView.RECORD_MODE_CLICK) {
-//            startRecordAnimByClick();
+            startRecordAnimByClick();
 //        } else {
-            startRecordAnimByLongTouch();
+//            startRecordAnimByLongTouch();
 //        }
     }
 
@@ -256,9 +256,9 @@ public class RecordButton extends RelativeLayout implements IRecordButton, View.
             return;
         }
 //        if (mRecordMode == RecordModeView.RECORD_MODE_CLICK) {
-//            pauseRecordAnimByClick();
+            pauseRecordAnimByClick();
 //        } else {
-            pauseRecordAnimByLongTouch();
+//            pauseRecordAnimByLongTouch();
 //        }
     }
 
@@ -346,7 +346,7 @@ public class RecordButton extends RelativeLayout implements IRecordButton, View.
             }
         });
         animatorSet.start();
-        mImageRecordPause.setVisibility(View.VISIBLE);
+        mViewTapModeInner.setBackground(createCircleGradientDrawable(getResources().getColor(R.color.ugckit_white)));
     }
 
     /**
@@ -410,6 +410,7 @@ public class RecordButton extends RelativeLayout implements IRecordButton, View.
                 if (mOnRecordButtonListener != null) {
                     mOnRecordButtonListener.onRecordPause();
                     mIsRecording = false;
+                    mViewTapModeInner.setBackground(createCircleGradientDrawable(getResources().getColor(R.color.ugckit_record_button_click_shotInner_color)));
                 }
             }
 
@@ -429,7 +430,6 @@ public class RecordButton extends RelativeLayout implements IRecordButton, View.
             }
         });
         animatorSet.start();
-        mImageRecordPause.setVisibility(View.GONE);
     }
 
     private GradientDrawable createCircleGradientDrawable(int color) {
