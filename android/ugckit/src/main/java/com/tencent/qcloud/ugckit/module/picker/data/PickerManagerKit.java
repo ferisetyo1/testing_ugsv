@@ -47,7 +47,7 @@ public class PickerManagerKit {
 
         if (cursor == null) return videos;
 
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToLast()) {
             do {
                 TCVideoFileInfo fileItem = new TCVideoFileInfo();
                 // 兼容 Android 10以上
@@ -72,10 +72,9 @@ public class PickerManagerKit {
                 }
                 Log.d(TAG, "fileItem = " + fileItem.toString());
             }
-            while (cursor.moveToNext());
+            while (cursor.moveToPrevious());
         }
         cursor.close();
-        Collections.reverse(videos);
         return videos;
     }
 
