@@ -50,6 +50,7 @@ public class UGCKitPicturePicker extends AbsPickerUI {
     public void initDefault() {
         // 设置标题
         getTitleBar().setTitle(getResources().getString(R.string.ugckit_picture_choose), ITitleBarLayout.POSITION.MIDDLE);
+        getTitleBar().setVisible(true, ITitleBarLayout.POSITION.MIDDLE);
         getTitleBar().setVisible(false, ITitleBarLayout.POSITION.RIGHT);
         getPickerListLayout().setOnItemAddListener(new ItemView.OnAddListener() {
             @Override

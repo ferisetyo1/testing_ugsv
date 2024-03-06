@@ -41,6 +41,7 @@
         android:layout_centerInParent="true"
         android:layout_weight="1"
         android:gravity="center"
+        android:fontFamily="@font/poppins_semibold"
         android:textColor="@color/ugckit_white"
         android:textSize="?attr/titleTextSize" />
 

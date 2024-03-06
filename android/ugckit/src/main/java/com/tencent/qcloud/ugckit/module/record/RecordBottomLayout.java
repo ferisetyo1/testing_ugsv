@@ -4,14 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,7 +16,8 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
-import com.tencent.qcloud.ugckit.UGCKitVideoPicker;
+import com.tencent.qcloud.ugckit.basic.ITitleBarLayout;
+import com.tencent.qcloud.ugckit.component.TitleBarLayout;
 import com.tencent.qcloud.ugckit.component.dialogfragment.ValidationDialogFragment;
 import com.tencent.qcloud.ugckit.module.picker.data.PickerManagerKit;
 import com.tencent.qcloud.ugckit.module.picker.data.TCVideoFileInfo;
@@ -29,14 +26,13 @@ import com.tencent.qcloud.ugckit.utils.UIAttributeUtil;
 import com.tencent.qcloud.ugckit.R;
 import com.tencent.ugc.TXUGCRecord;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class RecordBottomLayout extends RelativeLayout implements View.OnClickListener {
     private Activity mActivity;
     private ImageView mImageCameraSwitch;         // 切换摄像头
-    private TextView mTextProgressTime;
+//    private TextView mTextProgressTime;
     private ImageView mImageDeleteLastPart;       // 删除上一段
     private ImageView mImageTorch;                // 闪光灯
     private ImageView mImageChooser;
@@ -58,6 +54,8 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
     private OnPickerClicked onPickerClicked;
     private float second;
 
+    private TitleBarLayout mTitlebar;
+
     public RecordBottomLayout(Context context) {
         super(context);
         initViews();
@@ -78,9 +76,9 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
         inflate(mActivity, R.layout.ugckit_record_bottom_layout, this);
 
         mRecordLyt = findViewById(R.id.lyt_mode_view);
-        mTextProgressTime = (TextView) findViewById(R.id.record_progress_time);
-        mTextProgressTime.setText(0.0f + getResources().getString(R.string.ugckit_unit_second));
-        mTextProgressTime.setVisibility(View.INVISIBLE);
+//        mTextProgressTime = (TextView) findViewById(R.id.record_progress_time);
+//        mTextProgressTime.setText(0.0f + getResources().getString(R.string.ugckit_unit_second));
+//        mTextProgressTime.setVisibility(View.INVISIBLE);
 
         mImageDeleteLastPart = (ImageView) findViewById(R.id.iv_delete_last_part);
         mImageDeleteLastPart.setOnClickListener(this);
@@ -167,6 +165,10 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
         this.onPickerClicked = onPickerClicked;
     }
 
+    public void  setTitleBar(TitleBarLayout titleBarLayout){
+        this.mTitlebar =titleBarLayout;
+    }
+
 
     /**
      * 切换前后摄像头
@@ -245,7 +247,8 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
 
                 long duration = VideoRecordSDK.getInstance().getPartManager().getDuration();
                 float timeSecond = duration / 1000;
-                mTextProgressTime.setText(String.format(Locale.CHINA, "%.1f", timeSecond) + getResources().getString(R.string.ugckit_unit_second));
+//                mTextProgressTime.setText(String.format(Locale.CHINA, "%.1f", timeSecond) + getResources().getString(R.string.ugckit_unit_second));
+//                mTitlebar.setTitle("00:"+String.format("%02f",timeSecond), ITitleBarLayout.POSITION.MIDDLE);
 
                 mOnDeleteLastPartListener.onUpdateTitle(timeSecond >= UGCKitRecordConfig.getInstance().mMinDuration / 1000);
                 // 删除分段后再次判断size
@@ -326,7 +329,8 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
         mRecordModeDot.setVisibility(View.INVISIBLE);
         mRecordLyt.setVisibility(INVISIBLE);
 //        mRecordSpeedLayout.setVisibility(View.INVISIBLE);
-        mTextProgressTime.setVisibility(View.VISIBLE);
+//        mTextProgressTime.setVisibility(View.VISIBLE);
+        mTitlebar.setVisible(true, ITitleBarLayout.POSITION.MIDDLE);
     }
 
     public void pauseRecord() {
@@ -337,7 +341,9 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
         mRecordModeDot.setVisibility(View.VISIBLE);
         mRecordLyt.setVisibility(View.VISIBLE);
 //        mRecordSpeedLayout.setVisibility(View.VISIBLE);
-        mTextProgressTime.setVisibility(View.INVISIBLE);
+//        mTextProgressTime.setVisibility(View.INVISIBLE);
+        mTitlebar.setTitle("", ITitleBarLayout.POSITION.MIDDLE);
+        mTitlebar.setVisible(false, ITitleBarLayout.POSITION.MIDDLE);
         mImageDeleteLastPart.setVisibility(second > 0 ? VISIBLE : GONE);
         mImageChooser.setVisibility(second > 0 ? GONE : VISIBLE);
     }
@@ -354,11 +360,13 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
      * 更新录制进度Progress
      *
      * @param milliSecond
+     * @param showText
      */
-    public void updateProgress(long milliSecond) {
+    public void updateProgress(long milliSecond, boolean showText) {
         mRecordProgressView.setProgress((int) milliSecond);
         second = milliSecond / 1000f;
-        mTextProgressTime.setText(String.format(Locale.CHINA, "%.1f", second) + getResources().getString(R.string.ugckit_unit_second));
+//        mTextProgressTime.setText(String.format(Locale.CHINA, "%.1f", second) + getResources().getString(R.string.ugckit_unit_second));
+        if(showText) mTitlebar.setTitle("00:"+String.format("%02d",(int) second), ITitleBarLayout.POSITION.MIDDLE);
 //        checkButtonDelete();
     }
 

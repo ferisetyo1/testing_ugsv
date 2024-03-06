@@ -113,7 +113,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         VideoRecordSDK.getInstance().setOnRestoreDraftListener(new VideoRecordSDK.OnRestoreDraftListener() {
             @Override
             public void onDraftProgress(long duration) {
-                getRecordBottomLayout().updateProgress((int) duration);
+                getRecordBottomLayout().updateProgress((int) duration,false);
                 getRecordBottomLayout().getRecordProgressView().clipComplete();
             }
 
@@ -836,7 +836,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
 
     @Override
     public void onRecordProgress(long milliSecond) {
-        getRecordBottomLayout().updateProgress(milliSecond);
+        getRecordBottomLayout().updateProgress(milliSecond, true);
 
         float second = milliSecond / 1000f;
         boolean enable = second >= UGCKitRecordConfig.getInstance().mMinDuration / 1000;

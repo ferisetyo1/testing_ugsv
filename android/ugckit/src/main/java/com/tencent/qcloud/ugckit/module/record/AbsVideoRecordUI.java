@@ -55,6 +55,7 @@ public abstract class AbsVideoRecordUI extends RelativeLayout implements IVideoR
 
         mRecordRightLayout = (RecordRightLayout) findViewById(R.id.record_right_layout);
         mRecordBottomLayout = (RecordBottomLayout) findViewById(R.id.record_bottom_layout);
+        mRecordBottomLayout.setTitleBar(mTitleBar);
 
         mTencentEffectPanel = findViewById(R.id.tencent_effect_panel);
         mBeautyPanel = (BeautyPanel) findViewById(R.id.beauty_panel);

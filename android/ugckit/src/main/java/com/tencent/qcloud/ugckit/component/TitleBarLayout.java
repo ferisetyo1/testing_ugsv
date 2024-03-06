@@ -87,6 +87,9 @@ public class TitleBarLayout extends LinearLayout implements ITitleBarLayout {
             case RIGHT:
                 mRightButton.setVisibility(enable ? View.VISIBLE : View.GONE);
                 break;
+            case MIDDLE:
+                mCenterTitle.setVisibility(enable ? View.VISIBLE : View.GONE);
+                break;
         }
     }
 
