@@ -1,13 +1,20 @@
 package com.tencent.ugsv_flutter.manager;
 
+import static android.Manifest.permission.READ_MEDIA_IMAGES;
+import static android.Manifest.permission.READ_MEDIA_VIDEO;
+import static android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+
 import com.tencent.qcloud.ugckit.PermissionIntroductionDialog;
 import com.tencent.qcloud.ugckit.R;
 import com.tencent.qcloud.ugckit.utils.SharedPreferenceUtils;
@@ -35,6 +42,11 @@ public class PermissionManager {
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
     private OnAudioPermissionGrantedListener onAudioPermissionGrantedListener;
+    private ActivityResultLauncher<String[]> storageActivityResultLauncher;
+
+    public void setLauncher(ActivityResultLauncher<String[]> storageActivityResultLauncher) {
+        this.storageActivityResultLauncher = storageActivityResultLauncher;
+    }
 
 
     public enum PermissionType {
@@ -59,15 +71,14 @@ public class PermissionManager {
         long now = System.currentTimeMillis();
         long oldTime = 0L;
         if (mPermissionType.equals(PermissionType.STORAGE)) {
-            if (Build.VERSION.SDK_INT >= 34) {
-                if(mContext.checkSelfPermission("android.permission.READ_MEDIA_VISUAL_USER_SELECTED") != PackageManager.PERMISSION_GRANTED) checkAndRequestPermission("android.permission.READ_MEDIA_VISUAL_USER_SELECTED", REQUEST_CODE_STORAGE);
-                else onStoragePermissionGrantedListener.onStoragePermissionGranted();
-            } else if (Build.VERSION.SDK_INT >= 33) {
-                if(mContext.checkSelfPermission("android.permission.READ_MEDIA_VIDEO")!=PackageManager.PERMISSION_GRANTED) checkAndRequestPermission(new String[]{"android.permission.READ_MEDIA_IMAGES","android.permission.READ_MEDIA_VIDEO"}, REQUEST_CODE_STORAGE);
-                else onStoragePermissionGrantedListener.onStoragePermissionGranted();
-            } else if(Build.VERSION.SDK_INT>=32){
-                if(mContext.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)checkAndRequestPermission(Manifest.permission.READ_EXTERNAL_STORAGE, REQUEST_CODE_STORAGE);
-                else onStoragePermissionGrantedListener.onStoragePermissionGranted();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                if (mContext.checkSelfPermission(READ_MEDIA_VISUAL_USER_SELECTED) != PackageManager.PERMISSION_GRANTED || mContext.checkSelfPermission(READ_MEDIA_VIDEO) != PackageManager.PERMISSION_GRANTED || mContext.checkSelfPermission(READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
+                    storageActivityResultLauncher.launch(new String[]{READ_MEDIA_VISUAL_USER_SELECTED, READ_MEDIA_VIDEO, READ_MEDIA_IMAGES});
+                }
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (mContext.checkSelfPermission(READ_MEDIA_VIDEO) != PackageManager.PERMISSION_GRANTED || mContext.checkSelfPermission(READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
+                    storageActivityResultLauncher.launch(new String[]{READ_MEDIA_VIDEO, READ_MEDIA_IMAGES});
+                }
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 oldTime = (long) sharedPreferenceUtils.getSharedPreference(SHARED_PREFERENCE_KEY_STORAGE, 0L);
                 if (mContext.checkSelfPermission(PERMISSION_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -135,6 +146,7 @@ public class PermissionManager {
         }
         return true;
     }
+
     public boolean checkAndRequestPermission(String[] permission, int requestCode) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             String[] permissions = permission;

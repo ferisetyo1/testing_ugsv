@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -34,6 +37,7 @@ public class TCVideoPickerActivity extends FragmentActivity
         setContentView(R.layout.activity_video_picker);
         mUGCKitVideoPicker = (UGCKitVideoPicker) findViewById(R.id.video_choose_layout);
         mStoragePermissionManager = new PermissionManager(this, PermissionManager.PermissionType.STORAGE);
+        mStoragePermissionManager.setLauncher(storageActivityResultLauncher);
         mStoragePermissionManager.setOnStoragePermissionGrantedListener(this);
         mStoragePermissionManager.checkoutIfShowPermissionIntroductionDialog();
         mUGCKitVideoPicker.getTitleBar().setOnBackClickListener(new View.OnClickListener() {
@@ -96,6 +100,7 @@ public class TCVideoPickerActivity extends FragmentActivity
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         mStoragePermissionManager.onRequestPermissionsResult(requestCode, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -103,4 +108,10 @@ public class TCVideoPickerActivity extends FragmentActivity
         mUGCKitVideoPicker.getPickerListLayout().showProgressBar();
         mUGCKitVideoPicker.loadVideoList();
     }
+
+    private ActivityResultLauncher<String[]> storageActivityResultLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(),
+                    o -> {
+                        onStoragePermissionGranted();
+                    });
 }

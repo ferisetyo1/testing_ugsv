@@ -130,12 +130,10 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
             mImageTorch.setImageResource(mTorchOffImage);
         }
 
-        getLastVideo();
-
 //        checkButtonDelete();
     }
 
-    private void getLastVideo() {
+    public void getLastVideo() {
         BackgroundTasks.getInstance().runOnUiThread(() -> {
             ArrayList<TCVideoFileInfo> listVideo = PickerManagerKit.getInstance(getContext()).getLastVideo();
             if (!listVideo.isEmpty()) {

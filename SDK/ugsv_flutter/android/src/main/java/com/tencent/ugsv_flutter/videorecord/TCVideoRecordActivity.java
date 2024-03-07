@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -85,7 +87,7 @@ public class TCVideoRecordActivity extends FragmentActivity
             public void onRecordCompleted(UGCKitResult ugcKitResult) {
                 if (ugcKitResult.errorCode == 0) {
                     startEditActivity(ugcKitResult);
-                    Log.d("onRecordCompleted",String.valueOf(ugcKitResult.musicId));
+                    Log.d("onRecordCompleted", String.valueOf(ugcKitResult.musicId));
                     finish();
                 } else {
                     ToastUtil.toastShortMessage("record video failed. error code:" + ugcKitResult.errorCode + ",desc msg:" + ugcKitResult.descMsg);
@@ -110,9 +112,17 @@ public class TCVideoRecordActivity extends FragmentActivity
 
         mCameraPermissionManager.setOnCameraPermissionGrantedListener(this);
         mAudioPermissionManager.setOnAudioPermissionGrantedListener(this);
-        mCameraPermissionManager.checkoutIfShowPermissionIntroductionDialog();
+        mStoragePermissionManager.setLauncher(storageActivityResultLauncher);
         mStoragePermissionManager.setOnStoragePermissionGrantedListener(this);
+        mStoragePermissionManager.checkoutIfShowPermissionIntroductionDialog();
+        mCameraPermissionManager.checkoutIfShowPermissionIntroductionDialog();
     }
+
+    private ActivityResultLauncher<String[]> storageActivityResultLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(),
+                    o -> {
+                        onStoragePermissionGranted();
+                    });
 
 
     private void initWindowParam() {
@@ -165,7 +175,7 @@ public class TCVideoRecordActivity extends FragmentActivity
         super.onActivityResult(requestCode, resultCode, data);
         mUGCKitVideoRecord.onActivityResult(requestCode, resultCode, data);
         if (requestCode == request_open_galery) {
-            if (resultCode == RESULT_OK){
+            if (resultCode == RESULT_OK) {
                 finish();
             }
             return;
@@ -178,7 +188,7 @@ public class TCVideoRecordActivity extends FragmentActivity
         }
         MusicInfo musicInfo = new MusicInfo();
 
-        musicInfo.id=data.getIntExtra(UGCKitConstants.MUSIC_ID,-1);
+        musicInfo.id = data.getIntExtra(UGCKitConstants.MUSIC_ID, -1);
         musicInfo.path = data.getStringExtra(UGCKitConstants.MUSIC_PATH);
         musicInfo.name = data.getStringExtra(UGCKitConstants.MUSIC_NAME);
         musicInfo.position = data.getIntExtra(UGCKitConstants.MUSIC_POSITION, -1);
@@ -203,6 +213,7 @@ public class TCVideoRecordActivity extends FragmentActivity
                 mStoragePermissionManager.onRequestPermissionsResult(requestCode, grantResults);
             }
         }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -218,6 +229,6 @@ public class TCVideoRecordActivity extends FragmentActivity
 
     @Override
     public void onStoragePermissionGranted() {
-
+        mUGCKitVideoRecord.getRecordBottomLayout().getLastVideo();
     }
 }
