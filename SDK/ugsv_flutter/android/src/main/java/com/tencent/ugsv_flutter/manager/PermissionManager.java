@@ -74,10 +74,14 @@ public class PermissionManager {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                 if (mContext.checkSelfPermission(READ_MEDIA_VISUAL_USER_SELECTED) != PackageManager.PERMISSION_GRANTED || mContext.checkSelfPermission(READ_MEDIA_VIDEO) != PackageManager.PERMISSION_GRANTED || mContext.checkSelfPermission(READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
                     storageActivityResultLauncher.launch(new String[]{READ_MEDIA_VISUAL_USER_SELECTED, READ_MEDIA_VIDEO, READ_MEDIA_IMAGES});
+                }else {
+                    onStoragePermissionGrantedListener.onStoragePermissionGranted();
                 }
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (mContext.checkSelfPermission(READ_MEDIA_VIDEO) != PackageManager.PERMISSION_GRANTED || mContext.checkSelfPermission(READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
                     storageActivityResultLauncher.launch(new String[]{READ_MEDIA_VIDEO, READ_MEDIA_IMAGES});
+                }else {
+                    onStoragePermissionGrantedListener.onStoragePermissionGranted();
                 }
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 oldTime = (long) sharedPreferenceUtils.getSharedPreference(SHARED_PREFERENCE_KEY_STORAGE, 0L);
