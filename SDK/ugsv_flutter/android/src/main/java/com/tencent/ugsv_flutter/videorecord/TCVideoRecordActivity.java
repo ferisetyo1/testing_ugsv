@@ -111,11 +111,10 @@ public class TCVideoRecordActivity extends FragmentActivity
         mStoragePermissionManager = new PermissionManager(this, PermissionManager.PermissionType.STORAGE);
 
         mCameraPermissionManager.setOnCameraPermissionGrantedListener(this);
+        mCameraPermissionManager.checkoutIfShowPermissionIntroductionDialog();
         mAudioPermissionManager.setOnAudioPermissionGrantedListener(this);
         mStoragePermissionManager.setLauncher(storageActivityResultLauncher);
         mStoragePermissionManager.setOnStoragePermissionGrantedListener(this);
-        mStoragePermissionManager.checkoutIfShowPermissionIntroductionDialog();
-        mCameraPermissionManager.checkoutIfShowPermissionIntroductionDialog();
     }
 
     private ActivityResultLauncher<String[]> storageActivityResultLauncher =
@@ -229,6 +228,6 @@ public class TCVideoRecordActivity extends FragmentActivity
 
     @Override
     public void onStoragePermissionGranted() {
-        mUGCKitVideoRecord.getRecordBottomLayout().getLastVideo();
+//        mUGCKitVideoRecord.getRecordBottomLayout().getLastVideo();
     }
 }

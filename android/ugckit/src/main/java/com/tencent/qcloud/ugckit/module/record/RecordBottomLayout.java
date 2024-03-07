@@ -133,15 +133,15 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
 //        checkButtonDelete();
     }
 
-    public void getLastVideo() {
-        BackgroundTasks.getInstance().runOnUiThread(() -> {
-            ArrayList<TCVideoFileInfo> listVideo = PickerManagerKit.getInstance(getContext()).getLastVideo();
-            if (!listVideo.isEmpty()) {
-                TCVideoFileInfo video = listVideo.get(0);
-                Glide.with(getContext()).load(video.getFileUri()).into(mImageChooser);
-            }
-        });
-    }
+//    public void getLastVideo() {
+//        BackgroundTasks.getInstance().runOnUiThread(() -> {
+//            ArrayList<TCVideoFileInfo> listVideo = PickerManagerKit.getInstance(getContext()).getLastVideo();
+//            if (!listVideo.isEmpty()) {
+//                TCVideoFileInfo video = listVideo.get(0);
+//                Glide.with(getContext()).load(video.getFileUri()).into(mImageChooser);
+//            }
+//        });
+//    }
 
     @Override
     public void onClick(@NonNull View view) {

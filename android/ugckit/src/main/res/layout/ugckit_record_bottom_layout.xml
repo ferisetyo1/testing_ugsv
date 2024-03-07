@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
+    android:gravity="bottom"
     android:background="@drawable/ugckit_record_mask_buttom"
     android:orientation="vertical">
 
@@ -30,7 +31,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:layout_marginBottom="36dp">
 
         <com.tencent.qcloud.ugckit.module.record.RecordProgressView
             android:id="@+id/record_progress_view"
@@ -92,12 +94,12 @@
             <!-- 删除上一段 -->
             <ImageView
                 android:id="@+id/iv_chooser"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/rounded_outline"
                 android:scaleType="centerCrop"
-                android:src="@drawable/img_chooser" />
+                android:src="@drawable/img_galery" />
 
             <!-- 删除上一段 -->
             <ImageView
@@ -117,6 +119,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="1"
+        android:visibility="gone"
         android:background="@color/white">
         <!-- 拍摄模式View -->
         <com.tencent.qcloud.ugckit.module.record.RecordModeView
