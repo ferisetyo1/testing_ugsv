@@ -74,10 +74,10 @@
             <!-- 切换前后摄像头 -->
             <ImageView
                 android:id="@+id/iv_switch_camera"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:src="?attr/recordSwitchCameraIcon" />
+                android:src="@drawable/ic_switch_camera" />
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -94,8 +94,8 @@
             <!-- 删除上一段 -->
             <ImageView
                 android:id="@+id/iv_chooser"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/rounded_outline"
                 android:scaleType="centerCrop"
