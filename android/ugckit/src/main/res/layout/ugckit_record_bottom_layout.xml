@@ -74,8 +74,8 @@
             <!-- 切换前后摄像头 -->
             <ImageView
                 android:id="@+id/iv_switch_camera"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="34dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_switch_camera" />
             <View
