@@ -3,7 +3,7 @@ package com.tencent.qcloud.ugckit;
 public class UGCKitConstants {
 
     public static final String APP_SVR_URL                     = "http://demo.vod2.myqcloud.com/lite"; // 业务Server的地址 如果您的服务器没有部署https证书，这里需要用http
-    public static final String SVR_BGM_GET_URL                 = "https://superapp.codeoffice.net/mobile-api/v1/musics";   // BGM列表地址
+    public static final String SVR_BGM_GET_URL                 = "https://api.sapa.co.id/mobile-api/v1/musics";   // BGM列表地址
     public static final String BUGLY_APPID                     = "9018b79ae2";    // 小视频Bugly
     public static final String USER_ID                         = "userid";
     public static final String USER_PWD                        = "userpwd";
