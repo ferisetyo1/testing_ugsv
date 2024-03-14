@@ -123,7 +123,7 @@ public class TCVideoRecordActivity extends FragmentActivity
                         if (o.containsValue(false)) {
                             ToastUtil.toastShortMessage("Dibutuhkan akses storage untuk melanjutkan aksi ini, pilih izinkan semua!");
                         } else {
-                            mUGCKitVideoRecord.onLanjutPressed();
+                            onStoragePermissionGranted();
                         }
                     });
 
@@ -232,6 +232,7 @@ public class TCVideoRecordActivity extends FragmentActivity
 
     @Override
     public void onStoragePermissionGranted() {
+        mUGCKitVideoRecord.onLanjutPressed();
 //        mUGCKitVideoRecord.getRecordBottomLayout().getLastVideo();
     }
 }
