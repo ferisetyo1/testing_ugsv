@@ -33,6 +33,8 @@ import com.tencent.ugsv_flutter.videoeditor.TCVideoEditerActivity;
 
 import static com.tencent.ugsv_flutter.manager.PermissionManager.*;
 
+import java.util.Map;
+
 import io.flutter.plugin.common.MethodChannel;
 
 /**
@@ -71,11 +73,9 @@ public class TCVideoRecordActivity extends FragmentActivity
         UGCKitRecordConfig ugcKitRecordConfig = UGCKitRecordConfig.getInstance();
         mUGCKitVideoRecord.setConfig(ugcKitRecordConfig);
 
-        mUGCKitVideoRecord.getTitleBar().setOnBackClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        mUGCKitVideoRecord.getTitleBar().setOnBackClickListener(v -> finish());
+        mUGCKitVideoRecord.getTitleBar().setOnRightClickListener((v) -> {
+            mStoragePermissionManager.checkoutIfShowPermissionIntroductionDialog();
         });
         mUGCKitVideoRecord.setOnRecordListener(new IVideoRecordKit.OnRecordListener() {
             @Override
@@ -120,7 +120,11 @@ public class TCVideoRecordActivity extends FragmentActivity
     private ActivityResultLauncher<String[]> storageActivityResultLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(),
                     o -> {
-                        onStoragePermissionGranted();
+                        if (o.containsValue(false)) {
+                            ToastUtil.toastShortMessage("Dibutuhkan akses storage untuk melanjutkan aksi ini, pilih izinkan semua!");
+                        } else {
+                            mUGCKitVideoRecord.onLanjutPressed();
+                        }
                     });
 
 
@@ -223,7 +227,7 @@ public class TCVideoRecordActivity extends FragmentActivity
 
     @Override
     public void onAudioPermissionGranted() {
-        mStoragePermissionManager.checkoutIfShowPermissionIntroductionDialog();
+//        mStoragePermissionManager.checkoutIfShowPermissionIntroductionDialog();
     }
 
     @Override

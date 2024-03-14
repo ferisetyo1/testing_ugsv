@@ -134,13 +134,13 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         VideoRecordSDK.getInstance().setVideoRecordListener(this);
         // 点击"下一步"
 //        getTitleBar().setVisible(true, ITitleBarLayout.POSITION.RIGHT);
-        getTitleBar().setOnRightClickListener(v -> {
+//        getTitleBar().setOnRightClickListener(v -> {
             //录制stop状态，由于stop的过程比较长，可长达一秒以上，做防重复点击的最小点击时间就需要设置的比较长。
             //使用录制的currentState状态来判断是否是STOP状态，虽然可以完美解决防重复点击问题，但是如果用户按返回回到该界面，
             //无法再次点击下一步，currentState状态仍然是stop。
             //所以这里采用一个新的布尔值进行限制
-            onLanjutPressed();
-        });
+//            onLanjutPressed();
+//        });
 
         // 点击"右侧工具栏"（包括"美颜"，"音乐"，"音效"）
         getRecordRightLayout().setOnItemClickListener(this);
@@ -266,7 +266,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         });
     }
 
-    private void onLanjutPressed() {
+    public void onLanjutPressed() {
         if (isInStopProcessing) {
             return;
         }
@@ -771,9 +771,9 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         getTitleBar().setTitle(lastTextButton.toString(), ITitleBarLayout.POSITION.RIGHT);
         getTitleBar().getRightButton().setBackground(lastDrawableButton);
 
-        getTitleBar().setOnRightClickListener((v) -> {
-            onLanjutPressed();
-        });
+//        getTitleBar().setOnRightClickListener((v) -> {
+//            onLanjutPressed();
+//        });
     }
 
     /**

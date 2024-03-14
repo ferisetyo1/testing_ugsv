@@ -64,7 +64,7 @@ public class PermissionManager {
     }
 
     public void checkoutIfShowPermissionIntroductionDialog() {
-        mHandler.post(() -> checkOrShowPermissionIntroductionDialog());
+        mHandler.post(this::checkOrShowPermissionIntroductionDialog);
     }
 
     private void checkOrShowPermissionIntroductionDialog() {
