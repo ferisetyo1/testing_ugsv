@@ -284,6 +284,9 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (countDownTimer!=null){
+            countDownTimer.cancel();
+        }
         if (player!=null){
             player.release();
         }

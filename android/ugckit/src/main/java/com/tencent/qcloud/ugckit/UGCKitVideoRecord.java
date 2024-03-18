@@ -57,6 +57,7 @@ import com.tencent.xmagic.module.XmagicResParser;
 import com.tencent.xmagic.panel.XmagicPanelDataManager;
 import com.tencent.xmagic.telicense.TELicenseCheck;
 
+import java.io.Console;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -267,6 +268,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
     }
 
     public void onLanjutPressed() {
+        Log.d("onLanjutPressed","");
         if (isInStopProcessing) {
             return;
         }
@@ -771,9 +773,9 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         getTitleBar().setTitle(lastTextButton.toString(), ITitleBarLayout.POSITION.RIGHT);
         getTitleBar().getRightButton().setBackground(lastDrawableButton);
 
-//        getTitleBar().setOnRightClickListener((v) -> {
-//            onLanjutPressed();
-//        });
+        getTitleBar().setOnRightClickListener((v) -> {
+            onLanjutPressed();
+        });
     }
 
     /**
