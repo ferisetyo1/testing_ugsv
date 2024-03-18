@@ -321,27 +321,31 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
     public void startRecord() {
         mImageDeleteLastPart.setVisibility(View.INVISIBLE);
         mImageChooser.setVisibility(GONE);
-        mImageCameraSwitch.setVisibility(View.INVISIBLE);
+//        mImageCameraSwitch.setVisibility(View.INVISIBLE);
         mImageTorch.setVisibility(View.INVISIBLE);
-        mRecordModeView.setVisibility(View.INVISIBLE);
-        mRecordModeDot.setVisibility(View.INVISIBLE);
-        mRecordLyt.setVisibility(INVISIBLE);
+//        mRecordModeView.setVisibility(View.INVISIBLE);
+//        mRecordModeDot.setVisibility(View.INVISIBLE);
+//        mRecordLyt.setVisibility(INVISIBLE);
 //        mRecordSpeedLayout.setVisibility(View.INVISIBLE);
 //        mTextProgressTime.setVisibility(View.VISIBLE);
         mTitlebar.setVisible(true, ITitleBarLayout.POSITION.MIDDLE);
+        mTitlebar.setEnableRightButton(false);
     }
 
     public void pauseRecord() {
         mImageDeleteLastPart.setVisibility(View.VISIBLE);
-        mImageCameraSwitch.setVisibility(View.VISIBLE);
+//        mImageCameraSwitch.setVisibility(View.VISIBLE);
         mImageTorch.setVisibility(mFrontCameraFlag ? View.INVISIBLE : VISIBLE);
-        mRecordModeView.setVisibility(View.VISIBLE);
-        mRecordModeDot.setVisibility(View.VISIBLE);
-        mRecordLyt.setVisibility(View.VISIBLE);
+//        mRecordModeView.setVisibility(View.VISIBLE);
+//        mRecordModeDot.setVisibility(View.VISIBLE);
+//        mRecordLyt.setVisibility(View.VISIBLE);
 //        mRecordSpeedLayout.setVisibility(View.VISIBLE);
 //        mTextProgressTime.setVisibility(View.INVISIBLE);
         mTitlebar.setTitle("", ITitleBarLayout.POSITION.MIDDLE);
         mTitlebar.setVisible(false, ITitleBarLayout.POSITION.MIDDLE);
+        boolean enable = second >= UGCKitRecordConfig.getInstance().mMinDuration / 1000;
+        mTitlebar.setVisible(true, ITitleBarLayout.POSITION.RIGHT);
+        mTitlebar.setEnableRightButton(enable);
         mImageDeleteLastPart.setVisibility(second > 0 ? VISIBLE : GONE);
         mImageChooser.setVisibility(second > 0 ? GONE : VISIBLE);
     }

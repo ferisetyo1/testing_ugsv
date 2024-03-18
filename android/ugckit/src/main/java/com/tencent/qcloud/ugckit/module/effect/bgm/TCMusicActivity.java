@@ -165,13 +165,13 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
             @Override
             public void onClickUseBtn(SampleProgressButton button, int position) {
                 TCMusicInfo musicInfo = mTCMusicInfoList.get(position);
-//                if (musicInfo.status == TCMusicInfo.STATE_UNDOWNLOAD) {
-//                    musicInfo.status = TCMusicInfo.STATE_DOWNLOADING;
-//                    mTCMusicAdapter.updateItem(position, musicInfo);
-//                    downloadMusic(position);
-//                } else if (musicInfo.status == TCMusicInfo.STATE_DOWNLOADED) {
-                    backToEditActivity(position, musicInfo.url);
-//                }
+                if (musicInfo.status == TCMusicInfo.STATE_UNDOWNLOAD) {
+                    musicInfo.status = TCMusicInfo.STATE_DOWNLOADING;
+                    mTCMusicAdapter.updateItem(position, musicInfo);
+                    downloadMusic(position);
+                } else if (musicInfo.status == TCMusicInfo.STATE_DOWNLOADED) {
+                    backToEditActivity(position, musicInfo.localPath);
+                }
             }
 
             @Override

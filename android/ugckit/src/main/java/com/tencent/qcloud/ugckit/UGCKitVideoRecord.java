@@ -837,11 +837,6 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
     @Override
     public void onRecordProgress(long milliSecond) {
         getRecordBottomLayout().updateProgress(milliSecond, true);
-
-        float second = milliSecond / 1000f;
-        boolean enable = second >= UGCKitRecordConfig.getInstance().mMinDuration / 1000;
-        getTitleBar().setVisible(true, ITitleBarLayout.POSITION.RIGHT);
-        getTitleBar().setEnableRightButton(enable);
     }
 
     @Override

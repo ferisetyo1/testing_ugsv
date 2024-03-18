@@ -33,6 +33,7 @@ import com.tencent.ugsv_flutter.videoeditor.TCVideoEditerActivity;
 
 import static com.tencent.ugsv_flutter.manager.PermissionManager.*;
 
+import java.io.Console;
 import java.util.Map;
 
 import io.flutter.plugin.common.MethodChannel;
@@ -123,6 +124,7 @@ public class TCVideoRecordActivity extends FragmentActivity
                         if (o.containsValue(false)) {
                             ToastUtil.toastShortMessage("Dibutuhkan akses storage untuk melanjutkan aksi ini, pilih izinkan semua!");
                         } else {
+                            Log.d("onStorage","onStoragePermissionGranted");
                             onStoragePermissionGranted();
                         }
                     });
