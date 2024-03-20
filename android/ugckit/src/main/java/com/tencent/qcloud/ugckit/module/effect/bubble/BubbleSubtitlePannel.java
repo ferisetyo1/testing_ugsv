@@ -3,18 +3,23 @@ package com.tencent.qcloud.ugckit.module.effect.bubble;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,6 +47,8 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
     private TCColorView        mColorView;
     private TCCircleView       mCvColor;
     private LinearLayout       mLlColor;
+    private CardView btnSubmit;
+    private EditText mEdtSubtitle;
 
     @Nullable
     private TCSubtitleInfo           mSubtitleInfo;
@@ -80,9 +87,21 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
         mLlColor = (LinearLayout) contentView.findViewById(R.id.bubble_ll_color);
         mCvColor = (TCCircleView) contentView.findViewById(R.id.bubble_cv_color);
         mColorView = (TCColorView) contentView.findViewById(R.id.bubble_color_view);
+        mEdtSubtitle = (EditText) contentView.findViewById(R.id.edt_subtitle);
+        btnSubmit = (CardView) contentView.findViewById(R.id.btn_submit);
+        btnSubmit.setOnClickListener(this);
         mColorView.setOnSelectColorListener(this);
         mTextBubbleStyle.setSelected(true);
         mRecycleBubbles.setVisibility(View.VISIBLE);
+
+        mEdtSubtitle.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b){
+                    hideKeyboard(view);
+                }
+            }
+        });
     }
 
     private void enterAnimator() {
@@ -115,6 +134,8 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
     }
 
     private void resetInfo() {
+        mSubtitleInfo.setText("Isi field text lalu tekan submit untuk mengubah!");
+        mEdtSubtitle.setText("");
         mSubtitleInfo.setBubblePos(0);
         // 创建一个默认的
         TCBubbleInfo info = new TCBubbleInfo();
@@ -144,6 +165,7 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
             resetInfo();
         } else {
             mSubtitleInfo = info;
+            mEdtSubtitle.setText(info.getText());
         }
         mContentView.post(new Runnable() {
             @Override
@@ -211,9 +233,16 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
             mRecycleBubbles.setVisibility(View.GONE);
 
         } else if (i == R.id.iv_close) {
+
             dismiss();
 
-
+        } else if (i == R.id.btn_submit) {
+            String text=mEdtSubtitle.getText().toString();
+            if (text.isEmpty()){
+                return;
+            }
+            mSubtitleInfo.setText(text);
+            callback();
         }
     }
 
@@ -230,11 +259,7 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
 
     private void callback() {
         if (mCallback != null) {
-            TCSubtitleInfo info = new TCSubtitleInfo();
-            info.setBubblePos(mSubtitleInfo.getBubblePos());
-            info.setBubbleInfo(mSubtitleInfo.getBubbleInfo());
-            info.setTextColor(mSubtitleInfo.getTextColor());
-            mCallback.onBubbleSubtitleCallback(info);
+            mCallback.onBubbleSubtitleCallback(mSubtitleInfo);
         }
     }
 
@@ -263,4 +288,8 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
         mImageClose.setImageResource(resid);
     }
 
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }

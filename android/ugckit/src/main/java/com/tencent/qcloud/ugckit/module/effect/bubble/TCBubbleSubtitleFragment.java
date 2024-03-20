@@ -251,10 +251,9 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
     @Override
     public void onBubbleSubtitleCallback(TCSubtitleInfo info) {
         // 新增气泡字幕
-        if (!mIsEditWordAgain) {
-            String defaultText = getResources().getString(R.string.ugckit_bubble_fragment_double_click_to_edit_text);
+        if (mAddBubbleInfoList.isEmpty()) {
             // 创建一个默认的参数
-            BubbleViewParams params = BubbleViewParams.createDefaultParams(defaultText);
+            BubbleViewParams params = BubbleViewParams.createDefaultParams(info.getText());
             // 添加到气泡view
             BubbleView view = createDefaultBubbleView(params);
             mTCBubbleViewGroup.addOperationView(view);// 添加到Group中去管理
@@ -263,7 +262,7 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
             view.setBubbleParams(params);
 
             int count = mAddBubbleInfoList.size();
-            params.text = defaultText;
+            params.text = info.getText();
             // 更新下方的贴纸列表
             mAddBubbleInfoList.add(params);
             mAddBubbleAdapter.notifyDataSetChanged();
@@ -290,6 +289,7 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
             if (view != null) {
                 BubbleViewParams params = view.getBubbleParams();
                 params.wordParamsInfo = info;
+                params.text = info.getText();
                 params.bubbleBitmap = TCBubbleManager.getInstance(getActivity()).getBitmapFromAssets(params.wordParamsInfo.getBubbleInfo().getBubblePath());
                 view.setBubbleParams(params);
             }
@@ -301,7 +301,7 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
 
             mIsEditWordAgain = false;
         }
-        mBubbleSubtitlePannel.dismiss();
+//        mBubbleSubtitlePannel.dismiss();
 
         addSubtitlesIntoVideo();
         saveIntoManager();
@@ -313,7 +313,7 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
 
         // 根据params初始化对应的控件
         view.setBubbleParams(params);
-        view.showDelete(false);
+        view.showDelete(true);
 
         // 设置view显示出来的位置
         view.setCenterX(mTCBubbleViewGroup.getWidth() / 2);// 控件显示在父容器的中心
@@ -330,7 +330,28 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
     /****** 可编辑控件的回调start ******/
     @Override
     public void onDeleteClick() {
+        int index = mTCBubbleViewGroup.getSelectedViewIndex();
+        if (index < 0) {
+            return;
+        }
+        BubbleView view = (BubbleView) mTCBubbleViewGroup.getSelectedLayerOperationView();
+        if (view != null) {
+            mTCBubbleViewGroup.removeOperationView(view);
+        }
 
+        mVideoProgressController.removeRangeSliderView(ViewConst.VIEW_TYPE_WORD, index);
+
+        mAddBubbleInfoList.remove(index);
+        mAddBubbleAdapter.notifyDataSetChanged();
+
+        mCurrentSelectedPos = -1;
+        mAddBubbleAdapter.setCurrentSelectedPos(mCurrentSelectedPos);
+
+        addSubtitlesIntoVideo();
+        saveIntoManager();
+        if (mTXVideoEditer != null) {
+            mTXVideoEditer.refreshOneFrame();
+        }
     }
 
     @Override
