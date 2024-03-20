@@ -144,7 +144,7 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
         mTCBubbleViewGroup = (FloatLayerViewGroup) getActivity().findViewById(R.id.bubble_container);
         mTCBubbleViewGroup.setOnItemClickListener(this);
         mTCBubbleViewGroup.enableChildSingleClick(false); // 在容器里不响应子控件的单击事件
-        mTCBubbleViewGroup.enableDoubleChildClick(true);  // 在容器里响应子控件的双击事件
+        mTCBubbleViewGroup.enableDoubleChildClick(false);  // 在容器里响应子控件的双击事件
 
         // 展示气泡样式修改的面板
         mBubbleSubtitlePannel = (BubbleSubtitlePannel) getActivity().findViewById(R.id.bubble_setting_view);
