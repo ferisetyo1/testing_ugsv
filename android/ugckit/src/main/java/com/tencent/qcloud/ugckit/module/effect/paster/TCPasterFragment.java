@@ -521,16 +521,17 @@ public class TCPasterFragment extends Fragment implements BaseRecyclerAdapter.On
 
     @Override
     public void onEditClick() {
-        int index = mFloatLayerViewGroup.getSelectedViewIndex();
-        PasterView view = (PasterView) mFloatLayerViewGroup.getSelectedLayerOperationView();
-        if (view != null) {
-            mFloatLayerViewGroup.removeOperationView(view);
-        }
-        mVideoProgressController.removeRangeSliderView(index);
-
-        mAddPasterInfoList.remove(index);
-        mAddPasterAdapter.notifyDataSetChanged();
-        mAddPasterAdapter.setCurrentSelectedPos(-1);
+//        int index = mFloatLayerViewGroup.getSelectedViewIndex();
+//        PasterView view = (PasterView) mFloatLayerViewGroup.getSelectedLayerOperationView();
+//        if (view != null) {
+//            mFloatLayerViewGroup.removeOperationView(view);
+//        }
+//        mVideoProgressController.removeRangeSliderView(index);
+//
+//        mAddPasterInfoList.remove(index);
+//        mAddPasterAdapter.notifyDataSetChanged();
+//        mAddPasterAdapter.setCurrentSelectedPos(-1);
+        deletePaster();
     }
 
     // 拖动、旋转的回调
