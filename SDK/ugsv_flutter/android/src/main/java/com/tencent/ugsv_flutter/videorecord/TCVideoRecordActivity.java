@@ -78,6 +78,7 @@ public class TCVideoRecordActivity extends FragmentActivity
         mUGCKitVideoRecord.getTitleBar().setOnRightClickListener((v) -> {
             mStoragePermissionManager.checkoutIfShowPermissionIntroductionDialog();
         });
+
         mUGCKitVideoRecord.setOnRecordListener(new IVideoRecordKit.OnRecordListener() {
             @Override
             public void onRecordCanceled() {
@@ -102,6 +103,13 @@ public class TCVideoRecordActivity extends FragmentActivity
                 bgmIntent.putExtra(UGCKitConstants.MUSIC_POSITION, position);
                 startActivityForResult(bgmIntent, UGCKitConstants.ACTIVITY_MUSIC_REQUEST_CODE);
             }
+
+            @Override
+            public void onMusicSelected() {
+                mUGCKitVideoRecord.getTitleBar().setOnRightClickListener((v) -> {
+                    mStoragePermissionManager.checkoutIfShowPermissionIntroductionDialog();
+                });
+            }
         });
         mUGCKitVideoRecord.setOnPickerClicked(() -> {
             Intent intent = new Intent(this, TCVideoPickerActivity.class);
@@ -116,6 +124,7 @@ public class TCVideoRecordActivity extends FragmentActivity
         mAudioPermissionManager.setOnAudioPermissionGrantedListener(this);
         mStoragePermissionManager.setLauncher(storageActivityResultLauncher);
         mStoragePermissionManager.setOnStoragePermissionGrantedListener(this);
+
     }
 
     private ActivityResultLauncher<String[]> storageActivityResultLauncher =

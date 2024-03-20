@@ -773,9 +773,9 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         getTitleBar().setTitle(lastTextButton.toString(), ITitleBarLayout.POSITION.RIGHT);
         getTitleBar().getRightButton().setBackground(lastDrawableButton);
 
-        getTitleBar().setOnRightClickListener((v) -> {
-            onLanjutPressed();
-        });
+        if (mOnMusicListener != null) {
+            mOnMusicListener.onMusicSelected();
+        }
     }
 
     /**
@@ -1066,4 +1066,5 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
     public void setHostFragment(Fragment mHostFragment) {
         this.mHostFragment = mHostFragment;
     }
+
 }

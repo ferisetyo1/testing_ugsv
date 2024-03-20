@@ -166,6 +166,8 @@ public interface IVideoRecordKit {
          * @param position 音乐在音乐列表的第几个位置
          */
         void onChooseMusic(int position);
+
+        void onMusicSelected();
     }
 
     interface OnRecordListener {
