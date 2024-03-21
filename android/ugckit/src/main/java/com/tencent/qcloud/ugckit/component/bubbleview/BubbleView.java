@@ -44,7 +44,7 @@ public class BubbleView extends FloatLayerView {
             Log.w(TAG, "setBubbleParams: bubble text is null");
         }
         BubbleViewHelper helper = new BubbleViewHelper();
-        helper.setBubbleTextParams(params);
+        helper.setBubbleTextParams(this.getContext(),params);
         Bitmap bitmap = helper.createBubbleTextBitmap();
         setImageBitamp(bitmap);
         mBubbleViewParams.bubbleBitmap = null;

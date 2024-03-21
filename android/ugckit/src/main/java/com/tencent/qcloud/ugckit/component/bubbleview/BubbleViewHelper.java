@@ -1,11 +1,16 @@
 package com.tencent.qcloud.ugckit.component.bubbleview;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
+
+import com.tencent.qcloud.ugckit.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +43,7 @@ public class BubbleViewHelper {
 
     }
 
-    public void setBubbleTextParams(@NonNull BubbleViewParams params) {
+    public void setBubbleTextParams(Context context, @NonNull BubbleViewParams params) {
         mParams = params;
         mTextDefaultSize = params.wordParamsInfo.getBubbleInfo().getDefaultSize();
         mBubbleBitmap = params.bubbleBitmap;
@@ -48,7 +53,7 @@ public class BubbleViewHelper {
             return;
         }
 
-        initPaint();
+        initPaint(context);
 
         // 如果气泡字幕背景为空， 那么创建一张刚好可以包裹文字的"空背景"
         if (mBubbleBitmap == null) {
@@ -67,9 +72,10 @@ public class BubbleViewHelper {
     /**
      * 初始化画笔
      */
-    private void initPaint() {
+    private void initPaint(Context context) {
         mPaint = new Paint();
         mPaint.setColor(mParams.wordParamsInfo.getTextColor() != 0 ? mParams.wordParamsInfo.getTextColor() : Color.WHITE);
+        mPaint.setTypeface(ResourcesCompat.getFont(context, mParams.wordParamsInfo.getTextStyle()));
         mPaint.setTextSize(mTextDefaultSize);
         mPaint.setAntiAlias(true);
     }

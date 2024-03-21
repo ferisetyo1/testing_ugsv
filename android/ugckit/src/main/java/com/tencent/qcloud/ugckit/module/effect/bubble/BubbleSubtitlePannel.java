@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
+
 import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,27 +33,32 @@ import com.tencent.qcloud.ugckit.component.circlebmp.TCCircleView;
 import com.tencent.qcloud.ugckit.component.seekbar.TCColorView;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 配置气泡字幕样式、以及字体颜色的控件
  */
-public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitlePannel, BubbleAdapter.OnItemClickListener, View.OnClickListener, TCColorView.OnSelectColorListener {
-    private View               mContentView;
-    private RecyclerView       mRecycleBubbles;
-    private BubbleAdapter      mBubbleAdapter;
+public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitlePannel, BubbleAdapter.OnItemClickListener, View.OnClickListener, TCColorView.OnSelectColorListener, BubbleFontStyleAdapter.OnFontClickListener {
+    private View mContentView;
+    private RecyclerView mRecycleBubbles;
+    private RecyclerView mRecycleFont;
+    private BubbleAdapter mBubbleAdapter;
+    private BubbleFontStyleAdapter mFontAdapter;
     private List<TCBubbleInfo> mBubbles;
-    private ImageView          mImageClose;
-    private TextView           mTextBubbleStyle;   //气泡样式
-    private TextView           mTextColor;         //文字颜色
-    private TCColorView        mColorView;
-    private TCCircleView       mCvColor;
-    private LinearLayout       mLlColor;
+    private List<BubbleFontStyle> mFonts;
+    private ImageView mImageClose;
+    private TextView mTextBubbleStyle;   //气泡样式
+    private TextView mTextStyle;   //气泡样式
+    private TextView mTextColor;         //文字颜色
+    private TCColorView mColorView;
+    private TCCircleView mCvColor;
+    private LinearLayout mLlColor;
     private CardView btnSubmit;
     private EditText mEdtSubtitle;
 
     @Nullable
-    private TCSubtitleInfo           mSubtitleInfo;
+    private TCSubtitleInfo mSubtitleInfo;
     private OnBubbleSubtitleCallback mCallback;
 
     public BubbleSubtitlePannel(@NonNull Context context) {
@@ -80,8 +87,11 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
         mImageClose = (ImageView) contentView.findViewById(R.id.iv_close);
         mImageClose.setOnClickListener(this);
         mRecycleBubbles = (RecyclerView) contentView.findViewById(R.id.bubble_rv_style);
+        mRecycleFont = (RecyclerView) contentView.findViewById(R.id.rv_font_style);
         mTextBubbleStyle = (TextView) contentView.findViewById(R.id.bubble_iv_bubble);
         mTextBubbleStyle.setOnClickListener(this);
+        mTextStyle = (TextView) contentView.findViewById(R.id.bubble_iv_style);
+        mTextStyle.setOnClickListener(this);
         mTextColor = (TextView) contentView.findViewById(R.id.bubble_iv_color);
         mTextColor.setOnClickListener(this);
         mLlColor = (LinearLayout) contentView.findViewById(R.id.bubble_ll_color);
@@ -97,11 +107,26 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
         mEdtSubtitle.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (!b){
+                if (!b) {
                     hideKeyboard(view);
                 }
             }
         });
+
+        loadAllFontStyle();
+    }
+
+    private void loadAllFontStyle() {
+     mFonts= new ArrayList();
+     mFonts.add(new BubbleFontStyle("Poppins (Medium)",R.font.poppins_medium));
+     mFonts.add(new BubbleFontStyle("Inter (Medium)",R.font.inter_medium));
+     mFonts.add(new BubbleFontStyle("Caveat (Bold)",R.font.caveat_bold));
+     mFonts.add(new BubbleFontStyle("Playfair Display (Bold)",R.font.playfair_display_bold));
+     mFonts.add(new BubbleFontStyle("Noto serif (Bold)",R.font.playfair_display_bold));
+
+     mFontAdapter = new BubbleFontStyleAdapter(mFonts);
+     mFontAdapter.setOnFontClickListener(this);
+     mRecycleFont.setAdapter(mFontAdapter);
     }
 
     private void enterAnimator() {
@@ -220,26 +245,39 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
     public void onClick(@NonNull View v) {
         int i = v.getId();
         if (i == R.id.bubble_iv_bubble) {
-            mLlColor.setVisibility(View.GONE);
-            mTextColor.setSelected(false);
-
             mTextBubbleStyle.setSelected(true);
             mRecycleBubbles.setVisibility(View.VISIBLE);
 
-        } else if (i == R.id.bubble_iv_color) {
-            mLlColor.setVisibility(View.VISIBLE);
-            mTextColor.setSelected(true);
+            mTextStyle.setSelected(false);
+            mRecycleFont.setVisibility(View.GONE);
 
+            mTextColor.setSelected(false);
+            mLlColor.setVisibility(View.GONE);
+        } else if (i == R.id.bubble_iv_color) {
             mTextBubbleStyle.setSelected(false);
             mRecycleBubbles.setVisibility(View.GONE);
 
+            mTextStyle.setSelected(false);
+            mRecycleFont.setVisibility(View.GONE);
+
+            mTextColor.setSelected(true);
+            mLlColor.setVisibility(View.VISIBLE);
+        } else if (i == R.id.bubble_iv_style) {
+            mTextBubbleStyle.setSelected(false);
+            mRecycleBubbles.setVisibility(View.GONE);
+
+            mTextStyle.setSelected(true);
+            mRecycleFont.setVisibility(View.VISIBLE);
+
+            mLlColor.setVisibility(View.GONE);
+            mTextColor.setSelected(false);
         } else if (i == R.id.iv_close) {
 
             dismiss();
 
         } else if (i == R.id.btn_submit) {
-            String text=mEdtSubtitle.getText().toString();
-            if (text.isEmpty()){
+            String text = mEdtSubtitle.getText().toString();
+            if (text.isEmpty()) {
                 return;
             }
             mSubtitleInfo.setText(text);
@@ -290,7 +328,13 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
     }
 
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onFontClick(View view, int position) {
+        mSubtitleInfo.setTextStyle(mFonts.get(position).getRes());
+        callback();
     }
 }

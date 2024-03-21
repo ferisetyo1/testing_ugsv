@@ -47,32 +47,48 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/bubble_iv_bubble"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ugckit_bublle_style"
+                android:layout_height="match_parent"
+                android:text="Bingkai"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@drawable/custom_tab_indicator"
+                android:textColor="@color/ugckit_ic_text_selector"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/bubble_iv_style"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Gaya Huruf"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/custom_tab_indicator"
                 android:textColor="@color/ugckit_ic_text_selector"
                 android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/bubble_iv_color"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="44dp"
-                android:text="@string/ugckit_text_color"
+                android:layout_height="match_parent"
+                android:text="Warna"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/custom_tab_indicator"
                 android:textColor="@color/ugckit_ic_text_selector"
                 android:textSize="16dp" />
         </LinearLayout>
@@ -85,7 +101,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:src="@drawable/round_close_24" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -104,6 +120,16 @@
             android:id="@+id/bubble_rv_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_font_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:listitem="@layout/ugckit_bubble_font_style_item"
             android:layout_centerInParent="true" />
 
         <LinearLayout
