@@ -264,16 +264,19 @@ public class RecordBottomLayout extends RelativeLayout implements View.OnClickLi
             if (size == 0) { // 重新开始录
                 mImageDeleteLastPart.setVisibility(GONE);
                 mImageChooser.setVisibility(VISIBLE);
+                mButtonRecord.setRecordInitial();
                 if (mOnDeleteLastPartListener != null) {
                     mOnDeleteLastPartListener.onReRecord();
                 }
             } else {
                 mImageDeleteLastPart.setVisibility(VISIBLE);
                 mImageChooser.setVisibility(GONE);
+                mButtonRecord.setRecordComplete();
             }
         } catch (Exception e) {
             mImageDeleteLastPart.setVisibility(GONE);
             mImageChooser.setVisibility(VISIBLE);
+            mButtonRecord.setRecordInitial();
             e.printStackTrace();
         }
     }
