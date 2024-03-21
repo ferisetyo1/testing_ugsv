@@ -277,7 +277,7 @@ public class TCPasterFragment extends Fragment implements BaseRecyclerAdapter.On
     // mAddPasterAdapter底部的已添加的贴纸列表选中
     @Override
     public void onItemClick(View view, int position) {
-        if (position == mAddPasterInfoList.size()) {
+        if (position == 0) {
             // 新增
             clickBtnAdd();
         } else {
@@ -291,17 +291,17 @@ public class TCPasterFragment extends Fragment implements BaseRecyclerAdapter.On
             // 列表选中
             mAddPasterAdapter.setCurrentSelectedPos(position);
             // 预览界面选中
-            mFloatLayerViewGroup.selectOperationView(position);
+            mFloatLayerViewGroup.selectOperationView(mAddPasterInfoList.size()-position);
             // 进度条范围选中
             RangeSliderViewContainer lastSlider = mVideoProgressController.getRangeSliderView(ViewConst.VIEW_TYPE_PASTER, mCurrentSelectedPos);
             if (lastSlider != null) {
                 lastSlider.setEditComplete();
             }
-            RangeSliderViewContainer currentSlider = mVideoProgressController.getRangeSliderView(ViewConst.VIEW_TYPE_PASTER, position);
+            RangeSliderViewContainer currentSlider = mVideoProgressController.getRangeSliderView(ViewConst.VIEW_TYPE_PASTER, mAddPasterInfoList.size()-position);
             if (currentSlider != null) {
                 currentSlider.showEdit();
             }
-            mCurrentSelectedPos = position;
+            mCurrentSelectedPos = mAddPasterInfoList.size()-position;
         }
     }
 
@@ -485,11 +485,12 @@ public class TCPasterFragment extends Fragment implements BaseRecyclerAdapter.On
             mPasterPannel.dismiss();
 
             // 更新下方的贴纸列表
-            mAddPasterInfoList.add(tcPasterInfo);
-            mAddPasterAdapter.notifyDataSetChanged();
-            mAddPasterAdapter.setCurrentSelectedPos(mAddPasterInfoList.size() - 1);
+            Log.d("add sticker", mAddPasterInfoList.size()+"");
 
-            mCurrentSelectedPos = mAddPasterInfoList.size() - 1;
+            mAddPasterInfoList.add(0,tcPasterInfo);
+            mAddPasterAdapter.notifyDataSetChanged();
+            mAddPasterAdapter.setCurrentSelectedPos(1);
+            mCurrentSelectedPos = 0;
 
             addPasterListVideo();
             saveIntoManager();
@@ -657,15 +658,15 @@ public class TCPasterFragment extends Fragment implements BaseRecyclerAdapter.On
 //                animatedPasterList.add(txAnimatedPaster);
 //                Log.i(TAG, "addPasterListVideoToEditer, txAnimatedPaster startTimeMs, endTime is : " + txAnimatedPaster.startTime + ", " + txAnimatedPaster.endTime);
 //            } else if (childType == PasterView.TYPE_CHILD_VIEW_PASTER) {
-                TXVideoEditConstants.TXPaster txPaster = new TXVideoEditConstants.TXPaster();
+            TXVideoEditConstants.TXPaster txPaster = new TXVideoEditConstants.TXPaster();
 
-                txPaster.pasterImage = view.getRotateBitmap();
-                txPaster.startTime = view.getStartTime();
-                txPaster.endTime = view.getEndTime();
-                txPaster.frame = rect;
+            txPaster.pasterImage = view.getRotateBitmap();
+            txPaster.startTime = view.getStartTime();
+            txPaster.endTime = view.getEndTime();
+            txPaster.frame = rect;
 
-                pasterList.add(txPaster);
-                Log.i(TAG, "addPasterListVideoToEditer, txPaster startTimeMs, endTime is : " + txPaster.startTime + ", " + txPaster.endTime);
+            pasterList.add(txPaster);
+            Log.i(TAG, "addPasterListVideoToEditer, txPaster startTimeMs, endTime is : " + txPaster.startTime + ", " + txPaster.endTime);
 //            }
         }
 //        mTXVideoEditer.setPasterList(animatedPasterList);
@@ -756,9 +757,9 @@ public class TCPasterFragment extends Fragment implements BaseRecyclerAdapter.On
             tcPasterInfo.setIconPath(info.getIconPath());
             tcPasterInfo.setPasterType(info.getViewType());
             tcPasterInfo.setEmote(info.getEmote());
-            mAddPasterInfoList.add(tcPasterInfo);
+            mAddPasterInfoList.add(0, tcPasterInfo);
         }
-        mCurrentSelectedPos = manager.getSize() - 1;
+        mCurrentSelectedPos = 0;
 
         mAddPasterAdapter.notifyDataSetChanged();
     }

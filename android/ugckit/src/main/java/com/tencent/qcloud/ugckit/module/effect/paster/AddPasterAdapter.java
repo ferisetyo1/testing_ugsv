@@ -39,7 +39,7 @@ public class AddPasterAdapter extends BaseRecyclerAdapter<AddPasterAdapter.AddPa
 
     public void setFooterView(View footerView) {
         mFooterView = footerView;
-        notifyItemInserted(getItemCount() - 1);
+        notifyItemInserted(0);
     }
 
     public void setCurrentSelectedPos(int pos) {
@@ -54,7 +54,7 @@ public class AddPasterAdapter extends BaseRecyclerAdapter<AddPasterAdapter.AddPa
         if (mFooterView == null) {
             return TYPE_NORMAL;
         }
-        if (position == getItemCount() - 1) {
+        if (position == 0) {
             return TYPE_FOOTER;
         }
         return TYPE_NORMAL;
@@ -65,7 +65,7 @@ public class AddPasterAdapter extends BaseRecyclerAdapter<AddPasterAdapter.AddPa
         if (getItemViewType(position) == TYPE_FOOTER) {
             return;
         }
-        TCPasterInfo tcPasterInfo = mPasterInfoList.get(position);
+        TCPasterInfo tcPasterInfo = mPasterInfoList.get(position-1);
         String pasterPath = tcPasterInfo.getIconPath();
         if (!TextUtils.isEmpty(pasterPath)) {
             holder.ivAddPaster.setImageBitmap(BitmapFactory.decodeFile(pasterPath));
@@ -77,7 +77,7 @@ public class AddPasterAdapter extends BaseRecyclerAdapter<AddPasterAdapter.AddPa
 
             }
         }
-        holder.tvAddPasterText.setText(UGCKit.getAppContext().getResources().getString(R.string.ugckit_add_paster_adapter_paster) + String.valueOf(position + 1));
+        holder.tvAddPasterText.setText(UGCKit.getAppContext().getResources().getString(R.string.ugckit_add_paster_adapter_paster) + String.valueOf(mPasterInfoList.size() - (position-1)));
         if (mCoverIcon != 0) {
             if (mPasterTextSize != 0) {
                 holder.tvAddPasterText.setTextSize(mPasterTextSize);
@@ -98,7 +98,7 @@ public class AddPasterAdapter extends BaseRecyclerAdapter<AddPasterAdapter.AddPa
     @Override
     public AddPasterViewHolder onCreateVH(@NonNull ViewGroup parent, int viewType) {
         if (mFooterView != null && viewType == TYPE_FOOTER) {
-            return new AddPasterViewHolder(mFooterView);
+            return new AddPasterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.ugckit_item_add, parent, false));
         }
         return new AddPasterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.ugckit_item_add_paster, parent, false));
     }
