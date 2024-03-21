@@ -14,6 +14,7 @@ import com.tencent.qcloud.ugckit.module.effect.bubble.TCSubtitleInfo;
 public class BubbleViewParams {
     @Nullable
     public Bitmap         bubbleBitmap;
+    public Bitmap         iconBitmap;
     public TCSubtitleInfo wordParamsInfo;
     public String         text;
 

@@ -42,6 +42,8 @@ public interface IBubbleSubtitlePannel {
          * @param info
          */
         void onBubbleSubtitleCallback(TCSubtitleInfo info);
+
+        void dimiss();
     }
 
 }

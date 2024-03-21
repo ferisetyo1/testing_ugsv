@@ -178,6 +178,7 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
     @Override
     public void dismiss() {
         exitAnimator();
+        mCallback.dimiss();
     }
 
     private void exitAnimator() {

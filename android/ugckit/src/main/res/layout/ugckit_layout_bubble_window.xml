@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/ugckit_white"
     android:minHeight="375dp"
+    android:clickable="true"
     android:orientation="vertical">
 
     <LinearLayout

@@ -2,8 +2,10 @@ package com.tencent.qcloud.ugckit.module.effect.bubble;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +26,12 @@ public class AddBubbleAdapter extends BaseRecyclerAdapter<AddBubbleAdapter.AddPa
     public static final int TYPE_FOOTER = 0;  // 带有Footer的
     public static final int TYPE_NORMAL = 1;  // 真实数据
 
-    private Context                mContext;
-    private View                   mFooterView;
-    private int                    mCurrentSelectedPos = -1;
-    private int                    mPasterTextSize;
-    private int                    mPasterTextColor;
-    private int                    mCoverIcon;
+    private Context mContext;
+    private View mFooterView;
+    private int mCurrentSelectedPos = -1;
+    private int mPasterTextSize;
+    private int mPasterTextColor;
+    private int mCoverIcon;
     private List<BubbleViewParams> mBubbleInfoList;
 
     public AddBubbleAdapter(List<BubbleViewParams> bubbleInfoList, Context context) {
@@ -67,24 +69,10 @@ public class AddBubbleAdapter extends BaseRecyclerAdapter<AddBubbleAdapter.AddPa
         }
         TCBubbleInfo tcBubbleInfo = null;
         BubbleViewParams bubbleViewParams = mBubbleInfoList.get(position);
+
         if (bubbleViewParams != null) {
-            TCSubtitleInfo tcSubtitleInfo = bubbleViewParams.wordParamsInfo;
-            if (tcSubtitleInfo != null) {
-                tcBubbleInfo = tcSubtitleInfo.getBubbleInfo();
-            }
-        }
-        String bubblePath = null;
-        if (tcBubbleInfo != null) {
-            bubblePath = tcBubbleInfo.getIconPath();
-        }
-        if (!TextUtils.isEmpty(bubblePath)) {
-            try {
-                holder.ivAddPaster.setImageBitmap(BitmapFactory.decodeStream(mContext.getAssets().open(bubblePath)));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        if (bubbleViewParams != null) {
+            if (bubbleViewParams.iconBitmap != null)
+                holder.ivAddPaster.setImageBitmap(bubbleViewParams.iconBitmap);
             if (mPasterTextSize != 0) {
                 holder.tvAddPasterText.setTextSize(mPasterTextSize);
             }
@@ -135,7 +123,7 @@ public class AddBubbleAdapter extends BaseRecyclerAdapter<AddBubbleAdapter.AddPa
     public class AddPasterViewHolder extends RecyclerView.ViewHolder {
         ImageView ivAddPaster;
         ImageView ivAddPasterTint;
-        TextView  tvAddPasterText;
+        TextView tvAddPasterText;
 
         public AddPasterViewHolder(@NonNull View itemView) {
             super(itemView);

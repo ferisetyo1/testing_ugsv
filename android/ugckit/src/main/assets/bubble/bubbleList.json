@@ -19,6 +19,10 @@
     {
       "icon": "rabbit/icon.png",
       "name": "rabbit"
+    },
+    {
+      "icon": "rounded-black/icon.png",
+      "name": "rounded-black"
     }
   ]
 }

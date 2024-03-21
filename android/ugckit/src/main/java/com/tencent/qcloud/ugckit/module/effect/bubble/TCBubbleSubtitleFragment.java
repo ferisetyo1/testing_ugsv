@@ -1,5 +1,6 @@
 package com.tencent.qcloud.ugckit.module.effect.bubble;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -190,10 +191,12 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
     // mAddBubbleAdapter底部的已添加的字幕列表选中
     @Override
     public void onItemClick(View view, int position) {
+        Log.d("onItemClick","position="+position+" size="+mAddBubbleInfoList.size());
         if (position == mAddBubbleInfoList.size()) {
             // 新增
             clickBtnAdd();
         } else {
+            mIsEditWordAgain = true;
             if (!mTCBubbleViewGroup.isShown()) {
                 mTCBubbleViewGroup.setVisibility(View.VISIBLE);
                 mImageDel.setVisibility(View.VISIBLE);
@@ -223,6 +226,7 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
     }
 
     private void clickBtnAdd() {
+        mIsEditWordAgain = false;
         mBubbleSubtitlePannel.show(null);
         mTCBubbleViewGroup.setVisibility(View.VISIBLE);
         mImageDel.setVisibility(View.VISIBLE);
@@ -250,8 +254,9 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
 
     @Override
     public void onBubbleSubtitleCallback(TCSubtitleInfo info) {
+
         // 新增气泡字幕
-        if (mAddBubbleInfoList.isEmpty()) {
+        if (!mIsEditWordAgain) {
             // 创建一个默认的参数
             BubbleViewParams params = BubbleViewParams.createDefaultParams(info.getText());
             // 添加到气泡view
@@ -259,15 +264,15 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
             mTCBubbleViewGroup.addOperationView(view);// 添加到Group中去管理
             params.wordParamsInfo = info;
             params.bubbleBitmap = TCBubbleManager.getInstance(getActivity()).getBitmapFromAssets(params.wordParamsInfo.getBubbleInfo().getBubblePath());
+            params.iconBitmap = TCBubbleManager.getInstance(getActivity()).getBitmapFromAssets(params.wordParamsInfo.getBubbleInfo().getIconPath());
             view.setBubbleParams(params);
 
             int count = mAddBubbleInfoList.size();
             params.text = info.getText();
             // 更新下方的贴纸列表
             mAddBubbleInfoList.add(params);
-            mAddBubbleAdapter.notifyDataSetChanged();
             mAddBubbleAdapter.setCurrentSelectedPos(count);
-
+            mAddBubbleAdapter.notifyDataSetChanged();
             // 更新进度条上的开始结束位置
             RangeSliderViewContainer rangeSliderView = new RangeSliderViewContainer(getActivity());
             rangeSliderView.init(mVideoProgressController, mDefaultWordStartTime, mDefaultWordEndTime - mDefaultWordStartTime, mDuration);
@@ -280,31 +285,41 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
             updateDefaultTime();
 
             mCurrentSelectedPos = count - 1;
+            mIsEditWordAgain = true;
         }
         // 修改
         else {
             //获取当前处于编辑状态的气泡字幕的view
             BubbleView view = (BubbleView) mTCBubbleViewGroup.getSelectedLayerOperationView();
             int index = mTCBubbleViewGroup.getSelectedViewIndex();
+            Bitmap buble= TCBubbleManager.getInstance(getActivity()).getBitmapFromAssets(info.getBubbleInfo().getBubblePath());
+            Bitmap icon= TCBubbleManager.getInstance(getActivity()).getBitmapFromAssets(info.getBubbleInfo().getBubblePath());
             if (view != null) {
                 BubbleViewParams params = view.getBubbleParams();
                 params.wordParamsInfo = info;
                 params.text = info.getText();
-                params.bubbleBitmap = TCBubbleManager.getInstance(getActivity()).getBitmapFromAssets(params.wordParamsInfo.getBubbleInfo().getBubblePath());
+                params.bubbleBitmap = buble;
+                params.iconBitmap = icon;
                 view.setBubbleParams(params);
             }
-            if (index > 0 && index < mAddBubbleInfoList.size()) {
+            if (index >= 0 && index < mAddBubbleInfoList.size()) {
                 BubbleViewParams bubbleViewParams = mAddBubbleInfoList.get(index);
                 bubbleViewParams.wordParamsInfo = info;
+                bubbleViewParams.bubbleBitmap = buble;
+                bubbleViewParams.iconBitmap = icon;
             }
             mAddBubbleAdapter.notifyDataSetChanged();
 
-            mIsEditWordAgain = false;
         }
 //        mBubbleSubtitlePannel.dismiss();
 
         addSubtitlesIntoVideo();
         saveIntoManager();
+    }
+
+    @Override
+    public void dimiss() {
+        mIsEditWordAgain=false;
     }
 
     // 添加一个字幕控件到Group中，并显示出来
@@ -346,7 +361,7 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
 
         mCurrentSelectedPos = -1;
         mAddBubbleAdapter.setCurrentSelectedPos(mCurrentSelectedPos);
-
+        mIsEditWordAgain=false;
         addSubtitlesIntoVideo();
         saveIntoManager();
         if (mTXVideoEditer != null) {
