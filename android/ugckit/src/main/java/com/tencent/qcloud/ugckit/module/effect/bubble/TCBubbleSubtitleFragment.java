@@ -319,7 +319,8 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
 
     @Override
     public void dimiss() {
-        mIsEditWordAgain=false;
+        mIsEditWordAgain = false;
+        onPlayStateStart();
     }
 
     // 添加一个字幕控件到Group中，并显示出来

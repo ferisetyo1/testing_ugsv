@@ -43,7 +43,7 @@ public class TCColorView extends View {
     private float                 mSwipeRadius;
     private int                   marginTopAndBottom;
     @NonNull
-    private float[]               colorHSV       = new float[]{0f, 1f, 0f};
+    private float[]               colorHSV       = new float[]{0f, 0f, 1f};
     private float                 mSwipeHueCx    = 0;
     private float                 mSwipeValueCx  = 0;
 
