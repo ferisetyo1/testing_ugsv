@@ -5,24 +5,24 @@
       "name": "empty"
     },
     {
-      "icon": "lightning/icon.png",
-      "name": "lightning"
-    },
-    {
-      "icon": "cloud/icon.png",
-      "name": "cloud"
-    },
-    {
-      "icon": "boom/icon.png",
-      "name": "boom"
-    },
-    {
-      "icon": "rabbit/icon.png",
-      "name": "rabbit"
-    },
-    {
       "icon": "rounded-black/icon.png",
       "name": "rounded-black"
+    },
+    {
+      "icon": "rounded-outline/icon.png",
+      "name": "rounded-outline"
+    },
+    {
+      "icon": "rounded-bevel/icon.png",
+      "name": "rounded-bevel"
+    },
+    {
+      "icon": "black-shape/icon.png",
+      "name": "black-shape"
+    },
+    {
+      "icon": "chat-shape/icon.png",
+      "name": "chat-shape"
     }
   ]
 }
