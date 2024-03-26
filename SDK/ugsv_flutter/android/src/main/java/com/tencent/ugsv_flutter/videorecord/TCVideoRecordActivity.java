@@ -138,53 +138,55 @@ public class TCVideoRecordActivity extends FragmentActivity
 
     private void setMusicInitial() {
         int musicId = getIntent().getIntExtra(UGCKitConstants.MUSIC_ID, -1);
-        String musicArtist = getIntent().getStringExtra(UGCKitConstants.MUSIC_ARTIST);
-        String musicPath = getIntent().getStringExtra(UGCKitConstants.MUSIC_PATH);
-        String musicThumb = getIntent().getStringExtra(UGCKitConstants.MUSIC_THUMBNAIL);
-        String musicName = getIntent().getStringExtra(UGCKitConstants.MUSIC_NAME);
+        if (musicId != -1) {
+            String musicArtist = getIntent().getStringExtra(UGCKitConstants.MUSIC_ARTIST);
+            String musicPath = getIntent().getStringExtra(UGCKitConstants.MUSIC_PATH);
+            String musicThumb = getIntent().getStringExtra(UGCKitConstants.MUSIC_THUMBNAIL);
+            String musicName = getIntent().getStringExtra(UGCKitConstants.MUSIC_NAME);
 
-        TCMusicManager musicManager = TCMusicManager.getInstance();
-        String localPath = musicManager.getLocalPath(musicName);
+            TCMusicManager musicManager = TCMusicManager.getInstance();
+            String localPath = musicManager.getLocalPath(musicName);
 
-        MusicInfo musicInfo = new MusicInfo();
-        musicInfo.id = musicId;
-        musicInfo.name = musicName;
-        musicInfo.path = localPath;
-        musicInfo.position = -1;
+            MusicInfo musicInfo = new MusicInfo();
+            musicInfo.id = musicId;
+            musicInfo.name = musicName;
+            musicInfo.path = localPath;
+            musicInfo.position = -1;
 
-        if (!localPath.equals("")) {
-            mUGCKitVideoRecord.setRecordMusicInfo(musicInfo);
-        } else {
-            ProgressFragmentUtil mProgressFragmentUtil = new ProgressFragmentUtil(this,"Memuat Musik");
-            TCMusicDownloadProgress downloadProgress = new TCMusicDownloadProgress(musicName, 0, musicPath);
-            mProgressFragmentUtil.showLoadingProgress(new ProgressFragmentUtil.IProgressListener() {
-                @Override
-                public void onStop() {
-                    mProgressFragmentUtil.dismissLoadingProgress();
-                }
-            });
-            downloadProgress.start(new TCMusicDownloadProgress.Downloadlistener() {
-                @Override
-                public void onDownloadFail(String errorMsg) {
-                    mProgressFragmentUtil.dismissLoadingProgress();
-                    ToastUtil.toastShortMessage(errorMsg);
-                }
-
-                @Override
-                public void onDownloadProgress(int progress) {
-                    mProgressFragmentUtil.updateGenerateProgress(progress);
-                }
-
-                @Override
-                public void onDownloadSuccess(String filePath) {
-                    BackgroundTasks.getInstance().runOnUiThread(() -> {
+            if (!localPath.equals("")) {
+                mUGCKitVideoRecord.setRecordMusicInfo(musicInfo);
+            } else {
+                ProgressFragmentUtil mProgressFragmentUtil = new ProgressFragmentUtil(this, "Memuat Musik");
+                TCMusicDownloadProgress downloadProgress = new TCMusicDownloadProgress(musicName, 0, musicPath);
+                mProgressFragmentUtil.showLoadingProgress(new ProgressFragmentUtil.IProgressListener() {
+                    @Override
+                    public void onStop() {
                         mProgressFragmentUtil.dismissLoadingProgress();
-                        musicManager.setLocalPath(musicName, filePath);
-                        musicInfo.path = filePath;
-                        mUGCKitVideoRecord.setRecordMusicInfo(musicInfo);
-                    });
-                }
-            });
+                    }
+                });
+                downloadProgress.start(new TCMusicDownloadProgress.Downloadlistener() {
+                    @Override
+                    public void onDownloadFail(String errorMsg) {
+                        mProgressFragmentUtil.dismissLoadingProgress();
+                        ToastUtil.toastShortMessage(errorMsg);
+                    }
+
+                    @Override
+                    public void onDownloadProgress(int progress) {
+                        mProgressFragmentUtil.updateGenerateProgress(progress);
+                    }
+
+                    @Override
+                    public void onDownloadSuccess(String filePath) {
+                        BackgroundTasks.getInstance().runOnUiThread(() -> {
+                            mProgressFragmentUtil.dismissLoadingProgress();
+                            musicManager.setLocalPath(musicName, filePath);
+                            musicInfo.path = filePath;
+                            mUGCKitVideoRecord.setRecordMusicInfo(musicInfo);
+                        });
+                    }
+                });
+            }
         }
     }
 
