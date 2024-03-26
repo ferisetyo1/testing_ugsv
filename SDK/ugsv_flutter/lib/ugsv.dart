@@ -52,14 +52,24 @@ class UGSV {
   }
 
   static openVideoRecorder() async {
-    final result = await _apiChannel.invokeMethod("openVideoRecorder", {});
+    final result = await _apiChannel.invokeMethod("openVideoRecorder", {
+      "music": {
+        "id": 5,
+        "artist_name": "DJ Yatim Fvnky",
+        "audio_title": "SAH REMIX",
+        "thumbnail":
+            "https://storage.sapa.co.id/sapawebapi/images/749bf7bd-9893-47a5-8bc0-71f1e57c2197.jpg",
+        "file_url":
+            "https://storage.sapa.co.id/sapawebapi/images/517ebaad-981b-4136-a557-d131192b5446.mp3"
+      }
+    });
     if (result == null) {
       return null;
     }
     debugPrint("openVideoRecorder ${result["outputPath"]}"); //type string
     debugPrint(
         "openVideoRecorder ${result["musicId"]}"); //type string (default -1)
-    // return json;
+    return result;
   }
 
   static Future<bool> hasLastRecordPart() async {

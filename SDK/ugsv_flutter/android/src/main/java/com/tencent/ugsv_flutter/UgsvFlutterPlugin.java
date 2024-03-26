@@ -3,10 +3,9 @@ package com.tencent.ugsv_flutter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
-import androidx.activity.*;
 
 import com.tencent.qcloud.ugckit.UGCKit;
 import com.tencent.qcloud.ugckit.UGCKitConstants;
@@ -19,6 +18,14 @@ import com.tencent.ugsv_flutter.manager.LicenseManager;
 import com.tencent.ugsv_flutter.videochoose.TCVideoPickerActivity;
 import com.tencent.ugsv_flutter.videoeditor.TCVideoCutActivity;
 import com.tencent.ugsv_flutter.videorecord.TCVideoRecordActivity;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -26,11 +33,6 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
     private MethodChannel apiChannel;
@@ -58,7 +60,8 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
                 break;
             }
             case "openVideoRecorder": {
-                openVideoRecorder();
+                HashMap music = call.argument("music");
+                openVideoRecorder(music);
                 UgsvFlutterPlugin.result = result;
                 break;
             }
@@ -97,7 +100,7 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
         TCConfigManager.init(applicationContext);
         UGCKit.init(applicationContext);
         TCUserMgr.getInstance().initContext(applicationContext);
-        mainActivity =  binding.getActivity();
+        mainActivity = binding.getActivity();
     }
 
     @Override
@@ -107,7 +110,7 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
 
     @Override
     public void onReattachedToActivityForConfigChanges(@NonNull @NotNull ActivityPluginBinding binding) {
-        mainActivity =  binding.getActivity();
+        mainActivity = binding.getActivity();
     }
 
     @Override
@@ -126,8 +129,19 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
         mainActivity.startActivity(intent);
     }
 
-    void openVideoRecorder() {
+    void openVideoRecorder(HashMap music) {
         Intent intent = new Intent(mainActivity, TCVideoRecordActivity.class);
+        try {
+            if (music != null) {
+                intent.putExtra(UGCKitConstants.MUSIC_ID,  (int) music.get("id"));
+                intent.putExtra(UGCKitConstants.MUSIC_NAME, (String) music.get("audio_title"));
+                intent.putExtra(UGCKitConstants.MUSIC_PATH, (String) music.get("file_url"));
+                intent.putExtra(UGCKitConstants.MUSIC_THUMBNAIL, (String) music.get("thumbnail"));
+                intent.putExtra(UGCKitConstants.MUSIC_ARTIST, (String) music.get("artist_name"));
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
         mainActivity.startActivity(intent);
     }
 

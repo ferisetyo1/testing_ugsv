@@ -30,8 +30,10 @@ public class UGCKitConstants {
     public static final int    ACTIVITY_MUSIC_REQUEST_CODE     = 1;    // bgm activity request code and intent extra
     public static final String MUSIC_POSITION                  = "bgm_position";
     public static final String MUSIC_PATH                      = "bgm_path";
+    public static final String MUSIC_THUMBNAIL                 = "bgm_thumnail";
+    public static final String MUSIC_ARTIST                    = "bgm_artist";
     public static final String MUSIC_NAME                      = "bgm_name";
-    public static final String MUSIC_ID                      = "bgm_id";
+    public static final String MUSIC_ID                        = "bgm_id";
     public static final int    ACTIVITY_OTHER_REQUEST_CODE     = 2;
     public static final String KEY_FRAGMENT                    = "fragment_type";
     public static final int    TYPE_EDITER_BGM                 = 1;

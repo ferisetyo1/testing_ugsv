@@ -90,7 +90,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
     private CharSequence lastTextButton;
     private Drawable lastDrawableButton;
 
-    int musicId = 1;
+    int musicId = -1;
 
     public UGCKitVideoRecord(Context context) {
         super(context);

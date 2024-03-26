@@ -155,6 +155,7 @@ public class NumberProgressBar extends View {
     private boolean mDrawReachedBar = true;
 
     private boolean mIfDrawText = true;
+    private String msg = "Memproses video";
 
     public enum ProgressTextVisibility {
         Visible, Invisible
@@ -257,11 +258,11 @@ public class NumberProgressBar extends View {
         if (mIfDrawText && getProgress() > 0)
             canvas.drawText(mCurrentDrawText, mDrawTextStart, mDrawTextEnd, mTextPaint);
 
-        String mActivityText="Memproses video";
-        float mActivityWidth=mTextPaint.measureText(mActivityText);
+        String mActivityText = msg;
+        float mActivityWidth = mTextPaint.measureText(mActivityText);
 
-        if (  mReachedRectF.right- dp2px(8) - mDrawTextWidth > mActivityWidth){
-            canvas.drawText(mActivityText, getPaddingLeft()+dp2px(8), mDrawTextEnd, mTextPaint);
+        if (mReachedRectF.right - dp2px(8) - mDrawTextWidth > mActivityWidth) {
+            canvas.drawText(mActivityText, getPaddingLeft() + dp2px(8), mDrawTextEnd, mTextPaint);
         }
     }
 
@@ -490,4 +491,11 @@ public class NumberProgressBar extends View {
         return mIfDrawText;
     }
 
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 }

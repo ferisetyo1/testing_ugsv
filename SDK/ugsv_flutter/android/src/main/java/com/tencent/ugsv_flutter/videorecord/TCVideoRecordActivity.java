@@ -2,6 +2,7 @@ package com.tencent.ugsv_flutter.videorecord;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -20,11 +21,17 @@ import androidx.fragment.app.FragmentActivity;
 import com.tencent.qcloud.ugckit.UGCKitConstants;
 import com.tencent.qcloud.ugckit.UGCKitVideoRecord;
 import com.tencent.qcloud.ugckit.basic.UGCKitResult;
+import com.tencent.qcloud.ugckit.component.dialogfragment.ProgressFragmentUtil;
 import com.tencent.qcloud.ugckit.module.effect.bgm.TCMusicActivity;
+import com.tencent.qcloud.ugckit.module.effect.bgm.TCMusicDownloadProgress;
+import com.tencent.qcloud.ugckit.module.effect.bgm.TCMusicInfo;
+import com.tencent.qcloud.ugckit.module.effect.bgm.TCMusicManager;
 import com.tencent.qcloud.ugckit.module.record.MusicInfo;
 import com.tencent.qcloud.ugckit.module.record.RecordBottomLayout;
 import com.tencent.qcloud.ugckit.module.record.UGCKitRecordConfig;
 import com.tencent.qcloud.ugckit.module.record.interfaces.IVideoRecordKit;
+import com.tencent.qcloud.ugckit.utils.BackgroundTasks;
+import com.tencent.qcloud.ugckit.utils.DownloadUtil;
 import com.tencent.qcloud.ugckit.utils.ToastUtil;
 import com.tencent.ugsv_flutter.R;
 import com.tencent.ugsv_flutter.manager.PermissionManager;
@@ -34,6 +41,7 @@ import com.tencent.ugsv_flutter.videoeditor.TCVideoEditerActivity;
 import static com.tencent.ugsv_flutter.manager.PermissionManager.*;
 
 import java.io.Console;
+import java.util.ArrayList;
 import java.util.Map;
 
 import io.flutter.plugin.common.MethodChannel;
@@ -125,6 +133,59 @@ public class TCVideoRecordActivity extends FragmentActivity
         mStoragePermissionManager.setLauncher(storageActivityResultLauncher);
         mStoragePermissionManager.setOnStoragePermissionGrantedListener(this);
 
+        setMusicInitial();
+    }
+
+    private void setMusicInitial() {
+        int musicId = getIntent().getIntExtra(UGCKitConstants.MUSIC_ID, -1);
+        String musicArtist = getIntent().getStringExtra(UGCKitConstants.MUSIC_ARTIST);
+        String musicPath = getIntent().getStringExtra(UGCKitConstants.MUSIC_PATH);
+        String musicThumb = getIntent().getStringExtra(UGCKitConstants.MUSIC_THUMBNAIL);
+        String musicName = getIntent().getStringExtra(UGCKitConstants.MUSIC_NAME);
+
+        TCMusicManager musicManager = TCMusicManager.getInstance();
+        String localPath = musicManager.getLocalPath(musicName);
+
+        MusicInfo musicInfo = new MusicInfo();
+        musicInfo.id = musicId;
+        musicInfo.name = musicName;
+        musicInfo.path = localPath;
+        musicInfo.position = -1;
+
+        if (!localPath.equals("")) {
+            mUGCKitVideoRecord.setRecordMusicInfo(musicInfo);
+        } else {
+            ProgressFragmentUtil mProgressFragmentUtil = new ProgressFragmentUtil(this,"Memuat Musik");
+            TCMusicDownloadProgress downloadProgress = new TCMusicDownloadProgress(musicName, 0, musicPath);
+            mProgressFragmentUtil.showLoadingProgress(new ProgressFragmentUtil.IProgressListener() {
+                @Override
+                public void onStop() {
+                    mProgressFragmentUtil.dismissLoadingProgress();
+                }
+            });
+            downloadProgress.start(new TCMusicDownloadProgress.Downloadlistener() {
+                @Override
+                public void onDownloadFail(String errorMsg) {
+                    mProgressFragmentUtil.dismissLoadingProgress();
+                    ToastUtil.toastShortMessage(errorMsg);
+                }
+
+                @Override
+                public void onDownloadProgress(int progress) {
+                    mProgressFragmentUtil.updateGenerateProgress(progress);
+                }
+
+                @Override
+                public void onDownloadSuccess(String filePath) {
+                    BackgroundTasks.getInstance().runOnUiThread(() -> {
+                        mProgressFragmentUtil.dismissLoadingProgress();
+                        musicManager.setLocalPath(musicName, filePath);
+                        musicInfo.path = filePath;
+                        mUGCKitVideoRecord.setRecordMusicInfo(musicInfo);
+                    });
+                }
+            });
+        }
     }
 
     private ActivityResultLauncher<String[]> storageActivityResultLauncher =
@@ -133,7 +194,7 @@ public class TCVideoRecordActivity extends FragmentActivity
                         if (o.containsValue(false)) {
                             ToastUtil.toastShortMessage("Dibutuhkan akses storage untuk melanjutkan aksi ini, pilih izinkan semua!");
                         } else {
-                            Log.d("onStorage","onStoragePermissionGranted");
+                            Log.d("onStorage", "onStoragePermissionGranted");
                             onStoragePermissionGranted();
                         }
                     });

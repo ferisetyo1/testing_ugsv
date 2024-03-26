@@ -2,10 +2,12 @@ package com.tencent.qcloud.ugckit.component.dialogfragment;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
+
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -19,14 +21,14 @@ import com.tencent.qcloud.ugckit.R;
 import com.tencent.qcloud.ugckit.component.progressbar.NumberProgressBar;
 
 public class VideoWorkProgressFragment extends DialogFragment {
-    private static final String               KEY_TITLE  = "key_title";
-    private              View                 mViewContent;
-    private              ImageView            mImageStop;
-    private              TextView             mTextTips;
-    private              NumberProgressBar    mProgressLoading;
-    private              View.OnClickListener mListener;
-    private              int                  mProgress;
-    private              boolean              mCanCancel = true;
+    private static final String KEY_TITLE = "key_title";
+    private View mViewContent;
+    private ImageView mImageStop;
+    private TextView mTextTips;
+    private NumberProgressBar mProgressLoading;
+    private View.OnClickListener mListener;
+    private int mProgress;
+    private boolean mCanCancel = true;
 
     @NonNull
     public static VideoWorkProgressFragment newInstance(String title) {
@@ -49,16 +51,18 @@ public class VideoWorkProgressFragment extends DialogFragment {
         mViewContent = inflater.inflate(R.layout.ugckit_layout_joiner_progress, null);
         mTextTips = (TextView) mViewContent.findViewById(R.id.joiner_tv_msg);
         Bundle bundle = getArguments();
-        if (bundle != null) {
-            String msg = bundle.getString(KEY_TITLE);
-            if (!TextUtils.isEmpty(msg)) {
-                mTextTips.setText(msg);
-            }
-        }
+
         mImageStop = (ImageView) mViewContent.findViewById(R.id.joiner_iv_stop);
         mProgressLoading = (NumberProgressBar) mViewContent.findViewById(R.id.joiner_pb_loading);
         mProgressLoading.setMax(100);
         mProgressLoading.setProgress(mProgress);
+        if (bundle != null) {
+            String msg = bundle.getString(KEY_TITLE);
+            if (!TextUtils.isEmpty(msg)) {
+                mTextTips.setText(msg);
+                mProgressLoading.setMsg(msg);
+            }
+        }
         mImageStop.setOnClickListener(mListener);
         if (mCanCancel) {
             mImageStop.setVisibility(View.VISIBLE);

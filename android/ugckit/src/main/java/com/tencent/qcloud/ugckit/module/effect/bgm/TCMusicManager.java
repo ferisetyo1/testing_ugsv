@@ -21,10 +21,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class TCMusicManager {
-    private static final String            TAG    = "TCBgmManager";
-    private              boolean           isLoading;
-    private              SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(UGCKit.getAppContext());
-    private              LoadMusicListener mLoadMusicListener;
+    private static final String TAG = "TCBgmManager";
+    private boolean isLoading;
+    private SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(UGCKit.getAppContext());
+    private LoadMusicListener mLoadMusicListener;
 
     private static class TCMusicMgrHolder {
         @NonNull
@@ -89,6 +89,14 @@ public class TCMusicManager {
                 TCMusicInfo.status = TCMusicInfo.STATE_DOWNLOADED;
             }
         }
+    }
+
+    public String getLocalPath( String bgName) {
+        return mPrefs.getString(bgName, "");
+    }
+
+    public void setLocalPath(String bgmName,String filePath) {
+        mPrefs.edit().putString(bgmName, filePath).apply();
     }
 
     public void downloadMusicInfo(final String bgmName, final int position, String url) {
