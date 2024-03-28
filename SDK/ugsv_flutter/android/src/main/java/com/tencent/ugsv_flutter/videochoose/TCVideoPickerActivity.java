@@ -1,7 +1,9 @@
 package com.tencent.ugsv_flutter.videochoose;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,6 +17,7 @@ import com.tencent.qcloud.ugckit.UGCKitConstants;
 import com.tencent.qcloud.ugckit.UGCKitVideoPicker;
 import com.tencent.qcloud.ugckit.module.picker.data.TCVideoFileInfo;
 import com.tencent.qcloud.ugckit.module.picker.view.IPickerLayout;
+import com.tencent.qcloud.ugckit.utils.DialogUtil;
 import com.tencent.ugsv_flutter.R;
 import com.tencent.ugsv_flutter.manager.PermissionManager;
 import com.tencent.ugsv_flutter.videoeditor.TCVideoCutActivity;
@@ -107,6 +110,16 @@ public class TCVideoPickerActivity extends FragmentActivity
     public void onStoragePermissionGranted() {
         mUGCKitVideoPicker.getPickerListLayout().showProgressBar();
         mUGCKitVideoPicker.loadVideoList();
+    }
+
+    @Override
+    public void onStoragePermissionDenied() {
+        DialogUtil.showDialog(this,"Akses Penyimpanan","Dibutuhkan akses storage untuk melanjutkan aksi ini, pilih izinkan semua!",(v)->{
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", getPackageName(), null);
+            intent.setData(uri);
+            startActivity(intent);
+        });
     }
 
     private ActivityResultLauncher<String[]> storageActivityResultLauncher =

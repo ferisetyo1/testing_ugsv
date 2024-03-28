@@ -94,6 +94,7 @@ public class TitleBarLayout extends LinearLayout implements ITitleBarLayout {
     }
 
     public void setEnableRightButton(boolean enable) {
+            mRightButton.setEnabled(enable);
         if (enable){
             mRightButton.setBackground(getResources().getDrawable(R.drawable.bg_next_title_red));
             mRightButton.setTextColor(getResources().getColor(R.color.white));

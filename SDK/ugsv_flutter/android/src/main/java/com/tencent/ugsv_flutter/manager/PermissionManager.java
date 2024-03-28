@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
@@ -91,6 +92,8 @@ public class PermissionManager {
                         FragmentActivity temp = (FragmentActivity) mContext;
                         mDialog = createDialog();
                         mDialog.show(temp.getSupportFragmentManager(), DIALOG_NAME);
+                    }{
+                        onStoragePermissionGrantedListener.onStoragePermissionDenied();
                     }
                 } else {
                     onStoragePermissionGrantedListener.onStoragePermissionGranted();
@@ -180,8 +183,10 @@ public class PermissionManager {
                     if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                         onStoragePermissionGrantedListener.onStoragePermissionGranted();
                     } else {
+                        Log.d("permission_denied","permission_denied");
                         long begin = System.currentTimeMillis();
                         sharedPreferenceUtils.put(SHARED_PREFERENCE_KEY_STORAGE, begin);
+                        onStoragePermissionGrantedListener.onStoragePermissionDenied();
                     }
                     dismissDialog();
                 } else if (requestCode == REQUEST_CODE_AUDIO) {
@@ -248,6 +253,7 @@ public class PermissionManager {
 
     public interface OnStoragePermissionGrantedListener {
         void onStoragePermissionGranted();
+        void onStoragePermissionDenied();
     }
 
     public void setOnStoragePermissionGrantedListener(OnStoragePermissionGrantedListener listener) {

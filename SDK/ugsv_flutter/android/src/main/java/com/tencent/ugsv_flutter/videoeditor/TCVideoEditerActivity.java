@@ -2,7 +2,9 @@ package com.tencent.ugsv_flutter.videoeditor;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.tencent.qcloud.ugckit.basic.UGCKitResult;
 import com.tencent.qcloud.ugckit.module.editer.IVideoEditKit;
 import com.tencent.qcloud.ugckit.module.editer.UGCKitEditConfig;
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK;
+import com.tencent.qcloud.ugckit.utils.DialogUtil;
 import com.tencent.qcloud.ugckit.utils.ToastUtil;
 // import com.tencent.qcloud.xiaoshipin.mainui.TCMainActivity;
 import com.tencent.ugsv_flutter.FlutterCallback;
@@ -230,11 +233,22 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         mStoragePermissionManager.onRequestPermissionsResult(requestCode, grantResults);
     }
 
     @Override
     public void onStoragePermissionGranted() {
 
+    }
+
+    @Override
+    public void onStoragePermissionDenied() {
+        DialogUtil.showDialog(this,"Akses Penyimpanan","Dibutuhkan akses storage untuk melanjutkan aksi ini, pilih izinkan semua!",(v)->{
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", getPackageName(), null);
+            intent.setData(uri);
+            startActivity(intent);
+        });
     }
 }

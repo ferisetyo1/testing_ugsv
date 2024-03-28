@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -31,6 +33,7 @@ import com.tencent.qcloud.ugckit.module.record.RecordBottomLayout;
 import com.tencent.qcloud.ugckit.module.record.UGCKitRecordConfig;
 import com.tencent.qcloud.ugckit.module.record.interfaces.IVideoRecordKit;
 import com.tencent.qcloud.ugckit.utils.BackgroundTasks;
+import com.tencent.qcloud.ugckit.utils.DialogUtil;
 import com.tencent.qcloud.ugckit.utils.DownloadUtil;
 import com.tencent.qcloud.ugckit.utils.ToastUtil;
 import com.tencent.ugsv_flutter.R;
@@ -83,6 +86,7 @@ public class TCVideoRecordActivity extends FragmentActivity
         mUGCKitVideoRecord.setConfig(ugcKitRecordConfig);
 
         mUGCKitVideoRecord.getTitleBar().setOnBackClickListener(v -> finish());
+        mUGCKitVideoRecord.getTitleBar().setEnableRightButton(false);
         mUGCKitVideoRecord.getTitleBar().setOnRightClickListener((v) -> {
             mStoragePermissionManager.checkoutIfShowPermissionIntroductionDialog();
         });
@@ -194,7 +198,7 @@ public class TCVideoRecordActivity extends FragmentActivity
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(),
                     o -> {
                         if (o.containsValue(false)) {
-                            ToastUtil.toastShortMessage("Dibutuhkan akses storage untuk melanjutkan aksi ini, pilih izinkan semua!");
+                            onStoragePermissionDenied();
                         } else {
                             Log.d("onStorage", "onStoragePermissionGranted");
                             onStoragePermissionGranted();
@@ -308,5 +312,15 @@ public class TCVideoRecordActivity extends FragmentActivity
     public void onStoragePermissionGranted() {
         mUGCKitVideoRecord.onLanjutPressed();
 //        mUGCKitVideoRecord.getRecordBottomLayout().getLastVideo();
+    }
+
+    @Override
+    public void onStoragePermissionDenied() {
+        DialogUtil.showDialog(this,"Akses Penyimpanan","Dibutuhkan akses storage untuk melanjutkan aksi ini, pilih izinkan semua!",(v)->{
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", getPackageName(), null);
+            intent.setData(uri);
+            startActivity(intent);
+        });
     }
 }
