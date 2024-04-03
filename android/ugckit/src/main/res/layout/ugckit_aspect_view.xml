@@ -14,16 +14,16 @@
 
         <ImageView
             android:id="@+id/iv_aspect"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_ratio_16_9" />
+            android:src="@drawable/menu_ic_ratio_16_9" />
 
         <ImageView
             android:id="@+id/iv_aspect_mask"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/ugckit_record_round_bg"
             android:visibility="gone" />
@@ -38,9 +38,9 @@
             android:fontFamily="@font/poppins"
             android:gravity="center_horizontal"
             android:shadowColor="@color/ugckit_color_gray4"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="4"
             android:text="Rasio"
             android:textColor="@color/ugckit_white"
             android:textSize="12sp" />
@@ -62,7 +62,7 @@
             android:layout_height="24dp"
             android:layout_marginLeft="@dimen/ugckit_aspect_divider"
             android:layout_marginRight="@dimen/ugckit_aspect_divider"
-            android:src="@drawable/ic_ratio_1_1" />
+            android:src="@drawable/menu_ic_ratio_1_1" />
 
         <ImageView
             android:id="@+id/iv_aspect_second"
@@ -70,7 +70,7 @@
             android:layout_height="24dp"
             android:layout_marginRight="@dimen/ugckit_aspect_divider"
             android:layout_toRightOf="@id/iv_aspect_first"
-            android:src="@drawable/ic_ratio_3_4" />
+            android:src="@drawable/menu_ic_ratio_3_4" />
 
         <ImageView
             android:id="@+id/iv_aspect_third"
@@ -78,7 +78,7 @@
             android:layout_height="24dp"
             android:layout_marginRight="@dimen/ugckit_aspect_divider"
             android:layout_toRightOf="@id/iv_aspect_second"
-            android:src="@drawable/ic_ratio_16_9" />
+            android:src="@drawable/menu_ic_ratio_16_9" />
 
         <ImageView
             android:id="@+id/iv_aspect_fourth"
@@ -86,7 +86,7 @@
             android:layout_height="24dp"
             android:layout_marginRight="@dimen/ugckit_aspect_divider"
             android:layout_toRightOf="@id/iv_aspect_third"
-            android:src="@drawable/ic_ratio_9_16" />
+            android:src="@drawable/menu_ic_ratio_9_16" />
 
         <ImageView
             android:id="@+id/iv_aspect_fifth"
@@ -94,6 +94,6 @@
             android:layout_height="24dp"
             android:layout_marginRight="@dimen/ugckit_aspect_divider"
             android:layout_toRightOf="@id/iv_aspect_fourth"
-            android:src="@drawable/ic_ratio_4_3" />
+            android:src="@drawable/menu_ic_ratio_4_3" />
     </RelativeLayout>
 </RelativeLayout>

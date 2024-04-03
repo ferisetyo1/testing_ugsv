@@ -102,7 +102,6 @@ public class ItemAdapter extends BaseAdapter {
         BeautyUtils.setTextViewText(holder.title, ResourceUtils.getString(itemInfo.getItemName()));
         BeautyUtils.setTextViewSize(holder.title, mTabInfo.getTabItemNameSize());
         if (mSelectPos == position) {
-            BeautyUtils.setTextViewColor(holder.title, mTabInfo.getTabItemNameColorSelect());
             BeautyUtils.setImageResource(holder.icon, itemInfo.getItemIconSelect());
         } else {
             BeautyUtils.setTextViewColor(holder.title, mTabInfo.getTabItemNameColorNormal());

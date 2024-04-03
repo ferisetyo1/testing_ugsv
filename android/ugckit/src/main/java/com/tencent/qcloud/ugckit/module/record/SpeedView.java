@@ -136,7 +136,7 @@ public class SpeedView extends RelativeLayout implements View.OnClickListener {
                 if (mOnSpeedListener != null) {
                     mOnSpeedListener.onSpeedSelect(TXRecordCommon.RECORD_SPEED_SLOWEST);
                 }
-                mImageSpeedCurr.setImageResource(R.drawable.speed__03x);
+                mImageSpeedCurr.setImageResource(R.drawable.menu_ic_speed_03x);
                 mTextSpeedFirst.setBackgroundResource(R.drawable.active_background_speed);
                 mTextSpeedFirst.setTextColor(Color.BLACK);
                 break;
@@ -144,7 +144,7 @@ public class SpeedView extends RelativeLayout implements View.OnClickListener {
                 if (mOnSpeedListener != null) {
                     mOnSpeedListener.onSpeedSelect(TXRecordCommon.RECORD_SPEED_SLOW);
                 }
-                mImageSpeedCurr.setImageResource(R.drawable.speed__05x);
+                mImageSpeedCurr.setImageResource(R.drawable.menu_ic_speed_05x);
                 mTextSpeedSecond.setBackgroundResource(R.drawable.active_background_speed);
                 mTextSpeedSecond.setTextColor(Color.BLACK);
                 break;
@@ -152,7 +152,7 @@ public class SpeedView extends RelativeLayout implements View.OnClickListener {
                 if (mOnSpeedListener != null) {
                     mOnSpeedListener.onSpeedSelect(TXRecordCommon.RECORD_SPEED_NORMAL);
                 }
-                mImageSpeedCurr.setImageResource(R.drawable.speed__1x);
+                mImageSpeedCurr.setImageResource(R.drawable.menu_ic_speed_1x);
                 mTextSpeedThird.setBackgroundResource(R.drawable.active_background_speed);
                 mTextSpeedThird.setTextColor(Color.BLACK);
                 break;
@@ -160,7 +160,7 @@ public class SpeedView extends RelativeLayout implements View.OnClickListener {
                 if (mOnSpeedListener != null) {
                     mOnSpeedListener.onSpeedSelect(TXRecordCommon.RECORD_SPEED_FAST);
                 }
-                mImageSpeedCurr.setImageResource(R.drawable.speed__2x);
+                mImageSpeedCurr.setImageResource(R.drawable.menu_ic_speed_2x);
                 mTextSpeedFourth.setBackgroundResource(R.drawable.active_background_speed);
                 mTextSpeedFourth.setTextColor(Color.BLACK);
                 break;
@@ -168,7 +168,7 @@ public class SpeedView extends RelativeLayout implements View.OnClickListener {
                 if (mOnSpeedListener != null) {
                     mOnSpeedListener.onSpeedSelect(TXRecordCommon.RECORD_SPEED_FASTEST);
                 }
-                mImageSpeedCurr.setImageResource(R.drawable.speed__3x);
+                mImageSpeedCurr.setImageResource(R.drawable.menu_ic_speed_3x);
                 mTextSpeedFifth.setBackgroundResource(R.drawable.active_background_speed);
                 mTextSpeedFifth.setTextColor(Color.BLACK);
                 break;

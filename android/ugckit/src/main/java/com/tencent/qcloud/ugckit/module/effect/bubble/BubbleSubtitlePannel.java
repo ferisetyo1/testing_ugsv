@@ -164,12 +164,12 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
         mSubtitleInfo.setBubblePos(0);
         // 创建一个默认的
         TCBubbleInfo info = new TCBubbleInfo();
-        info.setHeight(0);
-        info.setWidth(0);
+        info.setHeight(180);
+        info.setWidth(336);
         info.setDefaultSize(40);
         info.setBubblePath(null);
         info.setIconPath(null);
-        info.setRect(0, 0, 0, 0);
+        info.setRect(20, 20, 20, 20);
         mSubtitleInfo.setBubbleInfo(info);
     }
 

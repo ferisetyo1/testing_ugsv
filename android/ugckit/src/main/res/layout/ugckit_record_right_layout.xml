@@ -16,17 +16,17 @@
 
         <ImageView
             android:id="@+id/iv_music"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/music"
+            android:src="@drawable/menu_ic_musik"
             />
 
         <ImageView
             android:id="@+id/iv_music_mask"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/ugckit_record_round_bg"
             android:visibility="gone" />
@@ -41,9 +41,9 @@
             android:layout_marginTop="4dp"
             android:gravity="center"
             android:text="Musik"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="4"
             android:fontFamily="@font/poppins"
             android:shadowColor="@color/ugckit_color_gray4"
             android:textColor="@color/ugckit_white"
@@ -75,11 +75,11 @@
 
         <ImageView
             android:id="@+id/iv_beauty"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_filters"
+            android:src="@drawable/menu_ic_filters"
             android:adjustViewBounds="true"
             android:outlineProvider="background"
             android:outlineSpotShadowColor="@color/ugckit_text_weak"
@@ -97,9 +97,9 @@
             android:layout_marginTop="4dp"
             android:gravity="center"
             android:text="Filter"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="4"
             android:fontFamily="@font/poppins"
             android:shadowColor="@color/ugckit_color_gray4"
             android:textColor="@color/ugckit_white"
@@ -116,13 +116,13 @@
 
         <ImageView
             android:id="@+id/iv_te_beauty"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:onClick="onClick"
-            android:src="@drawable/ic_beauty" />
+            android:src="@drawable/menu_ic_beauty" />
 
         <TextView
             android:id="@+id/tv_te_beauty"
@@ -133,9 +133,9 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:layout_marginTop="4dp"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="4"
             android:shadowColor="@color/ugckit_color_gray4"
             android:fontFamily="@font/poppins"
             android:text="Percantik"
@@ -152,16 +152,16 @@
 
         <ImageView
             android:id="@+id/iv_sound_effect"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_mic" />
+            android:src="@drawable/menu_ic_mic" />
 
         <ImageView
             android:id="@+id/iv_sound_effect_mask"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/ugckit_record_round_bg"
             android:visibility="gone" />
@@ -176,9 +176,9 @@
             android:layout_marginTop="4dp"
             android:gravity="center"
             android:text="Suara"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="4"
             android:shadowColor="@color/ugckit_color_gray4"
             android:fontFamily="@font/poppins"
             android:textColor="@color/ugckit_white"

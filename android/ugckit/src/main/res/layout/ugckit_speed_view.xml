@@ -14,16 +14,16 @@
 
         <ImageView
             android:id="@+id/iv_speed"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:src="?attr/recordAspect169Icon" />
 
         <ImageView
             android:id="@+id/iv_speed_mask"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/ugckit_record_round_bg"
             android:visibility="gone" />
@@ -38,9 +38,9 @@
             android:fontFamily="@font/poppins"
             android:gravity="center_horizontal"
             android:shadowColor="@color/ugckit_color_gray4"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="3"
             android:text="Kecepatan"
             android:textColor="@color/ugckit_white"
             android:textSize="12sp" />

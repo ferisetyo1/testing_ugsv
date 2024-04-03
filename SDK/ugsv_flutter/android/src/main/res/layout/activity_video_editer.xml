@@ -13,7 +13,7 @@
     <include
         android:id="@+id/video_edit_layout"
         layout="@layout/ugckit_video_cutt_kit"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="72dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

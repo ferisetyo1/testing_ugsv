@@ -1,10 +1,10 @@
 {
   "name": "empty",
-  "width": 0,
-  "height": 0,
-  "textTop": 0,
-  "textLeft": 0,
-  "textRight": 0,
-  "textBottom": 0,
+  "width": 336,
+  "height": 180,
+  "textTop": 20,
+  "textLeft": 20,
+  "textRight": 20,
+  "textBottom": 20,
   "textSize": 40
 }

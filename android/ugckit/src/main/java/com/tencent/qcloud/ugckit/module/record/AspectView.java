@@ -131,35 +131,35 @@ public class AspectView extends RelativeLayout implements View.OnClickListener {
                 if (mOnAspectListener != null) {
                     mOnAspectListener.onAspectSelect(TXRecordCommon.VIDEO_ASPECT_RATIO_9_16);
                 }
-                mImageAspectCurr.setImageResource(R.drawable.ic_ratio_9_16);
+                mImageAspectCurr.setImageResource(R.drawable.menu_ic_ratio_9_16);
                 mImageAspectFourth.setBackgroundResource(R.drawable.active_border);
                 break;
             case TXRecordCommon.VIDEO_ASPECT_RATIO_3_4:
                 if (mOnAspectListener != null) {
                     mOnAspectListener.onAspectSelect(TXRecordCommon.VIDEO_ASPECT_RATIO_3_4);
                 }
-                mImageAspectCurr.setImageResource(R.drawable.ic_ratio_3_4);
+                mImageAspectCurr.setImageResource(R.drawable.menu_ic_ratio_3_4);
                 mImageAspectSecond.setBackgroundResource(R.drawable.active_border);
                 break;
             case TXRecordCommon.VIDEO_ASPECT_RATIO_1_1:
                 if (mOnAspectListener != null) {
                     mOnAspectListener.onAspectSelect(TXRecordCommon.VIDEO_ASPECT_RATIO_1_1);
                 }
-                mImageAspectCurr.setImageResource(R.drawable.ic_ratio_1_1);
+                mImageAspectCurr.setImageResource(R.drawable.menu_ic_ratio_1_1);
                 mImageAspectFirst.setBackgroundResource(R.drawable.active_border);
                 break;
             case TXRecordCommon.VIDEO_ASPECT_RATIO_4_3:
                 if (mOnAspectListener != null) {
                     mOnAspectListener.onAspectSelect(TXRecordCommon.VIDEO_ASPECT_RATIO_4_3);
                 }
-                mImageAspectCurr.setImageResource(R.drawable.ic_ratio_4_3);
+                mImageAspectCurr.setImageResource(R.drawable.menu_ic_ratio_4_3);
                 mImageAspectFifth.setBackgroundResource(R.drawable.active_border);
                 break;
             case TXRecordCommon.VIDEO_ASPECT_RATIO_16_9:
                 if (mOnAspectListener != null) {
                     mOnAspectListener.onAspectSelect(TXRecordCommon.VIDEO_ASPECT_RATIO_16_9);
                 }
-                mImageAspectCurr.setImageResource(R.drawable.ic_ratio_16_9);
+                mImageAspectCurr.setImageResource(R.drawable.menu_ic_ratio_16_9);
                 mImageAspectThird.setBackgroundResource(R.drawable.active_border);
                 break;
         }
