@@ -118,11 +118,11 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
 
     private void loadAllFontStyle() {
      mFonts= new ArrayList();
-     mFonts.add(new BubbleFontStyle("Poppins (Medium)",R.font.poppins_medium));
-     mFonts.add(new BubbleFontStyle("Inter (Medium)",R.font.inter_medium));
-     mFonts.add(new BubbleFontStyle("Caveat (Bold)",R.font.caveat_bold));
-     mFonts.add(new BubbleFontStyle("Playfair Display (Bold)",R.font.playfair_display_bold));
-     mFonts.add(new BubbleFontStyle("Noto serif (Bold)",R.font.playfair_display_bold));
+     mFonts.add(new BubbleFontStyle("Poppins  ",R.font.poppins_medium));
+     mFonts.add(new BubbleFontStyle("Inter  ",R.font.inter_medium));
+     mFonts.add(new BubbleFontStyle("Caveat ",R.font.caveat_bold));
+     mFonts.add(new BubbleFontStyle("Playfair  ",R.font.playfair_display_medium));
+     mFonts.add(new BubbleFontStyle("Noto serif  ",R.font.noto_serif_bold));
 
      mFontAdapter = new BubbleFontStyleAdapter(mFonts);
      mFontAdapter.setOnFontClickListener(this);

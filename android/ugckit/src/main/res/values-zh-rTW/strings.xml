@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Sapa Beta</string>
-
     <string name="ugckit_btn_back">返回</string>
     <string name="ugckit_btn_cancel">取消</string>
     <string name="ugckit_btn_ok">確定</string>

@@ -6,7 +6,7 @@
     android:paddingRight="10dp"
     android:paddingBottom="8dp">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/transition_image"
         android:layout_width="50dp"
         android:layout_height="50dp"

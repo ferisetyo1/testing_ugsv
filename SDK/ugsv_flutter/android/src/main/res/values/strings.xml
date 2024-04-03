@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Sapa Beta</string>
-
     <string name="btn_cancel">取消</string>
     <string name="btn_ok">确定</string>
 

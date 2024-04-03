@@ -2,10 +2,14 @@ package com.tencent.qcloud.ugckit;
 
 import android.app.KeyguardManager;
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -22,8 +26,8 @@ import com.tencent.qcloud.ugckit.module.effect.utils.DraftEditer;
 
 public class UGCKitVideoEffect extends AbsVideoEffectUI implements VideoProgressController.VideoProgressSeekListener {
 
-    private FragmentActivity      mActivity;
-    private int                   mConfirmIcon;
+    private FragmentActivity mActivity;
+    private int mConfirmIcon;
     private OnVideoEffectListener mOnVideoEffectListener;
 
     public UGCKitVideoEffect(Context context) {
@@ -56,11 +60,11 @@ public class UGCKitVideoEffect extends AbsVideoEffectUI implements VideoProgress
     }
 
     private void configureTabs() {
-        TabLayout tabs= getTabLayout();
+        TabLayout tabs = getTabLayout();
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()){
+                switch (tab.getPosition()) {
                     case 0:
                         setEffectType(UGCKitConstants.TYPE_EDITER_TRANSITION);
                         break;
@@ -95,9 +99,14 @@ public class UGCKitVideoEffect extends AbsVideoEffectUI implements VideoProgress
 
     private void initTitleBar() {
 //        mConfirmIcon = UIAttributeUtil.getResResources(mActivity, R.attr.editerConfirmIcon, R.drawable.ugckit_ic_edit_effect_confirm_selector);
-        getTitleBar().getRightButton().setText("Terapkan");
+        getTitleBar().setLeftIcon(R.drawable.round_close_24);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getTitleBar().getLeftIcon().setImageTintList(ColorStateList.valueOf(getContext().getColor(R.color.white)));
+        }
+
+        getTitleBar().getRightButton().setText("Lanjut");
         getTitleBar().setEnableRightButton(true);
-        getTitleBar().setOnBackClickListener(new View.OnClickListener() {
+        getTitleBar().setOnBackClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 点击"返回",清除当前设置的视频特效
@@ -112,7 +121,7 @@ public class UGCKitVideoEffect extends AbsVideoEffectUI implements VideoProgress
                 }
             }
         });
-        getTitleBar().setOnRightClickListener(new View.OnClickListener() {
+        getTitleBar().setOnRightClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 清理时间轴的滑动事件，防止与上一级页面的播放状态冲突

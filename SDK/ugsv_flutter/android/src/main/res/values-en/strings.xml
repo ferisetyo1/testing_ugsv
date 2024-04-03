@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Sapa Beta</string>
-
     <string name="btn_cancel">Cancel</string>
     <string name="btn_ok">OK</string>
     <string name="activity_login_login">Log in</string>
