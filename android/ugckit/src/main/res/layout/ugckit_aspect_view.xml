@@ -58,40 +58,40 @@
 
         <ImageView
             android:id="@+id/iv_aspect_first"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginLeft="@dimen/ugckit_aspect_divider"
             android:layout_marginRight="@dimen/ugckit_aspect_divider"
             android:src="@drawable/menu_ic_ratio_1_1" />
 
         <ImageView
             android:id="@+id/iv_aspect_second"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginRight="@dimen/ugckit_aspect_divider"
             android:layout_toRightOf="@id/iv_aspect_first"
             android:src="@drawable/menu_ic_ratio_3_4" />
 
         <ImageView
             android:id="@+id/iv_aspect_third"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginRight="@dimen/ugckit_aspect_divider"
             android:layout_toRightOf="@id/iv_aspect_second"
             android:src="@drawable/menu_ic_ratio_16_9" />
 
         <ImageView
             android:id="@+id/iv_aspect_fourth"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginRight="@dimen/ugckit_aspect_divider"
             android:layout_toRightOf="@id/iv_aspect_third"
             android:src="@drawable/menu_ic_ratio_9_16" />
 
         <ImageView
             android:id="@+id/iv_aspect_fifth"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginRight="@dimen/ugckit_aspect_divider"
             android:layout_toRightOf="@id/iv_aspect_fourth"
             android:src="@drawable/menu_ic_ratio_4_3" />
