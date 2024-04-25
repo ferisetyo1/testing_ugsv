@@ -10,5 +10,6 @@
     app:deleteDrawable="@drawable/float_delete_button"
     app:editDrawable="@drawable/float_edit_btn"
     app:frameColor="@color/ugckit_white"
-    app:frameWidth="0.5dp"
+    app:frameWidth="2dp"
+    app:framePadding="14dp"
     app:scale="1.0" />

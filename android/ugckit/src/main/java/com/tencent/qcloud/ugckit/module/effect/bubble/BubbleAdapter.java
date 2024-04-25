@@ -2,6 +2,12 @@ package com.tencent.qcloud.ugckit.module.effect.bubble;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,11 +21,17 @@ import java.util.List;
 
 public class BubbleAdapter extends RecyclerView.Adapter<BubbleAdapter.BubbleViewHolder> implements View.OnClickListener {
 
-    private List<TCBubbleInfo>          mBubbles;
+    private List<NewBubbleInfo> mBubbles;
     private WeakReference<RecyclerView> mRecyclerView;
 
-    public BubbleAdapter(List<TCBubbleInfo> bubbles) {
+    public BubbleAdapter(List<NewBubbleInfo> bubbles) {
         mBubbles = bubbles;
+    }
+
+    private int selection = 0;
+
+    public void setSelection(int selection) {
+        this.selection = selection;
     }
 
     @NonNull
@@ -34,8 +46,9 @@ public class BubbleAdapter extends RecyclerView.Adapter<BubbleAdapter.BubbleView
     public void onBindViewHolder(@NonNull BubbleViewHolder holder, int position) {
         holder.itemView.setOnClickListener(this);
         //glide 加在asset目录资源图片需要拼接
-        String assetsIconPath = "file:///android_asset/" + mBubbles.get(position).getIconPath();
-        Glide.with(holder.itemView.getContext()).load(assetsIconPath).into(holder.ivBubble);
+        Bitmap iconBitmap = mBubbles.get(position).buildIconBitmap(holder.itemView.getContext());
+        Glide.with(holder.itemView.getContext()).asBitmap().load(iconBitmap).into(holder.ivBubble);
+        holder.ivSelected.setVisibility(position==selection?View.VISIBLE:View.GONE);
     }
 
     @Override
@@ -49,17 +62,23 @@ public class BubbleAdapter extends RecyclerView.Adapter<BubbleAdapter.BubbleView
             RecyclerView recyclerView = mRecyclerView.get();
             if (recyclerView != null) {
                 int position = recyclerView.getChildAdapterPosition(v);
+                int lastPosition=selection;
+                selection = position;
                 mListener.onItemClick(v, position);
+                notifyItemChanged(lastPosition);
+                notifyItemChanged(position);
             }
         }
     }
 
     public static class BubbleViewHolder extends RecyclerView.ViewHolder {
         ImageView ivBubble;
+        ImageView ivSelected;
 
         public BubbleViewHolder(@NonNull View itemView) {
             super(itemView);
             ivBubble = (ImageView) itemView.findViewById(R.id.bubble_iv_img);
+            ivSelected = (ImageView) itemView.findViewById(R.id.iv_selected);
         }
     }
 

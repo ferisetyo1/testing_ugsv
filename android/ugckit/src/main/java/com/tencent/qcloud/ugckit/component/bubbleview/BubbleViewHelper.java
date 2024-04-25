@@ -5,12 +5,16 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
+import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.tencent.qcloud.ugckit.R;
+import com.tencent.qcloud.ugckit.module.effect.bubble.NewBubbleInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,19 +29,19 @@ import java.util.List;
  */
 public class BubbleViewHelper {
     @Nullable
-    private Bitmap           mBubbleBitmap;
+    private Bitmap mBubbleBitmap;
     private BubbleViewParams mParams;
-    private float            mTextDefaultSize = 36; // 字幕的默认代销
-    private String           mText;
-    private Paint            mPaint;
-    private int              mTextAreaTop;
-    private int              mTextAreaLeft;
-    private int              mTextAreaRight;
-    private int              mTextAreaBottom;
-    private int              mTextAreaHeight;
-    private int              mTextAreaWidth;
-    private int              mTextAreaCenterX;
-    private int              mTextAreaCenterY;
+    private float mTextDefaultSize = 36; // 字幕的默认代销
+    private String mText;
+    private Paint mPaint;
+    private int mTextAreaTop;
+    private int mTextAreaLeft;
+    private int mTextAreaRight;
+    private int mTextAreaBottom;
+    private int mTextAreaHeight;
+    private int mTextAreaWidth;
+    private int mTextAreaCenterX;
+    private int mTextAreaCenterY;
 
     public BubbleViewHelper() {
 
@@ -45,9 +49,10 @@ public class BubbleViewHelper {
 
     public void setBubbleTextParams(Context context, @NonNull BubbleViewParams params) {
         mParams = params;
-        mTextDefaultSize = params.wordParamsInfo.getBubbleInfo().getDefaultSize();
-        mBubbleBitmap = params.bubbleBitmap;
+        mTextDefaultSize = params.wordParamsInfo.getBubbleInfo().getTextSize();
         mText = params.text;
+        mBubbleBitmap = params.bubbleBitmap;
+        Bitmap defaultBitmap = params.wordParamsInfo.getBubbleInfo().buildBubbleBitmap();
 
         if (mBubbleBitmap != null && mBubbleBitmap.isRecycled()) {
             return;
@@ -57,16 +62,16 @@ public class BubbleViewHelper {
 
         // 如果气泡字幕背景为空， 那么创建一张刚好可以包裹文字的"空背景"
         if (mBubbleBitmap == null) {
-            // 创建一张空的背景
-            int height = (int) getFontHeight() * 2;
-            int width = (int) mPaint.measureText(mText) + 1;
-            mBubbleBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            mBubbleBitmap = defaultBitmap;
+            System.out.println("null mBubbleBitmap");
         }
+
         initTextArea(
-                params.wordParamsInfo.getBubbleInfo().getTop(),
-                params.wordParamsInfo.getBubbleInfo().getLeft(),
-                params.wordParamsInfo.getBubbleInfo().getRight(),
-                params.wordParamsInfo.getBubbleInfo().getBottom());
+                params.wordParamsInfo.getBubbleInfo().getPaddingTop(),
+                params.wordParamsInfo.getBubbleInfo().getPaddingLeft(),
+                params.wordParamsInfo.getBubbleInfo().getPaddingRight(),
+                params.wordParamsInfo.getBubbleInfo().getPaddingBottom());
+        Log.d("draw", "success setBubbleTextParams");
     }
 
     /**
@@ -74,9 +79,11 @@ public class BubbleViewHelper {
      */
     private void initPaint(Context context) {
         mPaint = new Paint();
-        mPaint.setColor(mParams.wordParamsInfo.getTextColor() != 0 ? mParams.wordParamsInfo.getTextColor() : Color.WHITE);
+        int textColor = mParams.wordParamsInfo.getTextColor();
+        mPaint.setColor(mParams.wordParamsInfo.getBubbleInfo().getOnlyText() ? textColor : textColor != Color.WHITE ? Color.WHITE : Color.BLACK);
         mPaint.setTypeface(ResourcesCompat.getFont(context, mParams.wordParamsInfo.getTextStyle()));
         mPaint.setTextSize(mTextDefaultSize);
+        mPaint.setTextAlign(Paint.Align.CENTER);
         mPaint.setAntiAlias(true);
     }
 
@@ -89,16 +96,20 @@ public class BubbleViewHelper {
      * @param bottom
      */
     private void initTextArea(float top, float left, float right, float bottom) {
-        mTextAreaTop = (int) (top * mBubbleBitmap.getHeight());
-        mTextAreaBottom = (int) (bottom * mBubbleBitmap.getHeight());
-        mTextAreaLeft = (int) (left * mBubbleBitmap.getWidth());
-        mTextAreaRight = (int) (right * mBubbleBitmap.getWidth());
+        mTextAreaTop = (int) top;
+        mTextAreaBottom = (int) bottom;
+        mTextAreaLeft = (int) left;
+        mTextAreaRight = (int) right;
 
         mTextAreaWidth = mBubbleBitmap.getWidth() - mTextAreaRight - mTextAreaLeft;
         mTextAreaHeight = mBubbleBitmap.getHeight() - mTextAreaBottom - mTextAreaTop;
+        Log.d("draw", "mBubbleBitmap.getHeight() " + mBubbleBitmap.getHeight());
+        Log.d("draw", "mTextAreaHeight " + mTextAreaHeight);
+        Log.d("draw", "mTextAreaWidth " + mTextAreaWidth);
 
         mTextAreaCenterX = mTextAreaWidth / 2 + mTextAreaLeft;
-        mTextAreaCenterY = mTextAreaHeight / 2 + mTextAreaTop;
+        mTextAreaCenterY = mBubbleBitmap.getHeight() / 2;
+        Log.d("draw", "success initTextArea");
     }
 
 
@@ -109,19 +120,25 @@ public class BubbleViewHelper {
      */
     @Nullable
     public Bitmap createBubbleTextBitmap() {
+        Log.d("draw", "mBubbleBitmap == null = " + (mBubbleBitmap == null));
+        Log.d("draw", "mBubbleBitmap.isRecycled() = " + (mBubbleBitmap.isRecycled()));
         if (mBubbleBitmap == null || mBubbleBitmap.isRecycled()) {
             return null;
         }
         float textSize = measureFontSize(mText);
+        Log.d("draw", "success measureFontSize");
         mPaint.setTextSize(textSize);
         Bitmap bitmap = Bitmap.createBitmap(mBubbleBitmap.getWidth(), mBubbleBitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawBitmap(mBubbleBitmap, 0, 0, mPaint);
+        Log.d("draw", "success drawBitmap");
         drawText(canvas);
+        Log.d("draw", "success drawText");
         if (!mBubbleBitmap.isRecycled()) {
             mBubbleBitmap.recycle();
             mBubbleBitmap = null;
         }
+        Log.d("draw", "success createBubbleTextBitmap");
         return bitmap;
     }
 
@@ -138,11 +155,16 @@ public class BubbleViewHelper {
         mPaint.setTextSize(trySize);
         int lines = measureTextLines(trySize, text);
         double height = measureTextAreaHeight(trySize, lines);
+        Log.d("draw", "size " + trySize + " lines " + lines + " height" + height);
         if (height > mTextAreaHeight) {
             do {
                 trySize -= 1;
                 lines = measureTextLines(trySize, text) + 1;// +1是为了留出更多的空间
                 height = measureTextAreaHeight(trySize, lines);
+                Log.d("draw", "size " + trySize + " lines " + lines + " height" + height);
+                if (trySize < 8) {
+                    break;
+                }
             } while (height > mTextAreaHeight);
         }
         return trySize;
@@ -185,7 +207,7 @@ public class BubbleViewHelper {
 
         for (TextParams params : list) {
             // 具体绘制字幕
-            canvas.drawText(params.text, params.x, params.y, mPaint);
+            canvas.drawText(params.text, mBubbleBitmap.getWidth() / 2, params.y, mPaint);
         }
 
     }
@@ -204,17 +226,17 @@ public class BubbleViewHelper {
 
         int middlePos = (text.size() + 1) / 2 - 1;
 
-        float baseX = mTextAreaLeft, baseY;
+        float baseX = mTextAreaCenterX, baseY;
 
         float fontHeight = getFontHeight();
 
         if (text.size() % 2 == 1) {//行数奇数
-            baseY = mTextAreaCenterY + fontHeight / 2;
+            baseY = mTextAreaCenterY + fontHeight / 3;
         } else {
             baseY = mTextAreaCenterY;
         }
 
-        list.add(new TextParams(text.get(middlePos), mTextAreaLeft, baseY));
+        list.add(new TextParams(text.get(middlePos), mTextAreaCenterX, baseY));
 
 
         int loopTime = 0;

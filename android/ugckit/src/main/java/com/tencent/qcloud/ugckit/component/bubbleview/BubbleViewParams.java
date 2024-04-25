@@ -5,6 +5,7 @@ import android.graphics.Color;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.tencent.qcloud.ugckit.module.effect.bubble.NewBubbleInfo;
 import com.tencent.qcloud.ugckit.module.effect.bubble.TCBubbleInfo;
 import com.tencent.qcloud.ugckit.module.effect.bubble.TCSubtitleInfo;
 
@@ -29,15 +30,8 @@ public class BubbleViewParams {
 
         // 初始化为无字幕的 配置信息
         // 创建一个默认的
-        TCBubbleInfo bubbleInfo = new TCBubbleInfo();
-        bubbleInfo.setHeight(0);
-        bubbleInfo.setWidth(0);
-        bubbleInfo.setDefaultSize(40);
-        bubbleInfo.setBubblePath(null);
-        bubbleInfo.setIconPath(null);
-        bubbleInfo.setRect(0, 0, 0, 0);
 
-        info.setBubbleInfo(bubbleInfo);
+        info.setBubbleInfo(new NewBubbleInfo(false,true,Color.BLACK,false));
 
         params.wordParamsInfo = info;
         return params;

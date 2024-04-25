@@ -149,7 +149,7 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
 
         // 展示气泡样式修改的面板
         mBubbleSubtitlePannel = (BubbleSubtitlePannel) getActivity().findViewById(R.id.bubble_setting_view);
-        mBubbleSubtitlePannel.loadAllBubble(TCBubbleManager.getInstance(getActivity()).loadBubbles());
+        mBubbleSubtitlePannel.loadAllBubble(TCBubbleManager.getInstance(getActivity()).loadNewBubble());
         mBubbleSubtitlePannel.setOnBubbleSubtitleCallback(this);
 
         mImageDel = (ImageView) view.findViewById(R.id.iv_bubble_del);
@@ -192,7 +192,7 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
     @Override
     public void onItemClick(View view, int position) {
         Log.d("onItemClick","position="+position+" size="+mAddBubbleInfoList.size());
-        if (position == mAddBubbleInfoList.size()) {
+        if (position == 0) {
             // 新增
             clickBtnAdd();
         } else {
@@ -209,19 +209,19 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
             // 列表选中
             mAddBubbleAdapter.setCurrentSelectedPos(position);
             // 预览界面选中
-            mTCBubbleViewGroup.selectOperationView(position);
+            mTCBubbleViewGroup.selectOperationView(position-1);
             // 进度条范围选中
             RangeSliderViewContainer lastSlider = mVideoProgressController.getRangeSliderView(ViewConst.VIEW_TYPE_WORD, mCurrentSelectedPos);
             if (lastSlider != null) {
                 lastSlider.setEditComplete();
             }
 
-            RangeSliderViewContainer currentSlider = mVideoProgressController.getRangeSliderView(ViewConst.VIEW_TYPE_WORD, position);
+            RangeSliderViewContainer currentSlider = mVideoProgressController.getRangeSliderView(ViewConst.VIEW_TYPE_WORD, position-1);
             if (currentSlider != null) {
                 currentSlider.showEdit();
             }
 
-            mCurrentSelectedPos = position;
+            mCurrentSelectedPos = position-1;
         }
     }
 
@@ -255,66 +255,70 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
     @Override
     public void onBubbleSubtitleCallback(TCSubtitleInfo info) {
 
-        // 新增气泡字幕
-        if (!mIsEditWordAgain) {
-            // 创建一个默认的参数
-            BubbleViewParams params = BubbleViewParams.createDefaultParams(info.getText());
-            // 添加到气泡view
-            BubbleView view = createDefaultBubbleView(params);
-            mTCBubbleViewGroup.addOperationView(view);// 添加到Group中去管理
-            params.wordParamsInfo = info;
-            params.bubbleBitmap = TCBubbleManager.getInstance(getActivity()).getBitmapFromAssets(params.wordParamsInfo.getBubbleInfo().getBubblePath());
-            params.iconBitmap = TCBubbleManager.getInstance(getActivity()).getBitmapFromAssets(params.wordParamsInfo.getBubbleInfo().getIconPath());
-            view.setBubbleParams(params);
-
-            int count = mAddBubbleInfoList.size();
-            params.text = info.getText();
-            // 更新下方的贴纸列表
-            mAddBubbleInfoList.add(params);
-            mAddBubbleAdapter.setCurrentSelectedPos(count);
-            mAddBubbleAdapter.notifyDataSetChanged();
-            // 更新进度条上的开始结束位置
-            RangeSliderViewContainer rangeSliderView = new RangeSliderViewContainer(getActivity());
-            rangeSliderView.init(mVideoProgressController, mDefaultWordStartTime, mDefaultWordEndTime - mDefaultWordStartTime, mDuration);
-            rangeSliderView.setDurationChangeListener(mOnDurationChangeListener);
-
-            mVideoProgressController.addRangeSliderView(ViewConst.VIEW_TYPE_WORD, rangeSliderView);
-            mVideoProgressController.setCurrentTimeMs(mDefaultWordStartTime);
-
-            // 更新一下默认配置的时间
-            updateDefaultTime();
-
-            mCurrentSelectedPos = count - 1;
-            mIsEditWordAgain = true;
-        }
-        // 修改
-        else {
-            //获取当前处于编辑状态的气泡字幕的view
-            BubbleView view = (BubbleView) mTCBubbleViewGroup.getSelectedLayerOperationView();
-            int index = mTCBubbleViewGroup.getSelectedViewIndex();
-            Bitmap buble= TCBubbleManager.getInstance(getActivity()).getBitmapFromAssets(info.getBubbleInfo().getBubblePath());
-            Bitmap icon= TCBubbleManager.getInstance(getActivity()).getBitmapFromAssets(info.getBubbleInfo().getBubblePath());
-            if (view != null) {
-                BubbleViewParams params = view.getBubbleParams();
+        try {
+            // 新增气泡字幕
+            if (!mIsEditWordAgain) {
+                // 创建一个默认的参数
+                BubbleViewParams params = BubbleViewParams.createDefaultParams(info.getText());
+                // 添加到气泡view
                 params.wordParamsInfo = info;
-                params.text = info.getText();
-                params.bubbleBitmap = buble;
-                params.iconBitmap = icon;
+                params.bubbleBitmap = info.getBubbleInfo().buildBubbleBitmap();
+                params.iconBitmap = info.getBubbleInfo().buildIconBitmap(getContext());
+                BubbleView view = createDefaultBubbleView(params);
+                mTCBubbleViewGroup.addOperationView(view);// 添加到Group中去管理
                 view.setBubbleParams(params);
-            }
-            if (index >= 0 && index < mAddBubbleInfoList.size()) {
-                BubbleViewParams bubbleViewParams = mAddBubbleInfoList.get(index);
-                bubbleViewParams.wordParamsInfo = info;
-                bubbleViewParams.bubbleBitmap = buble;
-                bubbleViewParams.iconBitmap = icon;
-            }
-            mAddBubbleAdapter.notifyDataSetChanged();
 
-        }
+                int count = mAddBubbleInfoList.size();
+                params.text = info.getText();
+                // 更新下方的贴纸列表
+                mAddBubbleInfoList.add(params);
+                mAddBubbleAdapter.setCurrentSelectedPos(count+1);
+                mAddBubbleAdapter.notifyDataSetChanged();
+                // 更新进度条上的开始结束位置
+                RangeSliderViewContainer rangeSliderView = new RangeSliderViewContainer(getActivity());
+                rangeSliderView.init(mVideoProgressController, mDefaultWordStartTime, mDefaultWordEndTime - mDefaultWordStartTime, mDuration);
+                rangeSliderView.setDurationChangeListener(mOnDurationChangeListener);
+
+                mVideoProgressController.addRangeSliderView(ViewConst.VIEW_TYPE_WORD, rangeSliderView);
+                mVideoProgressController.setCurrentTimeMs(mDefaultWordStartTime);
+
+                // 更新一下默认配置的时间
+                updateDefaultTime();
+
+                mCurrentSelectedPos = count;
+                mIsEditWordAgain = true;
+            }
+            // 修改
+            else {
+                //获取当前处于编辑状态的气泡字幕的view
+                BubbleView view = (BubbleView) mTCBubbleViewGroup.getSelectedLayerOperationView();
+                int index = mTCBubbleViewGroup.getSelectedViewIndex();
+                Bitmap buble= info.getBubbleInfo().buildBubbleBitmap();
+                Bitmap icon= info.getBubbleInfo().buildIconBitmap(getContext());
+                if (view != null) {
+                    BubbleViewParams params = view.getBubbleParams();
+                    params.wordParamsInfo = info;
+                    params.text = info.getText();
+                    params.bubbleBitmap = buble;
+                    params.iconBitmap = icon;
+                    view.setBubbleParams(params);
+                }
+                if (index >= 0 && index < mAddBubbleInfoList.size()) {
+                    BubbleViewParams bubbleViewParams = mAddBubbleInfoList.get(index);
+                    bubbleViewParams.wordParamsInfo = info;
+                    bubbleViewParams.bubbleBitmap = buble;
+                    bubbleViewParams.iconBitmap = icon;
+                }
+                mAddBubbleAdapter.notifyDataSetChanged();
+
+            }
 //        mBubbleSubtitlePannel.dismiss();
 
-        addSubtitlesIntoVideo();
-        saveIntoManager();
+            addSubtitlesIntoVideo();
+            saveIntoManager();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -402,7 +406,7 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
         }
         BubbleViewParams params = view.getBubbleParams();
         params.text = text;
-        params.bubbleBitmap = TCBubbleManager.getInstance(getActivity()).getBitmapFromAssets(params.wordParamsInfo.getBubbleInfo().getBubblePath());
+        params.bubbleBitmap = params.wordParamsInfo.getBubbleInfo().buildBubbleBitmap();
         view.setBubbleParams(params);
 
         BubbleViewParams bubbleViewParams = mAddBubbleInfoList.get(index);
@@ -489,7 +493,7 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
             BubbleViewParams params = info.getViewParams();
             // params设置进Bubble之后是不保存bitmap的,会被置空释放掉
             // 重新loadBitmap (因为在设置BubbleView的时候，原来的气泡Bitmap回在内部被回收。 所以这里直接重新load多一边
-            params.bubbleBitmap = TCBubbleManager.getInstance(getActivity()).getBitmapFromAssets(params.wordParamsInfo.getBubbleInfo().getBubblePath());
+            params.bubbleBitmap = params.wordParamsInfo.getBubbleInfo().buildBubbleBitmap();
 
             BubbleView view = createDefaultBubbleView(info.getViewParams());
             view.setCenterX(info.getViewCenterX());

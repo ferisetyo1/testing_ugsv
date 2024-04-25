@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class AddBubbleAdapter extends BaseRecyclerAdapter<AddBubbleAdapter.AddPa
 
     public void setFooterView(View footerView) {
         mFooterView = footerView;
-        notifyItemInserted(getItemCount() - 1);
+        notifyItemInserted(0);
     }
 
     public void setCurrentSelectedPos(int pos) {
@@ -56,7 +57,7 @@ public class AddBubbleAdapter extends BaseRecyclerAdapter<AddBubbleAdapter.AddPa
         if (mFooterView == null) {
             return TYPE_NORMAL;
         }
-        if (position == getItemCount() - 1) {
+        if (position == 0) {
             return TYPE_FOOTER;
         }
         return TYPE_NORMAL;
@@ -67,27 +68,32 @@ public class AddBubbleAdapter extends BaseRecyclerAdapter<AddBubbleAdapter.AddPa
         if (getItemViewType(position) == TYPE_FOOTER) {
             return;
         }
-        TCBubbleInfo tcBubbleInfo = null;
-        BubbleViewParams bubbleViewParams = mBubbleInfoList.get(position);
+        try{
+            BubbleViewParams bubbleViewParams = mBubbleInfoList.get(position-1);
 
-        if (bubbleViewParams != null) {
-            if (bubbleViewParams.iconBitmap != null)
-                holder.ivAddPaster.setImageBitmap(bubbleViewParams.iconBitmap);
-            if (mPasterTextSize != 0) {
-                holder.tvAddPasterText.setTextSize(mPasterTextSize);
+            if (bubbleViewParams != null) {
+                if (bubbleViewParams.iconBitmap != null)
+                    holder.ivAddPaster.setImageBitmap(bubbleViewParams.iconBitmap);
+                if (mPasterTextSize != 0) {
+                    holder.tvAddPasterText.setTextSize(mPasterTextSize);
+                }
+                if (mPasterTextColor != 0) {
+                    holder.tvAddPasterText.setTextColor(mContext.getResources().getColor(mPasterTextColor));
+                }
+                holder.tvAddPasterText.setText(TextUtils.isEmpty(bubbleViewParams.text) ? "" : bubbleViewParams.text);
+            }else{
+                holder.tvAddPasterText.setText("params null");
             }
-            if (mPasterTextColor != 0) {
-                holder.tvAddPasterText.setTextColor(mContext.getResources().getColor(mPasterTextColor));
+            if (mCoverIcon != 0) {
+                holder.ivAddPasterTint.setImageResource(mCoverIcon);
             }
-            holder.tvAddPasterText.setText(TextUtils.isEmpty(bubbleViewParams.text) ? "" : bubbleViewParams.text);
-        }
-        if (mCoverIcon != 0) {
-            holder.ivAddPasterTint.setImageResource(mCoverIcon);
-        }
-        if (mCurrentSelectedPos == position) {
-            holder.ivAddPasterTint.setVisibility(View.VISIBLE);
-        } else {
-            holder.ivAddPasterTint.setVisibility(View.GONE);
+            if (mCurrentSelectedPos == position) {
+                holder.ivAddPasterTint.setVisibility(View.VISIBLE);
+            } else {
+                holder.ivAddPasterTint.setVisibility(View.GONE);
+            }
+        }catch (Exception e){
+            Log.getStackTraceString(e.fillInStackTrace());
         }
     }
 

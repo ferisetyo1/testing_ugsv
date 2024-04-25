@@ -14,7 +14,7 @@ public interface IBubbleSubtitlePannel {
     /**
      * 加载所有的气泡字幕
      */
-    void loadAllBubble(List<TCBubbleInfo> list);
+    void loadAllBubble(List<NewBubbleInfo> list);
 
     /**
      * 显示气泡字幕面板

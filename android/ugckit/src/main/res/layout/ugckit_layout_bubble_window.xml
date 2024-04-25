@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="240dp"
+    android:layout_gravity="bottom"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/ugckit_white"
-    android:minHeight="375dp"
     android:clickable="true"
     android:orientation="vertical">
 
@@ -119,40 +119,28 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bubble_rv_style"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_font_style"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             android:visibility="gone"
             tools:listitem="@layout/ugckit_bubble_font_style_item"
             android:layout_centerInParent="true" />
 
-        <LinearLayout
-            android:id="@+id/bubble_ll_color"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/bubble_color_picker"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <com.tencent.qcloud.ugckit.component.circlebmp.TCCircleView
-                android:id="@+id/bubble_cv_color"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp" />
-
-            <com.tencent.qcloud.ugckit.component.seekbar.TCColorView
-                android:id="@+id/bubble_color_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="8"
+            android:layout_centerInParent="true" />
 
     </RelativeLayout>
 </LinearLayout>

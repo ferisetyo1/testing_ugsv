@@ -3,6 +3,8 @@ package com.tencent.qcloud.ugckit.module.effect.bubble;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -16,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,6 +38,15 @@ public class TCBubbleManager {
 
     private TCBubbleManager(@NonNull Context context) {
         mContext = context.getApplicationContext();
+    }
+
+    public List<NewBubbleInfo> loadNewBubble(){
+        return new ArrayList<NewBubbleInfo>(Arrays.asList(
+                new NewBubbleInfo(false,true, Color.BLACK,false),
+                new NewBubbleInfo(false,false, Color.BLACK,false),
+                new NewBubbleInfo(false,false, Color.BLACK,true),
+                new NewBubbleInfo(true,false, Color.BLACK,false)
+        ));
     }
 
     @Nullable

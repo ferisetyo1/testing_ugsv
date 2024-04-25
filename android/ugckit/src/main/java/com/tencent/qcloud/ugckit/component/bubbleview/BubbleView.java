@@ -49,6 +49,7 @@ public class BubbleView extends FloatLayerView {
         setImageBitamp(bitmap);
         mBubbleViewParams.bubbleBitmap = null;
         invalidate();
+        Log.d("draw","success setBubbleParams");
     }
 
     @Nullable

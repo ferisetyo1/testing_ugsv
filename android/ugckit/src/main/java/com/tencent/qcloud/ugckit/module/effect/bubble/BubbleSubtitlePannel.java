@@ -15,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,26 +35,27 @@ import com.tencent.qcloud.ugckit.component.seekbar.TCColorView;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * 配置气泡字幕样式、以及字体颜色的控件
  */
-public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitlePannel, BubbleAdapter.OnItemClickListener, View.OnClickListener, TCColorView.OnSelectColorListener, BubbleFontStyleAdapter.OnFontClickListener {
+public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitlePannel, BubbleAdapter.OnItemClickListener, View.OnClickListener, BubbleFontStyleAdapter.OnFontClickListener, GridColorAdapter.OnColorClickListener {
     private View mContentView;
     private RecyclerView mRecycleBubbles;
     private RecyclerView mRecycleFont;
+    private RecyclerView mRecycleColor;
     private BubbleAdapter mBubbleAdapter;
     private BubbleFontStyleAdapter mFontAdapter;
-    private List<TCBubbleInfo> mBubbles;
+    private GridColorAdapter mColorAdapter;
+    private List<NewBubbleInfo> mBubbles;
     private List<BubbleFontStyle> mFonts;
+    private List<Integer> mColors;
     private ImageView mImageClose;
     private TextView mTextBubbleStyle;   //气泡样式
     private TextView mTextStyle;   //气泡样式
     private TextView mTextColor;         //文字颜色
-    private TCColorView mColorView;
-    private TCCircleView mCvColor;
-    private LinearLayout mLlColor;
     private CardView btnSubmit;
     private EditText mEdtSubtitle;
 
@@ -88,19 +90,16 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
         mImageClose.setOnClickListener(this);
         mRecycleBubbles = (RecyclerView) contentView.findViewById(R.id.bubble_rv_style);
         mRecycleFont = (RecyclerView) contentView.findViewById(R.id.rv_font_style);
+        mRecycleColor = (RecyclerView) contentView.findViewById(R.id.bubble_color_picker);
         mTextBubbleStyle = (TextView) contentView.findViewById(R.id.bubble_iv_bubble);
         mTextBubbleStyle.setOnClickListener(this);
         mTextStyle = (TextView) contentView.findViewById(R.id.bubble_iv_style);
         mTextStyle.setOnClickListener(this);
         mTextColor = (TextView) contentView.findViewById(R.id.bubble_iv_color);
         mTextColor.setOnClickListener(this);
-        mLlColor = (LinearLayout) contentView.findViewById(R.id.bubble_ll_color);
-        mCvColor = (TCCircleView) contentView.findViewById(R.id.bubble_cv_color);
-        mColorView = (TCColorView) contentView.findViewById(R.id.bubble_color_view);
         mEdtSubtitle = (EditText) contentView.findViewById(R.id.edt_subtitle);
         btnSubmit = (CardView) contentView.findViewById(R.id.btn_submit);
         btnSubmit.setOnClickListener(this);
-        mColorView.setOnSelectColorListener(this);
         mTextBubbleStyle.setSelected(true);
         mRecycleBubbles.setVisibility(View.VISIBLE);
 
@@ -114,19 +113,44 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
         });
 
         loadAllFontStyle();
+        loadAllColorStyle();
+    }
+
+    private void loadAllColorStyle() {
+        mColors = new ArrayList<>(Arrays.asList(
+                Color.BLACK,
+                Color.WHITE,
+                Color.parseColor("#EB0023"),
+                Color.parseColor("#FDA22B"),
+                Color.parseColor("#F4CE47"),
+                Color.parseColor("#00AA4B"),
+                Color.parseColor("#92E2BF"),
+                Color.parseColor("#4791FF"),
+                Color.parseColor("#00398F"),
+                Color.parseColor("#7655D5"),
+                Color.parseColor("#D54DAF"),
+                Color.parseColor("#FFD1D8"),
+                Color.parseColor("#A4895A"),
+                Color.parseColor("#805C1E"),
+                Color.parseColor("#BABABA"),
+                Color.parseColor("#474747")
+        ));
+        mColorAdapter = new GridColorAdapter(mColors);
+        mColorAdapter.setOnColorClickListener(this);
+        mRecycleColor.setAdapter(mColorAdapter);
     }
 
     private void loadAllFontStyle() {
-     mFonts= new ArrayList();
-     mFonts.add(new BubbleFontStyle("Poppins  ",R.font.poppins_medium));
-     mFonts.add(new BubbleFontStyle("Inter  ",R.font.inter_medium));
-     mFonts.add(new BubbleFontStyle("Caveat ",R.font.caveat_bold));
-     mFonts.add(new BubbleFontStyle("Playfair  ",R.font.playfair_display_medium));
-     mFonts.add(new BubbleFontStyle("Noto serif  ",R.font.noto_serif_bold));
+        mFonts = new ArrayList();
+        mFonts.add(new BubbleFontStyle("Poppins  ", R.font.poppins_medium));
+        mFonts.add(new BubbleFontStyle("Inter  ", R.font.inter_medium));
+        mFonts.add(new BubbleFontStyle("Caveat ", R.font.caveat_bold));
+        mFonts.add(new BubbleFontStyle("Playfair  ", R.font.playfair_display_medium));
+        mFonts.add(new BubbleFontStyle("Noto serif  ", R.font.noto_serif_bold));
 
-     mFontAdapter = new BubbleFontStyleAdapter(mFonts);
-     mFontAdapter.setOnFontClickListener(this);
-     mRecycleFont.setAdapter(mFontAdapter);
+        mFontAdapter = new BubbleFontStyleAdapter(mFonts);
+        mFontAdapter.setOnFontClickListener(this);
+        mRecycleFont.setAdapter(mFontAdapter);
     }
 
     private void enterAnimator() {
@@ -159,22 +183,15 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
     }
 
     private void resetInfo() {
-        mSubtitleInfo.setText("Isi field text lalu tekan submit untuk mengubah!");
+        mSubtitleInfo.setText("Halo");
         mEdtSubtitle.setText("");
+        mBubbleAdapter.setSelection(0);
         mSubtitleInfo.setBubblePos(0);
-        // 创建一个默认的
-//        TCBubbleInfo info = new TCBubbleInfo();
-//        info.setHeight(180);
-//        info.setWidth(336);
-//        info.setDefaultSize(40);
-//        info.setBubblePath(null);
-//        info.setIconPath(null);
-//        info.setRect(20, 20, 20, 20);
         mSubtitleInfo.setBubbleInfo(mBubbles.get(0));
     }
 
     @Override
-    public void loadAllBubble(List<TCBubbleInfo> list) {
+    public void loadAllBubble(List<NewBubbleInfo> list) {
         mBubbles = list;
         mRecycleBubbles.setVisibility(View.VISIBLE);
         mBubbleAdapter = new BubbleAdapter(list);
@@ -252,7 +269,7 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
             mRecycleFont.setVisibility(View.GONE);
 
             mTextColor.setSelected(false);
-            mLlColor.setVisibility(View.GONE);
+            mRecycleColor.setVisibility(View.GONE);
         } else if (i == R.id.bubble_iv_color) {
             mTextBubbleStyle.setSelected(false);
             mRecycleBubbles.setVisibility(View.GONE);
@@ -261,7 +278,7 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
             mRecycleFont.setVisibility(View.GONE);
 
             mTextColor.setSelected(true);
-            mLlColor.setVisibility(View.VISIBLE);
+            mRecycleColor.setVisibility(View.VISIBLE);
         } else if (i == R.id.bubble_iv_style) {
             mTextBubbleStyle.setSelected(false);
             mRecycleBubbles.setVisibility(View.GONE);
@@ -269,7 +286,7 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
             mTextStyle.setSelected(true);
             mRecycleFont.setVisibility(View.VISIBLE);
 
-            mLlColor.setVisibility(View.GONE);
+            mRecycleColor.setVisibility(View.GONE);
             mTextColor.setSelected(false);
         } else if (i == R.id.iv_close) {
 
@@ -285,19 +302,9 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
         }
     }
 
-    @Override
-    public void onFinishColor(@ColorInt int color) {
-        mSubtitleInfo.setTextColor(color);
-        callback();
-    }
-
-    @Override
-    public void onProgressColor(@ColorInt int color) {
-        mCvColor.setColor(color);
-    }
-
     private void callback() {
         if (mCallback != null) {
+            Log.d("callback","calling");
             mCallback.onBubbleSubtitleCallback(mSubtitleInfo);
         }
     }
@@ -335,6 +342,12 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
     @Override
     public void onFontClick(View view, int position) {
         mSubtitleInfo.setTextStyle(mFonts.get(position).getRes());
+        callback();
+    }
+
+    @Override
+    public void onColorClick(View view, int position) {
+        mSubtitleInfo.setTextColor(mColors.get(position));
         callback();
     }
 }
