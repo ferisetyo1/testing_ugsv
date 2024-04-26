@@ -15,13 +15,15 @@
         android:id="@+id/paster_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_above="@+id/video_bottom_layout"/>
 
     <com.tencent.qcloud.ugckit.component.floatlayer.FloatLayerViewGroup
         android:id="@+id/bubble_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_above="@+id/video_bottom_layout"/>
 
     <LinearLayout
         android:id="@+id/video_bottom_layout"
