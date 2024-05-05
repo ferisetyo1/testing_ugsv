@@ -48,6 +48,7 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
     private UGCKitVideoEdit mUGCKitVideoEdit;
     // 背景音
     private TextView mTvBgm;
+    private TextView mTvSimpan;
     // 动态滤镜
     private TextView mTvMotion;
     // 时间特效
@@ -68,17 +69,7 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
         @Override
         public void onEditCompleted(UGCKitResult ugcKitResult) {
             if (ugcKitResult.errorCode == 0) {
-                // TODO: Callback output path
-                Map<String, String> args = new HashMap<>();
-                args.put("outputPath", ugcKitResult.outputPath);
-                FlutterCallback.call("onEditCompleted", args);
                 startPreviewActivity(ugcKitResult);
-                if (UgsvFlutterPlugin.result != null) {
-                    Map<String, String> newArgs = new HashMap<>();
-                    newArgs.put("outputPath", ugcKitResult.outputPath);
-                    newArgs.put("musicId", String.valueOf(ugcKitResult.musicId == -1 ? (musicId == -1 ? -1 : musicId) : ugcKitResult.musicId));
-                    UgsvFlutterPlugin.result.success(newArgs);
-                }
             } else {
                 if (UgsvFlutterPlugin.result != null) {
                     UgsvFlutterPlugin.result.error("FAILED", "FAILED", null);
@@ -114,6 +105,7 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
         // 初始化播放器
         mUGCKitVideoEdit.initPlayer();
 
+        mTvSimpan = (TextView) findViewById(R.id.tv_simpan);
         mTvBgm = (TextView) findViewById(R.id.tv_bgm);
         mTvMotion = (TextView) findViewById(R.id.tv_motion);
         mTvSpeed = (TextView) findViewById(R.id.tv_speed);
@@ -122,6 +114,7 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
         mTvSubtitle = (TextView) findViewById(R.id.tv_subtitle);
         mTextTransition = (TextView) findViewById(R.id.tv_transition);
 
+        mTvSimpan.setOnClickListener(this);
         mTvBgm.setOnClickListener(this);
         mTvMotion.setOnClickListener(this);
         mTvSpeed.setOnClickListener(this);
@@ -173,14 +166,17 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
         }
         long duration = VideoEditerSDK.getInstance().getVideoPlayDuration();
         if (ugcKitResult.isPublish) {
-            Context applicationContext = getApplicationContext();
-            Intent intent = new Intent(applicationContext, TCVideoPublisherActivity.class);
-            intent.putExtra(UGCKitConstants.VIDEO_PATH, ugcKitResult.outputPath);
-            if (!TextUtils.isEmpty(ugcKitResult.coverPath)) {
-                intent.putExtra(UGCKitConstants.VIDEO_COVERPATH, ugcKitResult.coverPath);
+            // TODO: Callback output path
+            Map<String, String> args = new HashMap<>();
+            args.put("outputPath", ugcKitResult.outputPath);
+            FlutterCallback.call("onEditCompleted", args);
+            Log.d("startPreviewActivity", String.valueOf(ugcKitResult.isPublish));
+            if (UgsvFlutterPlugin.result != null) {
+                Map<String, String> newArgs = new HashMap<>();
+                newArgs.put("outputPath", ugcKitResult.outputPath);
+                newArgs.put("musicId", String.valueOf(ugcKitResult.musicId == -1 ? (musicId == -1 ? -1 : musicId) : ugcKitResult.musicId));
+                UgsvFlutterPlugin.result.success(newArgs);
             }
-            intent.putExtra(UGCKitConstants.VIDEO_RECORD_DURATION, duration);
-            startActivity(intent);
             finish();
         } else {
             finish();
@@ -210,6 +206,8 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
             startEffectActivity(UGCKitConstants.TYPE_EDITER_SUBTITLE);
         } else if (id == R.id.tv_transition) {
             startEffectActivity(UGCKitConstants.TYPE_EDITER_TRANSITION);
+        } else if (id == R.id.tv_simpan) {
+            mUGCKitVideoEdit.showSaveDialog();
         }
     }
 

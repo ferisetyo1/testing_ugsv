@@ -171,35 +171,33 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
      * 显示发布对话框
      */
     private void showPublishDialog() {
-        ActionSheetDialog actionSheetDialog = new ActionSheetDialog(getContext());
-        actionSheetDialog.builder();
-        actionSheetDialog.setCancelable(false);
-        actionSheetDialog.setCancelable(false);
-        actionSheetDialog.addSheetItem(getResources().getString(R.string.ugckit_video_editer_activity_show_publish_dialog_save),
-                ActionSheetDialog.SheetItemColor.Blue, new ActionSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        if (Build.VERSION.SDK_INT <= 28 && ContextCompat.checkSelfPermission(getContext(),
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                            ToastUtil.toastLongMessage(getResources().getString(R.string.need_storage_permission));
-                        } else {
-                            VideoEditerSDK.getInstance().setPublishFlag(false);
-                            startGenerate();
-                        }
-                    }
-                });
+        ValidationDialogFragment dialog= ValidationDialogFragment.newInstance("Lanjut tanpa menyimpan editan video di perangkatmu?", "Ya, Lanjut", "Tetap Edit");
+        dialog.setListener(() -> {
+            if (Build.VERSION.SDK_INT <= 28 && ContextCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ToastUtil.toastLongMessage(getResources().getString(R.string.need_storage_permission));
+            } else {
+                VideoGenerateKit.getInstance().setmSaveToDCIM(false);
+                VideoEditerSDK.getInstance().setPublishFlag(true);
+                startGenerate();
+            }
+        });
+        dialog.show(((FragmentActivity) getContext()).getSupportFragmentManager(), "validation");
+    }
 
-        if (mIsPublish) {
-//            actionSheetDialog.addSheetItem(getResources().getString(R.string.ugckit_video_editer_activity_show_publish_dialog_publish),
-//                    ActionSheetDialog.SheetItemColor.Blue, new ActionSheetDialog.OnSheetItemClickListener() {
-//                        @Override
-//                        public void onClick(int which) {
-//                            VideoEditerSDK.getInstance().setPublishFlag(true);
-//                            startGenerate();
-//                        }
-//                    });
-        }
-        actionSheetDialog.show();
+    public void showSaveDialog() {
+        ValidationDialogFragment dialog= ValidationDialogFragment.newInstance("Lanjut menyimpan editan video di perangkatmu?", "Ya, Lanjut", "Tetap Edit");
+        dialog.setListener(() -> {
+            if (Build.VERSION.SDK_INT <= 28 && ContextCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ToastUtil.toastLongMessage(getResources().getString(R.string.need_storage_permission));
+            } else {
+                VideoGenerateKit.getInstance().setmSaveToDCIM(true);
+                VideoEditerSDK.getInstance().setPublishFlag(false);
+                startGenerate();
+            }
+        });
+        dialog.show(((FragmentActivity) getContext()).getSupportFragmentManager(), "validation");
     }
 
     @Override

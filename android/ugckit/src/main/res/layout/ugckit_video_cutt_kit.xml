@@ -8,6 +8,22 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_simpan"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:drawableTop="@drawable/menu_ic_simpan_32"
+        android:fontFamily="@font/poppins"
+        android:gravity="center"
+        android:shadowColor="@color/ugckit_color_gray4"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="4"
+        android:text="Simpan"
+        android:textColor="@color/ugckit_white"
+        android:textSize="12sp" />
+
+    <TextView
         android:id="@+id/tv_bgm"
         android:layout_width="70dp"
         android:layout_height="wrap_content"

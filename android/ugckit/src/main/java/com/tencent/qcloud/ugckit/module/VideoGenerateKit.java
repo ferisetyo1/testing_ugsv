@@ -210,6 +210,7 @@ public class VideoGenerateKit extends BaseGenerateKit implements TXVideoGenerate
     }
 
     private void saveAndUpdate(@NonNull TXVideoEditConstants.TXGenerateResult result) {
+        Log.d("saveAndUpdate","Lewat Sini");
         if (mSaveToDCIM) {
             long duration = VideoEditerSDK.getInstance().getVideoDuration();
             AlbumSaver.getInstance(UGCKit.getAppContext()).setOutputProfile(mVideoOutputPath, duration, mCoverPath);
@@ -251,5 +252,9 @@ public class VideoGenerateKit extends BaseGenerateKit implements TXVideoGenerate
 
     public void setTailWaterMark(TailWaterMarkConfig tailWaterMarkConfig) {
         mTailWaterMarkConfig = tailWaterMarkConfig;
+    }
+
+    public void setmSaveToDCIM(boolean mSaveToDCIM) {
+        this.mSaveToDCIM = mSaveToDCIM;
     }
 }
