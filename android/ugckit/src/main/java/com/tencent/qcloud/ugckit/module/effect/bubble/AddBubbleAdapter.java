@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.tencent.qcloud.ugckit.component.floatlayer.FloatLayerView;
+import com.tencent.qcloud.ugckit.component.floatlayer.FloatLayerViewGroup;
 import com.tencent.qcloud.ugckit.module.effect.BaseRecyclerAdapter;
 import com.tencent.qcloud.ugckit.R;
 import com.tencent.qcloud.ugckit.component.bubbleview.BubbleViewParams;
@@ -34,9 +36,11 @@ public class AddBubbleAdapter extends BaseRecyclerAdapter<AddBubbleAdapter.AddPa
     private int mPasterTextColor;
     private int mCoverIcon;
     private List<BubbleViewParams> mBubbleInfoList;
+    private IBubbleAdapter listener;
 
-    public AddBubbleAdapter(List<BubbleViewParams> bubbleInfoList, Context context) {
+    public AddBubbleAdapter(List<BubbleViewParams> bubbleInfoList,IBubbleAdapter listener, Context context) {
         mBubbleInfoList = bubbleInfoList;
+        this.listener = listener;
         mContext = context;
     }
 
@@ -70,10 +74,12 @@ public class AddBubbleAdapter extends BaseRecyclerAdapter<AddBubbleAdapter.AddPa
         }
         try{
             BubbleViewParams bubbleViewParams = mBubbleInfoList.get(position-1);
-
+            FloatLayerView floatView=listener.getFloat(position-1);
+            if (floatView!=null){
+                holder.ivAddPaster.setImageBitmap(floatView.getRotateBitmap());
+            }
             if (bubbleViewParams != null) {
-                if (bubbleViewParams.iconBitmap != null)
-                    holder.ivAddPaster.setImageBitmap(bubbleViewParams.iconBitmap);
+
                 if (mPasterTextSize != 0) {
                     holder.tvAddPasterText.setTextSize(mPasterTextSize);
                 }
@@ -93,6 +99,7 @@ public class AddBubbleAdapter extends BaseRecyclerAdapter<AddBubbleAdapter.AddPa
                 holder.ivAddPasterTint.setVisibility(View.GONE);
             }
         }catch (Exception e){
+            Log.d("errorBubble",e.getMessage());
             Log.getStackTraceString(e.fillInStackTrace());
         }
     }
@@ -103,7 +110,7 @@ public class AddBubbleAdapter extends BaseRecyclerAdapter<AddBubbleAdapter.AddPa
         if (mFooterView != null && viewType == TYPE_FOOTER) {
             return new AddPasterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.ugckit_item_add, parent, false));
         }
-        return new AddPasterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.ugckit_item_add_paster, parent, false));
+        return new AddPasterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.ugckit_item_add_bubble, parent, false));
     }
 
     @Override
@@ -143,5 +150,9 @@ public class AddBubbleAdapter extends BaseRecyclerAdapter<AddBubbleAdapter.AddPa
             tvAddPasterText.setEllipsize(TextUtils.TruncateAt.END);
             tvAddPasterText.setMaxEms(4);
         }
+    }
+
+    interface IBubbleAdapter {
+        FloatLayerView getFloat(int position);
     }
 }

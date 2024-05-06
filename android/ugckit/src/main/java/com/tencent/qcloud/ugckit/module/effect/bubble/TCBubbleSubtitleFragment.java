@@ -131,21 +131,26 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
         ImageView addView = (ImageView) mFootView.findViewById(R.id.add_paster_image);
         addView.setImageResource(mAddIcon);
 
+        mTCBubbleViewGroup = (FloatLayerViewGroup) getActivity().findViewById(R.id.bubble_container);
+        mTCBubbleViewGroup.setOnItemClickListener(this);
+        mTCBubbleViewGroup.enableChildSingleClick(false); // 在容器里不响应子控件的单击事件
+        mTCBubbleViewGroup.enableDoubleChildClick(false);  // 在容器里响应子控件的双击事件
+
         mAddBubbleInfoList = new ArrayList<>();
         mRecycleBubble = (RecyclerView) view.findViewById(R.id.bubble_rv_list);
         mRecycleBubble.setLayoutManager(new GridLayoutManager(getContext(), 5));
-        mAddBubbleAdapter = new AddBubbleAdapter(mAddBubbleInfoList, getActivity());
+        mAddBubbleAdapter = new AddBubbleAdapter(mAddBubbleInfoList, new AddBubbleAdapter.IBubbleAdapter() {
+            @Override
+            public FloatLayerView getFloat(int position) {
+                return mTCBubbleViewGroup.getOperationView(position);
+            }
+        }, getActivity());
         mAddBubbleAdapter.setCoverIconResouce(mCoverIcon);
         mAddBubbleAdapter.setPasterTextSize(mPasterTextSize);
         mAddBubbleAdapter.setPasterTextColor(mPasterTextColor);
         mAddBubbleAdapter.setOnItemClickListener(this);
         mRecycleBubble.setAdapter(mAddBubbleAdapter);
         mAddBubbleAdapter.setFooterView(mFootView);
-
-        mTCBubbleViewGroup = (FloatLayerViewGroup) getActivity().findViewById(R.id.bubble_container);
-        mTCBubbleViewGroup.setOnItemClickListener(this);
-        mTCBubbleViewGroup.enableChildSingleClick(false); // 在容器里不响应子控件的单击事件
-        mTCBubbleViewGroup.enableDoubleChildClick(false);  // 在容器里响应子控件的双击事件
 
         // 展示气泡样式修改的面板
         mBubbleSubtitlePannel = (BubbleSubtitlePannel) getActivity().findViewById(R.id.bubble_setting_view);
@@ -392,6 +397,7 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
 
         addSubtitlesIntoVideo();
         saveIntoManager();
+        mAddBubbleAdapter.notifyDataSetChanged();
     }
 
     /****** 可编辑控件的回调end ******/
