@@ -101,7 +101,7 @@ public class AddBubbleAdapter extends BaseRecyclerAdapter<AddBubbleAdapter.AddPa
     @Override
     public AddPasterViewHolder onCreateVH(@NonNull ViewGroup parent, int viewType) {
         if (mFooterView != null && viewType == TYPE_FOOTER) {
-            return new AddPasterViewHolder(mFooterView);
+            return new AddPasterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.ugckit_item_add, parent, false));
         }
         return new AddPasterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.ugckit_item_add_paster, parent, false));
     }

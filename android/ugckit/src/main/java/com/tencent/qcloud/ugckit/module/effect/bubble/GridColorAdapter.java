@@ -31,6 +31,13 @@ public class GridColorAdapter extends RecyclerView.Adapter<GridColorAdapter.Bubb
         colors = color;
     }
 
+    public void setSelected(int selected) {
+        int last=selected;
+        this.selected = selected;
+        notifyItemChanged(last);
+        notifyItemChanged(selected);
+    }
+
     @NonNull
     @Override
     public BubbleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

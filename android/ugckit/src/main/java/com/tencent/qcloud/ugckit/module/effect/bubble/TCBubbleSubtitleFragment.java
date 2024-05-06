@@ -229,6 +229,8 @@ public class TCBubbleSubtitleFragment extends Fragment implements BaseRecyclerAd
         mIsEditWordAgain = false;
         mBubbleSubtitlePannel.show(null);
         mTCBubbleViewGroup.setVisibility(View.VISIBLE);
+        mTCBubbleViewGroup.unSelectOperationView(mCurrentSelectedPos);
+        mCurrentSelectedPos=-1;
         mImageDel.setVisibility(View.VISIBLE);
         // 暂停播放
         mTXVideoEditer.refreshOneFrame();// 将视频画面中的字幕清除  ，避免与上层控件造成混淆导致体验不好的问题。

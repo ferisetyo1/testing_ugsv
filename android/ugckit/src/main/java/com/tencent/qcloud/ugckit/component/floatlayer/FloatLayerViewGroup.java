@@ -70,7 +70,7 @@ public class FloatLayerViewGroup extends FrameLayout implements View.OnClickList
         }
     }
 
-    private void unSelectOperationView(int pos) {
+    public void unSelectOperationView(int pos) {
         if (pos < mFloatLayerViewList.size() && mLastSelectedPos != -1) {
             mFloatLayerViewList.get(mLastSelectedPos).setEditable(false);//不显示编辑的边框
             mLastSelectedPos = -1;

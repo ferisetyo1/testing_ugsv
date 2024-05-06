@@ -31,7 +31,10 @@ public class BubbleAdapter extends RecyclerView.Adapter<BubbleAdapter.BubbleView
     private int selection = 0;
 
     public void setSelection(int selection) {
+        int last=this.selection;
         this.selection = selection;
+        notifyItemChanged(last);
+        notifyItemChanged(selection);
     }
 
     @NonNull

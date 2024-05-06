@@ -187,6 +187,7 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
         mEdtSubtitle.setText("");
         mBubbleAdapter.setSelection(0);
         mSubtitleInfo.setBubblePos(0);
+        mColorAdapter.setSelected(0);
         mSubtitleInfo.setBubbleInfo(mBubbles.get(0));
     }
 
