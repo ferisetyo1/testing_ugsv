@@ -149,6 +149,11 @@ class IndexState extends State<IndexWidget> {
                     ),
                   ),
                 ),
+                FilledButton(
+                    onPressed: () {
+                      UGSV.addWatermarkVideo();
+                    },
+                    child: Text("save watermark"))
               ],
             ),
           ),

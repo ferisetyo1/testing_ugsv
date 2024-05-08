@@ -80,6 +80,11 @@ class UGSV {
     _apiChannel.invokeMethod("deleteLastRecordPart", {});
   }
 
+  static Future<String> addWatermarkVideo() async {
+    return await _apiChannel.invokeMethod("saveVideoWithWatermark",
+        {"url": "/storage/emulated/0/Movies/TXVideo_20240508_134111.mp4"});
+  }
+
   static setUgcLicense({
     required String licenseUrl,
     required String licenseKey,

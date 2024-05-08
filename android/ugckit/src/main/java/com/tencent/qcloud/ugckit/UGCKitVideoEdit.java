@@ -296,7 +296,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
         });
         PlayerManagerKit.getInstance().stopPlay();
 
-        VideoGenerateKit.getInstance().addTailWaterMark();
+//        VideoGenerateKit.getInstance().addTailWaterMark();
         VideoGenerateKit.getInstance().startGenerate();
     }
 
