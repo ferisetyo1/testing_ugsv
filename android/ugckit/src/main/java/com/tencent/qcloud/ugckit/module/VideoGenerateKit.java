@@ -175,6 +175,31 @@ public class VideoGenerateKit extends BaseGenerateKit implements TXVideoGenerate
         }
     }
 
+    public void addWaterMark() {
+        TXVideoEditConstants.TXVideoInfo info = VideoEditerSDK.getInstance().getTXVideoInfo();
+
+        if (info == null) {
+            Log.e(TAG, "addTailWaterMark info is null");
+            return;
+        }
+        Bitmap tailWaterMarkBitmap = BitmapFactory.decodeResource(UGCKit.getAppContext().getResources(), R.drawable.logo_watermark);
+        float widthHeightRatio = tailWaterMarkBitmap.getWidth() / (float) tailWaterMarkBitmap.getHeight();
+
+        TXVideoEditConstants.TXRect rect = new TXVideoEditConstants.TXRect();
+        // 归一化的片尾水印，这里设置了一个固定值，水印占屏幕宽度的0.25。
+        rect.width = 0.25f;
+        // 后面根据实际图片的宽高比，计算出对应缩放后的图片的宽度：txRect.width * videoInfo.width 和高度：txRect.width * videoInfo.width / widthHeightRatio，然后计算出水印放中间时的左上角位置
+        int marginRight = 20; // Or calculate marginRight as desired
+        rect.x = info.width - rect.width - marginRight;
+//        rect.x = (info.width - rect.width * info.width) / (2f * info.width);
+        rect.y = (info.height - rect.width * info.width / widthHeightRatio) / (2f * info.height);
+
+        TXVideoEditer editer = VideoEditerSDK.getInstance().getEditer();
+        if (editer != null) {
+            editer.setWaterMark(tailWaterMarkBitmap, rect);
+        }
+    }
+
     @Override
     public void onGenerateComplete(@NonNull final TXVideoEditConstants.TXGenerateResult result) {
         mCurrentState = PlayState.STATE_NONE;

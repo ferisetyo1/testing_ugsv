@@ -198,7 +198,7 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
 
     void setVideoWatermark(String path, Result result){
         setVideoPath(path);
-        VideoGenerateKit.getInstance().addTailWaterMark();
+        VideoGenerateKit.getInstance().addWaterMark();
         VideoGenerateKit.getInstance().setmSaveToDCIM(true);
         VideoGenerateKit.getInstance().setOnUpdateUIListener(new OnUpdateUIListener() {
             @Override
