@@ -12,7 +12,6 @@ import com.tencent.qcloud.ugckit.UGCKit;
 import com.tencent.qcloud.ugckit.UGCKitConstants;
 import com.tencent.qcloud.ugckit.basic.JumpActivityMgr;
 import com.tencent.qcloud.ugckit.basic.OnUpdateUIListener;
-import com.tencent.qcloud.ugckit.component.dialogfragment.ProgressFragmentUtil;
 import com.tencent.qcloud.ugckit.module.VideoGenerateKit;
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK;
 import com.tencent.qcloud.ugckit.module.record.draft.RecordDraftInfo;
@@ -70,7 +69,8 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
             }
             case "openVideoRecorder": {
                 HashMap music = call.argument("music");
-                openVideoRecorder(music);
+                Boolean isBeta = call.argument("isBeta");
+                openVideoRecorder(music, isBeta);
                 UgsvFlutterPlugin.result = result;
                 break;
             }
@@ -95,9 +95,10 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
                 setXMagicLicense(licenseUrl, licenseKey);
                 break;
             }
-            case "saveVideoWithWatermark":{
+            case "saveVideoWithWatermark": {
                 String url = call.argument("url");
-                setVideoWatermark(url,result);
+                String username = call.argument("username");
+                setVideoWatermark(url, username, result);
                 break;
             }
         }
@@ -143,16 +144,17 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
         mainActivity.startActivity(intent);
     }
 
-    void openVideoRecorder(HashMap music) {
+    void openVideoRecorder(HashMap music, Boolean isBeta) {
         Intent intent = new Intent(mainActivity, TCVideoRecordActivity.class);
         try {
             if (music != null) {
-                intent.putExtra(UGCKitConstants.MUSIC_ID,  (int) music.get("id"));
+                intent.putExtra(UGCKitConstants.MUSIC_ID, (int) music.get("id"));
                 intent.putExtra(UGCKitConstants.MUSIC_NAME, (String) music.get("audio_title"));
                 intent.putExtra(UGCKitConstants.MUSIC_PATH, (String) music.get("file_url"));
                 intent.putExtra(UGCKitConstants.MUSIC_THUMBNAIL, (String) music.get("thumbnail"));
                 intent.putExtra(UGCKitConstants.MUSIC_ARTIST, (String) music.get("artist_name"));
             }
+            intent.putExtra(UGCKitConstants.IS_BETA, isBeta != null && isBeta);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -196,9 +198,9 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
         LicenseManager.setXMagicLicense(licenseUrl, licenseKey);
     }
 
-    void setVideoWatermark(String path, Result result){
+    void setVideoWatermark(String path, String username, Result result) {
         setVideoPath(path);
-        VideoGenerateKit.getInstance().addWaterMark();
+        VideoGenerateKit.getInstance().addWaterMark(username);
         VideoGenerateKit.getInstance().setmSaveToDCIM(true);
         VideoGenerateKit.getInstance().setOnUpdateUIListener(new OnUpdateUIListener() {
             @Override
@@ -208,13 +210,13 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
 
             @Override
             public void onUIComplete(int retCode, String descMsg) {
-                Log.d("generateWatermark",descMsg);
+                Log.d("generateWatermark", descMsg);
                 result.success(VideoGenerateKit.getInstance().getVideoOutputPath());
             }
 
             @Override
             public void onUICancel() {
-                result.error("100","UI Cancel","Canceled UI");
+                result.error("100", "UI Cancel", "Canceled UI");
             }
         });
         VideoGenerateKit.getInstance().startGenerate();

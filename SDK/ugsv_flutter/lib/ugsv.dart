@@ -53,6 +53,7 @@ class UGSV {
 
   static openVideoRecorder() async {
     final result = await _apiChannel.invokeMethod("openVideoRecorder", {
+      "isBeta": true
       // "music": {
       //   "id": 5,
       //   "artist_name": "DJ Yatim Fvnky",
@@ -81,8 +82,10 @@ class UGSV {
   }
 
   static Future<String> addWatermarkVideo() async {
-    return await _apiChannel.invokeMethod("saveVideoWithWatermark",
-        {"url": "/storage/emulated/0/Movies/TXVideo_20240508_135729.mp4"});
+    return await _apiChannel.invokeMethod("saveVideoWithWatermark", {
+      "url": "/storage/emulated/0/Movies/TXVideo_20240508_135729.mp4",
+      "username": "@utami.stylish"
+    });
   }
 
   static setUgcLicense({

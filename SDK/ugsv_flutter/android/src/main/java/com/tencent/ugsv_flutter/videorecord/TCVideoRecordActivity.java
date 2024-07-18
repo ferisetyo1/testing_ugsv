@@ -142,13 +142,16 @@ public class TCVideoRecordActivity extends FragmentActivity
 
     private void setMusicInitial() {
         int musicId = getIntent().getIntExtra(UGCKitConstants.MUSIC_ID, -1);
+        Boolean isBeta = getIntent().getBooleanExtra(UGCKitConstants.IS_BETA, true);
+        TCMusicManager musicManager = TCMusicManager.getInstance();
+        musicManager.setBeta(isBeta);
+
         if (musicId != -1) {
             String musicArtist = getIntent().getStringExtra(UGCKitConstants.MUSIC_ARTIST);
             String musicPath = getIntent().getStringExtra(UGCKitConstants.MUSIC_PATH);
             String musicThumb = getIntent().getStringExtra(UGCKitConstants.MUSIC_THUMBNAIL);
             String musicName = getIntent().getStringExtra(UGCKitConstants.MUSIC_NAME);
 
-            TCMusicManager musicManager = TCMusicManager.getInstance();
             String localPath = musicManager.getLocalPath(musicName);
 
             MusicInfo musicInfo = new MusicInfo();

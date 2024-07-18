@@ -3,7 +3,8 @@ package com.tencent.qcloud.ugckit;
 public class UGCKitConstants {
 
     public static final String APP_SVR_URL                     = "http://demo.vod2.myqcloud.com/lite"; // 业务Server的地址 如果您的服务器没有部署https证书，这里需要用http
-    public static final String SVR_BGM_GET_URL                 = "https://api.sapa.co.id/mobile-api/v1/musics";   // BGM列表地址
+    public static final String SVR_BGM_GET_URL_BETA            = "https://networkapp.telkomsel.co.id/beta/mobile-api/v1/musics";   // BGM列表地址
+    public static final String SVR_BGM_GET_URL                 = "https://networkapp.telkomsel.co.id/mobile-api/v1/musics";   // BGM列表地址
     public static final String BUGLY_APPID                     = "9018b79ae2";    // 小视频Bugly
     public static final String USER_ID                         = "userid";
     public static final String USER_PWD                        = "userpwd";
@@ -34,6 +35,7 @@ public class UGCKitConstants {
     public static final String MUSIC_ARTIST                    = "bgm_artist";
     public static final String MUSIC_NAME                      = "bgm_name";
     public static final String MUSIC_ID                        = "bgm_id";
+    public static final String IS_BETA                        = "is_beta";
     public static final int    ACTIVITY_OTHER_REQUEST_CODE     = 2;
     public static final String KEY_FRAGMENT                    = "fragment_type";
     public static final int    TYPE_EDITER_BGM                 = 1;

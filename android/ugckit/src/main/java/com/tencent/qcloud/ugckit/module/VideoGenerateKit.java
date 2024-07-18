@@ -3,6 +3,13 @@ package com.tencent.qcloud.ugckit.module;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
+
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.util.Log;
 
 
@@ -175,28 +182,58 @@ public class VideoGenerateKit extends BaseGenerateKit implements TXVideoGenerate
         }
     }
 
-    public void addWaterMark() {
+    public void addWaterMark(String username) {
         TXVideoEditConstants.TXVideoInfo info = VideoEditerSDK.getInstance().getTXVideoInfo();
 
         if (info == null) {
             Log.e(TAG, "addTailWaterMark info is null");
             return;
         }
-        Bitmap tailWaterMarkBitmap = BitmapFactory.decodeResource(UGCKit.getAppContext().getResources(), R.drawable.logo_watermark);
-        float widthHeightRatio = tailWaterMarkBitmap.getWidth() / (float) tailWaterMarkBitmap.getHeight();
+        Bitmap bitmap = BitmapFactory.decodeResource(UGCKit.getAppContext().getResources(), R.drawable.logo_watermark);
+        float scale = UGCKit.getAppContext().getResources().getDisplayMetrics().density;
+        float widthHeightRatio = bitmap.getWidth() / (float) bitmap.getHeight();
+
+        android.graphics.Bitmap.Config bitmapConfig = bitmap.getConfig();
+        // set default bitmap config if none
+        if (bitmapConfig == null) {
+            bitmapConfig = android.graphics.Bitmap.Config.ARGB_8888;
+        }
+        // resource bitmaps are imutable,
+        // so we need to convert it to mutable one
+        bitmap = bitmap.copy(bitmapConfig, true);
+
+        Canvas canvas = new Canvas(bitmap);
+        // new antialised Paint
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        // text type
+        paint.setTypeface(ResourcesCompat.getFont(UGCKit.getAppContext(), R.font.poppins_medium));
+        // text color - #3D3D3D
+        paint.setColor(Color.WHITE);
+        // text size in pixels
+        paint.setTextSize((int) (14 * scale));
+        // text shadow
+        paint.setShadowLayer(1f, 0f, 1f, Color.BLACK);
+
+        // draw text to the Canvas center
+        Rect bounds = new Rect();
+        paint.getTextBounds(username, 0, username.length(), bounds);
+        int m = (bitmap.getWidth() - bounds.width()) / 2;
+        int l = bitmap.getHeight() - bounds.height();
+
+        canvas.drawText(username, 8, l, paint);
 
         TXVideoEditConstants.TXRect rect = new TXVideoEditConstants.TXRect();
         // 归一化的片尾水印，这里设置了一个固定值，水印占屏幕宽度的0.25。
-        rect.width = 0.25f;
+        rect.width = 0.3f;
         // 后面根据实际图片的宽高比，计算出对应缩放后的图片的宽度：txRect.width * videoInfo.width 和高度：txRect.width * videoInfo.width / widthHeightRatio，然后计算出水印放中间时的左上角位置
         int marginRight = 20; // Or calculate marginRight as desired
-        rect.x = info.width - rect.width - marginRight;
-//        rect.x = (info.width - rect.width * info.width) / (2f * info.width);
+//        rect.x = info.width - rect.width - marginRight;
+        rect.x = ((info.width) - rect.width * info.width) / (info.width);
         rect.y = (info.height - rect.width * info.width / widthHeightRatio) / (2f * info.height);
 
         TXVideoEditer editer = VideoEditerSDK.getInstance().getEditer();
         if (editer != null) {
-            editer.setWaterMark(tailWaterMarkBitmap, rect);
+            editer.setWaterMark(bitmap, rect);
         }
     }
 

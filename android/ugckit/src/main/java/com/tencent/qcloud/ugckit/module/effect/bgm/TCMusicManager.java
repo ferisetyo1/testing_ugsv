@@ -23,12 +23,17 @@ import java.util.ArrayList;
 public class TCMusicManager {
     private static final String TAG = "TCBgmManager";
     private boolean isLoading;
+    private boolean isBeta = true;
     private SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(UGCKit.getAppContext());
     private LoadMusicListener mLoadMusicListener;
 
     private static class TCMusicMgrHolder {
         @NonNull
         private static TCMusicManager instance = new TCMusicManager();
+    }
+
+    public void setBeta(boolean beta) {
+        isBeta = beta;
     }
 
     @NonNull
@@ -42,7 +47,9 @@ public class TCMusicManager {
             return;
         }
         isLoading = true;
-        TCHttpURLClient.getInstance().get(UGCKitConstants.SVR_BGM_GET_URL, new TCHttpURLClient.OnHttpCallback() {
+        String url = isBeta ? UGCKitConstants.SVR_BGM_GET_URL_BETA : UGCKitConstants.SVR_BGM_GET_URL;
+        Log.i("url",url);
+        TCHttpURLClient.getInstance().get(url, new TCHttpURLClient.OnHttpCallback() {
             @Override
             public void onSuccess(String result) {
                 Log.i(TAG, "http request success:  result = " + result);
@@ -91,11 +98,11 @@ public class TCMusicManager {
         }
     }
 
-    public String getLocalPath( String bgName) {
+    public String getLocalPath(String bgName) {
         return mPrefs.getString(bgName, "");
     }
 
-    public void setLocalPath(String bgmName,String filePath) {
+    public void setLocalPath(String bgmName, String filePath) {
         mPrefs.edit().putString(bgmName, filePath).apply();
     }
 
