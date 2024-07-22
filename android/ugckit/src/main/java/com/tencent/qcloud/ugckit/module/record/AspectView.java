@@ -111,8 +111,10 @@ public class AspectView extends RelativeLayout implements View.OnClickListener {
     private void toggleAspectAnim() {
         if (!mToggleAspect) {
             showAspectSelectAnim();
+            mOnAspectListener.onShowAspect();
         } else {
             hideAspectSelectAnim();
+            mOnAspectListener.onHideAspect();
         }
         mToggleAspect = !mToggleAspect;
     }
@@ -273,5 +275,7 @@ public class AspectView extends RelativeLayout implements View.OnClickListener {
          * @param currentAspect 当前屏比
          */
         void onAspectSelect(int currentAspect);
+        void onHideAspect();
+        void onShowAspect();
     }
 }

@@ -110,8 +110,10 @@ public class SpeedView extends RelativeLayout implements View.OnClickListener {
     private void toggleSpeedAnim() {
         if (!mToggleSpeed) {
             showSpeedSelectAnim();
+            mOnSpeedListener.onShowSpeed();
         } else {
             hideSpeedSelectAnim();
+            mOnSpeedListener.onHideSpeed();
         }
         mToggleSpeed = !mToggleSpeed;
     }
@@ -276,5 +278,7 @@ public class SpeedView extends RelativeLayout implements View.OnClickListener {
          * @param currentSpeed 当前屏比
          */
         void onSpeedSelect(int currentSpeed);
+        void onShowSpeed();
+        void onHideSpeed();
     }
 }

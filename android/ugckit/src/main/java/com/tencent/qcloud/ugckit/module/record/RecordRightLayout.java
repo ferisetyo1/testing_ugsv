@@ -108,6 +108,8 @@ public class RecordRightLayout extends RelativeLayout implements IRecordRightLay
 //                            }
 //                        });
 //            } else {
+            mAspectView.hideAspectSelectAnim();
+            mSpeedView.hideSpeedSelectAnim();
             mOnItemClickListener.onShowFilterPanel();
 //            }
         } else if (id == R.id.iv_te_beauty) {
@@ -120,11 +122,17 @@ public class RecordRightLayout extends RelativeLayout implements IRecordRightLay
 //                            }
 //                        });
 //            } else {
+            mAspectView.hideAspectSelectAnim();
+            mSpeedView.hideSpeedSelectAnim();
             mOnItemClickListener.onShowBeautyPanel();
 //            }
         } else if (id == R.id.iv_music) {
+            mAspectView.hideAspectSelectAnim();
+            mSpeedView.hideSpeedSelectAnim();
             mOnItemClickListener.onShowMusicPanel();
         } else if (id == R.id.iv_sound_effect) {
+            mAspectView.hideAspectSelectAnim();
+            mSpeedView.hideSpeedSelectAnim();
             mOnItemClickListener.onShowSoundEffectPanel();
         }
     }
@@ -150,6 +158,26 @@ public class RecordRightLayout extends RelativeLayout implements IRecordRightLay
     @Override
     public void onAspectSelect(int currentAspect) {
         mOnItemClickListener.onAspectSelect(currentAspect);
+    }
+
+    @Override
+    public void onHideAspect() {
+
+    }
+
+    @Override
+    public void onShowAspect() {
+        mSpeedView.hideSpeedSelectAnim();
+    }
+
+    @Override
+    public void onHideSpeed() {
+
+    }
+
+    @Override
+    public void onShowSpeed() {
+        mAspectView.hideAspectSelectAnim();
     }
 
     /**
