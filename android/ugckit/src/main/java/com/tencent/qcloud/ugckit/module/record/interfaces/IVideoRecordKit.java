@@ -168,6 +168,8 @@ public interface IVideoRecordKit {
         void onChooseMusic(int position);
 
         void onMusicSelected();
+
+        void onMusicDeleted();
     }
 
     interface OnRecordListener {

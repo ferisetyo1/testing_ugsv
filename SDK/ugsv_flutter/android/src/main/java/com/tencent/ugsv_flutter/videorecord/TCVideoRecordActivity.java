@@ -122,6 +122,13 @@ public class TCVideoRecordActivity extends FragmentActivity
                     mStoragePermissionManager.checkoutIfShowPermissionIntroductionDialog();
                 });
             }
+
+            @Override
+            public void onMusicDeleted() {
+                mUGCKitVideoRecord.getTitleBar().setOnRightClickListener((v) -> {
+                    mStoragePermissionManager.checkoutIfShowPermissionIntroductionDialog();
+                });
+            }
         });
         mUGCKitVideoRecord.setOnPickerClicked(() -> {
             Intent intent = new Intent(this, TCVideoPickerActivity.class);

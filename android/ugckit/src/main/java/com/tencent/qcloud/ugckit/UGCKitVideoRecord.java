@@ -545,7 +545,8 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         // 隐藏底部工具栏
         getRecordBottomLayout().setVisibility(View.GONE);
         // 隐藏右侧工具栏
-        getRecordRightLayout().setVisibility(View.GONE);
+//        getRecordRightLayout().setVisibility(View.GONE);
+        hideAllPanel();
         // 显示美颜Panel
         getFilterPanel().setVisibility(View.VISIBLE);
         if (getBeautyPanel().getmTxBeautyManager() == null) {
@@ -590,7 +591,8 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         // 隐藏底部工具栏
         getRecordBottomLayout().setVisibility(View.GONE);
         // 隐藏右侧工具栏
-        getRecordRightLayout().setVisibility(View.GONE);
+//        getRecordRightLayout().setVisibility(View.GONE);
+        hideAllPanel();
         // 显示美颜Panel
         getBeautyPanel().setVisibility(View.VISIBLE);
         if (getBeautyPanel().getmTxBeautyManager() == null) {
@@ -651,7 +653,8 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
             // 隐藏底部工具栏
             getRecordBottomLayout().setVisibility(View.GONE);
             // 隐藏右侧工具栏
-            getRecordRightLayout().setVisibility(View.GONE);
+//            getRecordRightLayout().setVisibility(View.GONE);
+            hideAllPanel();
             // 显示音乐Pannel
             getRecordMusicPannel().setVisibility(View.VISIBLE);
 
@@ -673,12 +676,20 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         }
     }
 
+    void hideAllPanel(){
+        getBeautyPanel().setVisibility(View.GONE);
+        getFilterPanel().setVisibility(View.GONE);
+        getSoundEffectPannel().setVisibility(View.GONE);
+        getRecordMusicPannel().setVisibility(View.GONE);
+    }
+
     @Override
     public void onShowSoundEffectPanel() {
         // 隐藏底部工具栏
         getRecordBottomLayout().setVisibility(View.GONE);
         // 隐藏右侧工具栏
-        getRecordRightLayout().setVisibility(View.GONE);
+//        getRecordRightLayout().setVisibility(View.GONE);
+        hideAllPanel();
         // 显示音效Pannel
         getSoundEffectPannel().setVisibility(View.VISIBLE);
     }
@@ -807,7 +818,10 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
             getRecordRightLayout().setSoundEffectIconEnable(true);
 
 //                        getRecordMusicPannel().setMusicName("");
-            getRecordMusicPannel().setVisibility(View.GONE);
+            onSingleClick(0,0);
+            if (mOnMusicListener != null) {
+                mOnMusicListener.onMusicDeleted();
+            }
         });
         dialog.show(((FragmentActivity) getContext()).getSupportFragmentManager(), "showDeleteMusicDialog");
     }
@@ -826,6 +840,9 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         getRecordBottomLayout().setVisibility(View.VISIBLE);
         getRecordRightLayout().setVisibility(View.VISIBLE);
         TXUGCRecord record = VideoRecordSDK.getInstance().getRecorder();
+        getTitleBar().setTitle(lastTextButton.toString(), ITitleBarLayout.POSITION.RIGHT);
+        getTitleBar().getRightButton().setBackground(lastDrawableButton);
+
         if (record != null) {
             record.setFocusPosition(x, y);
         }
