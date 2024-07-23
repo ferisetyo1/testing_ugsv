@@ -113,7 +113,7 @@ public class AlbumSaver {
                 if (mCoverImagePath != null) {
                     insertVideoThumb(file.getPath(), mCoverImagePath);
                 }
-                ToastUtil.toastShortMessage(UGCKit.getAppContext().getString(R.string.ugckit_publish_save_aibum));
+//                ToastUtil.toastShortMessage(UGCKit.getAppContext().getString(R.string.ugckit_publish_save_aibum));
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();

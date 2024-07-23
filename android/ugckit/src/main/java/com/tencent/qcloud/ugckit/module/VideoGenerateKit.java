@@ -252,12 +252,16 @@ public class VideoGenerateKit extends BaseGenerateKit implements TXVideoGenerate
                         mCoverPath = coverPath;
                         Log.d(TAG, "onGenerateComplete coverPath:" + coverPath);
                         saveAndUpdate(result);
-                        release();
+                        if (mOnUpdateUIListener.isPublish()){
+                            release();
+                        }
                     }
                 });
             } else {
                 saveAndUpdate(result);
-                release();
+                if (mOnUpdateUIListener.isPublish()){
+                    release();
+                }
             }
         }
     }

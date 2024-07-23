@@ -171,7 +171,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
      * 显示发布对话框
      */
     private void showPublishDialog() {
-        ValidationDialogFragment dialog= ValidationDialogFragment.newInstance("Lanjut tanpa menyimpan editan video di perangkatmu?", "Ya, Lanjut", "Tetap Edit");
+        ValidationDialogFragment dialog = ValidationDialogFragment.newInstance("Lanjut tanpa menyimpan editan video di perangkatmu?", "Ya, Lanjut", "Tetap Edit");
         dialog.setListener(() -> {
             if (Build.VERSION.SDK_INT <= 28 && ContextCompat.checkSelfPermission(getContext(),
                     Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -186,18 +186,18 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
     }
 
     public void showSaveDialog() {
-        ValidationDialogFragment dialog= ValidationDialogFragment.newInstance("Lanjut menyimpan editan video di perangkatmu?", "Ya, Lanjut", "Tetap Edit");
-        dialog.setListener(() -> {
-            if (Build.VERSION.SDK_INT <= 28 && ContextCompat.checkSelfPermission(getContext(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ToastUtil.toastLongMessage(getResources().getString(R.string.need_storage_permission));
-            } else {
-                VideoGenerateKit.getInstance().setmSaveToDCIM(true);
-                VideoEditerSDK.getInstance().setPublishFlag(false);
-                startGenerate();
-            }
-        });
-        dialog.show(((FragmentActivity) getContext()).getSupportFragmentManager(), "validation");
+//        ValidationDialogFragment dialog = ValidationDialogFragment.newInstance("Lanjut menyimpan editan video di perangkatmu?", "Ya, Lanjut", "Tetap Edit");
+//        dialog.setListener(() -> {
+        if (Build.VERSION.SDK_INT <= 28 && ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ToastUtil.toastLongMessage(getResources().getString(R.string.need_storage_permission));
+        } else {
+            VideoGenerateKit.getInstance().setmSaveToDCIM(true);
+            VideoEditerSDK.getInstance().setPublishFlag(false);
+            startGenerate();
+        }
+//        });
+//        dialog.show(((FragmentActivity) getContext()).getSupportFragmentManager(), "validation");
     }
 
     @Override
@@ -273,6 +273,9 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
                 ugcKitResult.descMsg = descMsg;
                 ugcKitResult.isPublish = VideoEditerSDK.getInstance().isPublish();
                 ugcKitResult.musicId = EffectEditer.getInstance().getBgmId();
+                if (!ugcKitResult.isPublish) {
+                    PlayerManagerKit.getInstance().resumePlay();
+                }
                 if (listener != null) {
                     listener.onEditCompleted(ugcKitResult);
                 }
@@ -281,6 +284,11 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
             @Override
             public void onUICancel() {
                 // 视频编辑生成取消，UI仅去掉进度条
+            }
+
+            @Override
+            public boolean isPublish() {
+                return VideoEditerSDK.getInstance().isPublish();
             }
         });
     }

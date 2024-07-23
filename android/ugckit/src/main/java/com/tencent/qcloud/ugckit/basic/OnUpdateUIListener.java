@@ -23,4 +23,8 @@ public interface OnUpdateUIListener {
      * 操作取消，更新UI
      */
     void onUICancel();
+
+    default boolean isPublish(){
+        return  true;
+    }
 }

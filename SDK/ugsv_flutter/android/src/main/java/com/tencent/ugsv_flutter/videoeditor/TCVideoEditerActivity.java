@@ -179,7 +179,7 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
             }
             finish();
         } else {
-            finish();
+            ToastUtil.toastShortMessage("Telah disimpan ke album");
         }
     }
 
