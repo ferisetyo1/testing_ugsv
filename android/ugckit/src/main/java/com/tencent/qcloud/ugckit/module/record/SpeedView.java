@@ -224,6 +224,7 @@ public class SpeedView extends RelativeLayout implements View.OnClickListener {
 
             @Override
             public void onAnimationEnd(Animator animator) {
+                mToggleSpeed = false;
                 mLayoutSpeedSelect.setVisibility(GONE);
             }
 
@@ -267,7 +268,7 @@ public class SpeedView extends RelativeLayout implements View.OnClickListener {
         mTextSpeed.setTextColor(getResources().getColor(color));
     }
 
-    public void setSpeed(int speed){
+    public void setSpeed(int speed) {
         selectAnotherSpeed(speed);
     }
 
@@ -278,7 +279,9 @@ public class SpeedView extends RelativeLayout implements View.OnClickListener {
          * @param currentSpeed 当前屏比
          */
         void onSpeedSelect(int currentSpeed);
+
         void onShowSpeed();
+
         void onHideSpeed();
     }
 }

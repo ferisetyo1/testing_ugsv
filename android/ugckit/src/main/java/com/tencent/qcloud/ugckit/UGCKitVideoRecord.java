@@ -114,7 +114,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         VideoRecordSDK.getInstance().setOnRestoreDraftListener(new VideoRecordSDK.OnRestoreDraftListener() {
             @Override
             public void onDraftProgress(long duration) {
-                getRecordBottomLayout().updateProgress((int) duration,false);
+                getRecordBottomLayout().updateProgress((int) duration, false);
                 getRecordBottomLayout().getRecordProgressView().clipComplete();
             }
 
@@ -136,10 +136,10 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         // 点击"下一步"
 //        getTitleBar().setVisible(true, ITitleBarLayout.POSITION.RIGHT);
 //        getTitleBar().setOnRightClickListener(v -> {
-            //录制stop状态，由于stop的过程比较长，可长达一秒以上，做防重复点击的最小点击时间就需要设置的比较长。
-            //使用录制的currentState状态来判断是否是STOP状态，虽然可以完美解决防重复点击问题，但是如果用户按返回回到该界面，
-            //无法再次点击下一步，currentState状态仍然是stop。
-            //所以这里采用一个新的布尔值进行限制
+        //录制stop状态，由于stop的过程比较长，可长达一秒以上，做防重复点击的最小点击时间就需要设置的比较长。
+        //使用录制的currentState状态来判断是否是STOP状态，虽然可以完美解决防重复点击问题，但是如果用户按返回回到该界面，
+        //无法再次点击下一步，currentState状态仍然是stop。
+        //所以这里采用一个新的布尔值进行限制
 //            onLanjutPressed();
 //        });
 
@@ -268,7 +268,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
     }
 
     public void onLanjutPressed() {
-        Log.d("onLanjutPressed","");
+        Log.d("onLanjutPressed", "");
         if (isInStopProcessing) {
             return;
         }
@@ -366,7 +366,8 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
             Log.d(TAG, "music duration:" + musicInfo.duration);
         }
         // 设置音乐信息
-        RecordMusicManager.getInstance().setRecordMusicInfo(musicInfo);;
+        RecordMusicManager.getInstance().setRecordMusicInfo(musicInfo);
+        ;
         if (mXMagic != null) {
             mXMagic.setAudioMute(true);
         }
@@ -676,7 +677,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         }
     }
 
-    void hideAllPanel(){
+    void hideAllPanel() {
         getBeautyPanel().setVisibility(View.GONE);
         getFilterPanel().setVisibility(View.GONE);
         getSoundEffectPannel().setVisibility(View.GONE);
@@ -818,7 +819,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
             getRecordRightLayout().setSoundEffectIconEnable(true);
 
 //                        getRecordMusicPannel().setMusicName("");
-            onSingleClick(0,0);
+            onSingleClick(0, 0);
             if (mOnMusicListener != null) {
                 mOnMusicListener.onMusicDeleted();
             }
@@ -840,8 +841,12 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         getRecordBottomLayout().setVisibility(View.VISIBLE);
         getRecordRightLayout().setVisibility(View.VISIBLE);
         TXUGCRecord record = VideoRecordSDK.getInstance().getRecorder();
-        getTitleBar().setTitle(lastTextButton.toString(), ITitleBarLayout.POSITION.RIGHT);
-        getTitleBar().getRightButton().setBackground(lastDrawableButton);
+        if (lastTextButton != null) {
+            getTitleBar().setTitle(lastTextButton.toString(), ITitleBarLayout.POSITION.RIGHT);
+        }
+        if (lastDrawableButton != null) {
+            getTitleBar().getRightButton().setBackground(lastDrawableButton);
+        }
 
         if (record != null) {
             record.setFocusPosition(x, y);

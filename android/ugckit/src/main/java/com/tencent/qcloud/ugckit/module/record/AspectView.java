@@ -213,6 +213,7 @@ public class AspectView extends RelativeLayout implements View.OnClickListener {
 
             @Override
             public void onAnimationEnd(Animator animator) {
+                mToggleAspect=false;
                 mLayoutAspectSelect.setVisibility(GONE);
             }
 
