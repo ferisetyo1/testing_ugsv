@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="memuat_music">Memuat Musik</string>
+    <string name="telah_disimpan_ke_album">Telah disimpan ke album</string>
+    <string name="akses_penyimpanan">Akses penyimpanan</string>
+    <string name="dibutuhkan_akses_penyimpanan_untuk_melanjutkan_aksi_ini_izinkan_semua">Dibutuhkan akses penyimpanan untuk melanjutkan aksi ini, izinkan semua!</string>
+</resources>

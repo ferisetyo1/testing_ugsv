@@ -170,7 +170,7 @@ public class TCVideoRecordActivity extends FragmentActivity
             if (!localPath.equals("")) {
                 mUGCKitVideoRecord.setRecordMusicInfo(musicInfo);
             } else {
-                ProgressFragmentUtil mProgressFragmentUtil = new ProgressFragmentUtil(this, "Memuat Musik");
+                ProgressFragmentUtil mProgressFragmentUtil = new ProgressFragmentUtil(this, getString(R.string.memuat_music));
                 TCMusicDownloadProgress downloadProgress = new TCMusicDownloadProgress(musicName, 0, musicPath);
                 mProgressFragmentUtil.showLoadingProgress(new ProgressFragmentUtil.IProgressListener() {
                     @Override
@@ -326,7 +326,7 @@ public class TCVideoRecordActivity extends FragmentActivity
 
     @Override
     public void onStoragePermissionDenied() {
-        DialogUtil.showDialog(this,"Akses Penyimpanan","Dibutuhkan akses storage untuk melanjutkan aksi ini, pilih izinkan semua!",(v)->{
+        DialogUtil.showDialog(this,getString(R.string.akses_penyimpanan),getString(R.string.dibutuhkan_akses_penyimpanan_untuk_melanjutkan_aksi_ini_izinkan_semua),(v)->{
             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             Uri uri = Uri.fromParts("package", getPackageName(), null);
             intent.setData(uri);

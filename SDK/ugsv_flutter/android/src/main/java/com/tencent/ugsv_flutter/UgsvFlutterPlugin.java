@@ -3,6 +3,8 @@ package com.tencent.ugsv_flutter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.util.Log;
 
@@ -31,6 +33,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -70,6 +74,8 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
             case "openVideoRecorder": {
                 HashMap music = call.argument("music");
                 Boolean isBeta = call.argument("isBeta");
+                String language = call.argument("language");
+                setLanguageByCode(language);
                 openVideoRecorder(music, isBeta);
                 UgsvFlutterPlugin.result = result;
                 break;
@@ -102,6 +108,15 @@ public class UgsvFlutterPlugin implements FlutterPlugin, MethodCallHandler, Acti
                 break;
             }
         }
+    }
+
+    private void setLanguageByCode(String language) {
+        Locale locale = new Locale(Objects.equals(language, "id") ? "in" : "en");
+        Locale.setDefault(locale);
+        Resources resources = this.mainActivity.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 
     @Override

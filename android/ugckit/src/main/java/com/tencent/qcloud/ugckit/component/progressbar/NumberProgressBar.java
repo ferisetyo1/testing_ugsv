@@ -155,7 +155,7 @@ public class NumberProgressBar extends View {
     private boolean mDrawReachedBar = true;
 
     private boolean mIfDrawText = true;
-    private String msg = "Memproses video";
+    private String msg = getContext().getString(R.string.memproses_video);
 
     public enum ProgressTextVisibility {
         Visible, Invisible

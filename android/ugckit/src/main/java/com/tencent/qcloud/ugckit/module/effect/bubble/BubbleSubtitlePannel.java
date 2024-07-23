@@ -183,7 +183,7 @@ public class BubbleSubtitlePannel extends FrameLayout implements IBubbleSubtitle
     }
 
     private void resetInfo() {
-        mSubtitleInfo.setText("Halo");
+        mSubtitleInfo.setText(getContext().getString(R.string.edit_teks));
         mEdtSubtitle.setText("");
         mBubbleAdapter.setSelection(0);
         mSubtitleInfo.setBubblePos(0);

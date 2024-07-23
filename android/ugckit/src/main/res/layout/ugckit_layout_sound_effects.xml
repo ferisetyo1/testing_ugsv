@@ -31,19 +31,19 @@
                 android:id="@+id/tab_volume"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Volume" />
+                android:text="@string/volume" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_replika"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Replika Suara" />
+                android:text="@string/replika_suara" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_gema"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gema" />
+                android:text="@string/gema" />
 
         </com.google.android.material.tabs.TabLayout>
 
@@ -73,7 +73,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
             android:gravity="left|center_vertical"
-            android:text="Suara Asli"
+            android:text="@string/suara_asli"
             android:textColor="@color/black" />
 
         <SeekBar

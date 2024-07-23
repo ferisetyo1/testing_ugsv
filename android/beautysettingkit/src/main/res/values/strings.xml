@@ -101,4 +101,7 @@
     <string name="beauty_video_material_download_progress_material_unzip_failed">素材解压失败</string>
     <string name="beauty_video_material_download_progress_download_failed">下载失败</string>
     <string name="beauty_video_material_download_progress_no_enough_storage_space">存储空间不足</string>
+    <string name="filter">Filter</string>
+    <string name="percantik">Percantik</string>
+    <string name="skala">Skala</string>
 </resources>

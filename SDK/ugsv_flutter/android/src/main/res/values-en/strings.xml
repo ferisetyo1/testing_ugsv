@@ -125,4 +125,10 @@
     <string name="app_collection">Personal Information Collection List</string>
     <string name="app_share">Third Party Sharing List</string>
 
+    <!--  new  -->
+    <string name="memuat_music">Load Music</string>
+    <string name="telah_disimpan_ke_album">Saved to Album</string>
+    <string name="akses_penyimpanan">Storage access</string>
+    <string name="dibutuhkan_akses_penyimpanan_untuk_melanjutkan_aksi_ini_izinkan_semua">storage access is required to continue this action, allow all!</string>
+
 </resources>

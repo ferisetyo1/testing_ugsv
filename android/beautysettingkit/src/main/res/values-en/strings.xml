@@ -102,4 +102,9 @@
     <string name="beauty_video_material_download_progress_download_failed">Unable to download</string>
     <string name="beauty_video_material_download_progress_no_enough_storage_space">Insufficient storage</string>
 
+    <!--  new  -->
+    <string name="filter">Filters</string>
+    <string name="percantik">Beauty</string>
+    <string name="skala">Scale</string>
+
 </resources>

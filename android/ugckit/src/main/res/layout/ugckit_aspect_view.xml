@@ -41,7 +41,7 @@
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="4"
-            android:text="Rasio"
+            android:text="@string/rasio"
             android:textColor="@color/ugckit_white"
             android:textSize="12sp" />
     </RelativeLayout>

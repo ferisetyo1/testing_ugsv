@@ -19,7 +19,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="4"
-        android:text="Simpan"
+        android:text="@string/simpan"
         android:textColor="@color/ugckit_white"
         android:textSize="12sp" />
 
@@ -36,7 +36,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="4"
-        android:text="Audio"
+        android:text="@string/audio"
         android:textColor="@color/ugckit_white"
         android:textSize="12sp" />
 
@@ -53,7 +53,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="4"
-        android:text="Filter"
+        android:text="@string/filter"
         android:textColor="@color/ugckit_white"
         android:textSize="12sp" />
 
@@ -70,7 +70,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="4"
-        android:text="Efek"
+        android:text="@string/efek"
         android:textColor="@color/ugckit_white"
         android:textSize="12sp" />
 
@@ -86,7 +86,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="4"
-        android:text="@string/ugckit_speed"
+        android:text="@string/kecepatan"
         android:textColor="@color/ugckit_white"
         android:textSize="12sp"
         android:visibility="gone" />
@@ -105,7 +105,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="4"
-        android:text="@string/ugckit_paster"
+        android:text="@string/stiker"
         android:textColor="@color/ugckit_white"
         android:textSize="12sp" />
 
@@ -122,7 +122,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="4"
-        android:text="@string/ugckit_subtitle"
+        android:text="@string/teks"
         android:textColor="@color/ugckit_white"
         android:textSize="12sp" />
 

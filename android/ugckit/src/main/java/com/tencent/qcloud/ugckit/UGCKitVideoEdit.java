@@ -106,7 +106,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
 
     @Override
     public void backPressed() {
-        ValidationDialogFragment dialog = ValidationDialogFragment.newInstance("Buang editan Kamu?", "Ya, Buang", "Batal");
+        ValidationDialogFragment dialog = ValidationDialogFragment.newInstance(getContext().getString(R.string.buang_editan_kamu), getContext().getString(R.string.ya_buang), getContext().getString(R.string.batal));
         dialog.setListener(() -> {
             Log.i(TAG, "[UGCKit][VideoEdit]backPressed call stopPlay");
             PlayerManagerKit.getInstance().stopPlay();
@@ -171,7 +171,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
      * 显示发布对话框
      */
     private void showPublishDialog() {
-        ValidationDialogFragment dialog = ValidationDialogFragment.newInstance("Lanjut tanpa menyimpan editan video di perangkatmu?", "Ya, Lanjut", "Tetap Edit");
+        ValidationDialogFragment dialog = ValidationDialogFragment.newInstance(getContext().getString(R.string.lanjut_tanpa_menyimpan_editan_video_di_perangkatmu), getContext().getString(R.string.ya_lanjut), getContext().getString(R.string.tetap_edit));
         dialog.setListener(() -> {
             if (Build.VERSION.SDK_INT <= 28 && ContextCompat.checkSelfPermission(getContext(),
                     Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {

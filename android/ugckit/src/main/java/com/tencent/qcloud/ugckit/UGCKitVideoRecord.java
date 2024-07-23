@@ -808,7 +808,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
     }
 
     private void showDeleteMusicDialog() {
-        ValidationDialogFragment dialog = ValidationDialogFragment.newInstance("Buang latar belakang musik ini?", "Ya, Buang", "Batal");
+        ValidationDialogFragment dialog = ValidationDialogFragment.newInstance(getContext().getString(R.string.buang_latar_belakang_musik_ini), getContext().getString(R.string.ya_buang), getContext().getString(R.string.batal));
         dialog.setListener(() -> {
             RecordMusicManager.getInstance().deleteMusic();
             if (mXMagic != null && mBeautyType == 1) {  //当删除背景音乐的时候进行判断，如果当前是在高级美颜中，则消除静音

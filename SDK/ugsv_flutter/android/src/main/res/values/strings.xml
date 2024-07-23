@@ -157,5 +157,10 @@
     <string name="app_tencent_cloud_xiaoshipin">腾讯云小视频</string>
     <string name="app_collection">已收集个人信息清单</string>
     <string name="app_share">第三方共享个人信息清单</string>
+    <!-- new   -->
+    <string name="memuat_music">Memuat Musik</string>
+    <string name="telah_disimpan_ke_album">Telah disimpan ke album</string>
+    <string name="akses_penyimpanan">Akses penyimpanan</string>
+    <string name="dibutuhkan_akses_penyimpanan_untuk_melanjutkan_aksi_ini_izinkan_semua">Dibutuhkan akses penyimpanan untuk melanjutkan aksi ini, izinkan semua!</string>
 
 </resources>

@@ -53,7 +53,8 @@ class UGSV {
 
   static openVideoRecorder() async {
     final result = await _apiChannel.invokeMethod("openVideoRecorder", {
-      "isBeta": true
+      "isBeta": true,
+      "language": "id",
       // "music": {
       //   "id": 5,
       //   "artist_name": "DJ Yatim Fvnky",

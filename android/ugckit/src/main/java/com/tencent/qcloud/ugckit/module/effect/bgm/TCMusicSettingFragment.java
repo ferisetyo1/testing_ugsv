@@ -167,7 +167,7 @@ public class TCMusicSettingFragment extends Fragment {
     }
 
     private void showDeleteMusicDialog() {
-        ValidationDialogFragment dialog=ValidationDialogFragment.newInstance("Buang latar belakang musik ini?","Ya, Buang","Batal");
+        ValidationDialogFragment dialog=ValidationDialogFragment.newInstance(getContext().getString(R.string.buang_latar_belakang_musik_ini),getContext().getString(R.string.ya_buang), getContext().getString(R.string.batal));
         dialog.setListener(()->{
             DraftEditer.getInstance().setBgmPath(null);
             EffectEditer.getInstance().setBgmPath(null);

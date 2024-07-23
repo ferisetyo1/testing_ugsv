@@ -17,7 +17,7 @@
         android:layout_marginRight="15dp"
         android:background="@drawable/ugckit_drawable_ugc_red_next"
         android:gravity="center"
-        android:text="Simpan"
+        android:text="@string/simpan"
         android:visibility="gone"
         android:textAllCaps="false"
         android:textColor="@color/ugckit_white" />
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:gravity="start|center_vertical"
-            android:text="Musik vol"
+            android:text="@string/musik_vol"
             android:layout_marginEnd="12dp"
             android:fontFamily="@font/poppins"
             android:textColor="@color/ugckit_text_color" />

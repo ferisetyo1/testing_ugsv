@@ -179,7 +179,7 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
             }
             finish();
         } else {
-            ToastUtil.toastShortMessage("Telah disimpan ke album");
+            ToastUtil.toastShortMessage(getString(R.string.telah_disimpan_ke_album));
         }
     }
 
@@ -242,7 +242,7 @@ public class TCVideoEditerActivity extends FragmentActivity implements View.OnCl
 
     @Override
     public void onStoragePermissionDenied() {
-        DialogUtil.showDialog(this,"Akses Penyimpanan","Dibutuhkan akses storage untuk melanjutkan aksi ini, pilih izinkan semua!",(v)->{
+        DialogUtil.showDialog(this,getString(R.string.akses_penyimpanan),getString(R.string.dibutuhkan_akses_penyimpanan_untuk_melanjutkan_aksi_ini_izinkan_semua),(v)->{
             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             Uri uri = Uri.fromParts("package", getPackageName(), null);
             intent.setData(uri);

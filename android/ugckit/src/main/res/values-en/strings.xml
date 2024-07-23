@@ -441,4 +441,43 @@
     <string name="ugckit_tencent_effect_tip_dialog_content">Advanced beauty filters are provided by Tencent Effect SDK. Using them will incur additional fees. However, you can use basic beauty filters for free.</string>
     <string name="ugckit_tencent_effect_tip_dialog_lefttxt">Do not show again</string>
     <string name="ugckit_tencent_effect_tip_dialog_righttxt">OK</string>
+
+    <!--  New Translate  -->
+    <string name="edit_teks">Edit Text</string>
+    <string name="suara">Voice</string>
+    <string name="percantik">Beauty</string>
+    <string name="filter">Filters</string>
+    <string name="rasio">Ratio</string>
+    <string name="kecepatan">Speed</string>
+    <string name="lanjut">Next</string>
+    <string name="buang_klip_terakhir">Delete the last clip?</string>
+    <string name="ya_buang">Delete</string>
+    <string name="batal">Cancel</string>
+    <string name="memproses_video">Processing videos</string>
+    <string name="musik">Music</string>
+    <string name="tidak_ada_musik_yang_ditemukan">Music not found</string>
+    <string name="musik_vol">Music vol</string>
+    <string name="buang_latar_belakang_musik_ini">Delete this background music?</string>
+    <string name="buang_editan_kamu">Delete your edits?</string>
+    <string name="simpan">Save</string>
+    <string name="stiker">Sticker</string>
+    <string name="volume">Volume</string>
+    <string name="replika_suara">Voice Replica</string>
+    <string name="gema">Echo</string>
+    <string name="suara_asli">Real Sound</string>
+    <string name="audio">Audio</string>
+    <string name="efek">Effects</string>
+    <string name="teks">Text</string>
+    <string name="lanjut_tanpa_menyimpan_editan_video_di_perangkatmu">Continue without saving the edited video on your device?</string>
+    <string name="ya_lanjut">Continue</string>
+    <string name="tetap_edit">Stay Editing</string>
+    <string name="durasi_video">Video duration: </string>
+    <string name="transisi">Transition</string>
+    <string name="gerakan">Movement</string>
+    <string name="waktu">Time</string>
+    <string name="tambah">Add</string>
+    <string name="bingkai">Frame</string>
+    <string name="gaya_huruf">Font Style</string>
+    <string name="warna">Color</string>
+    <string name="emoji">Emoticon</string>
 </resources>
