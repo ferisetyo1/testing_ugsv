@@ -191,7 +191,7 @@ public class AlbumSaver {
             values.put(IS_PENDING, 0);
             UGCKit.getAppContext().getContentResolver().update(item, values, null, null);
 
-            ToastUtil.toastShortMessage(UGCKit.getAppContext().getString(R.string.ugckit_publish_save_aibum));
+//            ToastUtil.toastShortMessage(UGCKit.getAppContext().getString(R.string.ugckit_publish_save_aibum));
             return true;
         } else {
             Log.d(TAG, "file :" + mVideoOutputPath + " is not exists");

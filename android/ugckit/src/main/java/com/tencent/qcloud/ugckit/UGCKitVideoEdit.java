@@ -294,6 +294,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
     }
 
     public void startGenerate() {
+        mProgressFragmentUtil.setTitle(VideoEditerSDK.getInstance().isPublish() ? getContext().getString(R.string.memproses_video) : getContext().getString(R.string.menyimpan_video));
         mProgressFragmentUtil.showLoadingProgress(new ProgressFragmentUtil.IProgressListener() {
             @Override
             public void onStop() {

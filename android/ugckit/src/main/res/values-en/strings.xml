@@ -480,4 +480,5 @@
     <string name="gaya_huruf">Font Style</string>
     <string name="warna">Color</string>
     <string name="emoji">Emoticon</string>
+    <string name="menyimpan_video">Save Video</string>
 </resources>

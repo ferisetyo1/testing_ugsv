@@ -27,6 +27,10 @@ public class ProgressFragmentUtil {
         mTitle = title;
     }
 
+    public void setTitle(String mTitle) {
+        this.mTitle = mTitle;
+    }
+
     /**
      * 显示生成进度条
      */
