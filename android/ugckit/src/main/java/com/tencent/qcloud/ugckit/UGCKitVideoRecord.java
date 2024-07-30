@@ -387,7 +387,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
             onMusicSelect();
         });
 
-        getTitleBar().setTitle("Lanjut", ITitleBarLayout.POSITION.RIGHT);
+        getTitleBar().setTitle(getContext().getString(R.string.terapkan), ITitleBarLayout.POSITION.RIGHT);
         getTitleBar().setEnableRightButton(true);
     }
 
@@ -668,7 +668,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
                 onMusicSelect();
             });
 
-            getTitleBar().setTitle("Lanjut", ITitleBarLayout.POSITION.RIGHT);
+            getTitleBar().setTitle(getContext().getString(R.string.terapkan), ITitleBarLayout.POSITION.RIGHT);
             getTitleBar().setEnableRightButton(true);
         } else {
             if (mOnMusicListener != null) {

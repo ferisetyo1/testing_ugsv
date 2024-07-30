@@ -481,4 +481,6 @@
     <string name="warna">Color</string>
     <string name="emoji">Emoticon</string>
     <string name="menyimpan_video">Save Video</string>
+    <string name="terapkan">Apply</string>
+
 </resources>

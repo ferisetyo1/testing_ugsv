@@ -104,7 +104,7 @@ public class UGCKitVideoEffect extends AbsVideoEffectUI implements VideoProgress
             getTitleBar().getLeftIcon().setImageTintList(ColorStateList.valueOf(getContext().getColor(R.color.white)));
         }
 
-        getTitleBar().getRightButton().setText(R.string.lanjut);
+        getTitleBar().getRightButton().setText(R.string.terapkan);
         getTitleBar().setEnableRightButton(true);
         getTitleBar().setOnBackClickListener(new OnClickListener() {
             @Override

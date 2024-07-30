@@ -80,7 +80,7 @@
         android:layout_marginRight="15dp"
         android:background="@drawable/bg_next_title"
         android:textAllCaps="false"
-        android:text="Lanjut"
+        android:text="@string/lanjut"
         android:fontFamily="@font/poppins_semibold"
         android:textColor="@color/ugckit_text_color_disable"
         android:textSize="14sp" />
