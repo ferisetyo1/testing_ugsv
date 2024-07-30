@@ -1,43 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bg_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
         android:background="#fff">
 
-        <LinearLayout
-            android:id="@+id/back_ll"
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical">
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="8dp">
+            <LinearLayout
+                android:id="@+id/back_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:src="@drawable/round_arrow_back_ios_24"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/musik"
+                android:textColor="#181C21"
+                android:fontFamily="@font/poppins"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp">
+            <EditText
+                android:id="@+id/keyword"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                tools:text="Happy"
+                android:maxLines="1"
+                android:paddingHorizontal="40dp"
+                android:background="@drawable/bg_rounded_container"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_search_24"
+                android:layout_centerVertical="true"
+                android:tint="#FF505D6D"
+                android:layout_marginStart="15dp"
+                tools:ignore="UseAppTint" />
 
             <ImageView
-                android:layout_width="match_parent"
+                android:id="@+id/clear_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:gravity="center"
-                android:paddingRight="30dp"
-                android:src="@drawable/round_arrow_back_ios_24"
-                />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/musik"
-            android:textColor="#181C21"
-            android:fontFamily="@font/poppins"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-    </FrameLayout>
+                android:src="@drawable/close_circle"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:tint="#FF505D6D"
+                android:visibility="gone"
+                android:layout_marginEnd="15dp"
+                tools:ignore="UseAppTint" />
+        </RelativeLayout>
+    </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"

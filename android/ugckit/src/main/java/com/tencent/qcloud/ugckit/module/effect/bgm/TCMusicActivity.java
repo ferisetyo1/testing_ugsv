@@ -13,9 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.CountDownTimer;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.tencent.qcloud.ugckit.utils.BackgroundTasks;
@@ -35,6 +39,8 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private View mEmptyView;
+    private EditText mKeyword;
+    private ImageView mClearText;
     private TCMusicAdapter mTCMusicAdapter;
     private TCMusicManager.LoadMusicListener mLoadMusicListener;
     private List<TCMusicInfo> mTCMusicInfoList;
@@ -52,6 +58,7 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
         initView();
         initListener();
         prepareToRefresh();
+        onRefresh();
     }
 
     private void prepareToRefresh() {
@@ -61,7 +68,6 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
                 mSwipeRefreshLayout.setRefreshing(true);
             }
         });
-        this.onRefresh();
     }
 
     private void initData() {
@@ -69,6 +75,32 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
     }
 
     private void initListener() {
+        mClearText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mKeyword.setText("");
+            }
+        });
+        mKeyword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String keyword = editable.toString();
+                mClearText.setVisibility(keyword.isEmpty()?View.GONE:View.VISIBLE);
+                TCMusicManager
+                        .getInstance()
+                        .loadMusicList(keyword.isEmpty() ? null : keyword);
+                prepareToRefresh();
+            }
+        });
+
         player = new MediaPlayer();
         mLoadMusicListener = new TCMusicManager.LoadMusicListener() {
             @Override
@@ -147,6 +179,8 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
 
     private void initView() {
         getActionBar().hide();
+        mKeyword = (EditText) findViewById(R.id.keyword);
+
         mLayoutBack = (LinearLayout) findViewById(R.id.back_ll);
         mLayoutBack.setOnClickListener(this);
         findViewById(R.id.bg_parent).setBackground(getResources().getDrawable(R.drawable.background_music));
@@ -207,15 +241,15 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
                         public void onFinish() {
                             if (player != null && player.isPlaying()) {
                                 player.stop();
-                                musicInfo.statusMusic=TCMusicInfo.MUSIC_STATE_STOP;
+                                musicInfo.statusMusic = TCMusicInfo.MUSIC_STATE_STOP;
                                 mTCMusicAdapter.updateItem(selectedMusic, musicInfo);
                             }
                         }
                     };
-                    player.setOnPreparedListener((player1)->{
+                    player.setOnPreparedListener((player1) -> {
                         player1.start();
                         countDownTimer.start();
-                        musicInfo.statusMusic=TCMusicInfo.MUSIC_STATE_PLAYING;
+                        musicInfo.statusMusic = TCMusicInfo.MUSIC_STATE_PLAYING;
                         mTCMusicAdapter.updateItem(selectedMusic, musicInfo);
                     });
 
@@ -235,6 +269,9 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
         });
         mRecyclerView.setAdapter(mTCMusicAdapter);
         mEmptyView = findViewById(R.id.tv_bgm_empty);
+        mClearText = findViewById(R.id.clear_text);
+
+
     }
 
     private void downloadMusic(int position) {
@@ -259,7 +296,7 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
     }
 
     private void backToEditActivity(int position, String path) {
-        if (player!=null){
+        if (player != null) {
             player.release();
         }
         Intent intent = new Intent();
@@ -274,7 +311,7 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh");
-        TCMusicManager.getInstance().loadMusicList();
+        TCMusicManager.getInstance().loadMusicList(null);
     }
 
     private void downloadMusicInfo(int position, @NonNull TCMusicInfo TCMusicInfo) {
@@ -284,10 +321,10 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (countDownTimer!=null){
+        if (countDownTimer != null) {
             countDownTimer.cancel();
         }
-        if (player!=null){
+        if (player != null) {
             player.release();
         }
         TCMusicManager.getInstance().setOnLoadMusicListener(null);
@@ -317,7 +354,6 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
             this.mSpace = space;
         }
     }
-
 
 
 }

@@ -41,14 +41,17 @@ public class TCMusicManager {
         return TCMusicMgrHolder.instance;
     }
 
-    public void loadMusicList() {
+    public void loadMusicList(String keyword) {
         if (isLoading) {
             Log.e(TAG, "loadMusicList, is loading");
             return;
         }
         isLoading = true;
         String url = isBeta ? UGCKitConstants.SVR_BGM_GET_URL_BETA : UGCKitConstants.SVR_BGM_GET_URL;
-        Log.i("url",url);
+        Log.i("url", url);
+        if (keyword != null) {
+            url += "?artist_name=" + keyword + "&audio_title=" + keyword;
+        }
         TCHttpURLClient.getInstance().get(url, new TCHttpURLClient.OnHttpCallback() {
             @Override
             public void onSuccess(String result) {
