@@ -12,6 +12,7 @@ public class MusicInfo {
      * 音乐名称
      */
     public String name;
+    public String artistName;
     /**
      * 音乐路径
      */

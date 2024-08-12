@@ -77,6 +77,7 @@ public class RecordMusicPannel extends RelativeLayout implements IRecordMusicPan
         mTextMusicName = (TextView) findViewById(R.id.tx_music_name);
         mTextMusicName.setText("");
         mTextMusicName.setSelected(true);
+        mTextMusicName.setHorizontallyScrolling(true);
     }
 
     @Override
@@ -168,7 +169,7 @@ public class RecordMusicPannel extends RelativeLayout implements IRecordMusicPan
 
     @Override
     public void setMusicInfo(@NonNull MusicInfo musicInfo) {
-        setMusicName(musicInfo.name);
+        setMusicName(musicInfo.name +" - "+musicInfo.artistName);
         mMusicDuration = musicInfo.duration;
         setCutRange(0, musicInfo.duration);
         mRangeSlider.resetRangePos();

@@ -167,6 +167,7 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
             public void onReRecord() {
                 getRecordRightLayout().setMusicIconEnable(true);
                 getRecordRightLayout().setAspectIconEnable(true);
+                getSelectedMusic().check();
             }
         });
 
@@ -367,10 +368,12 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         }
         // 设置音乐信息
         RecordMusicManager.getInstance().setRecordMusicInfo(musicInfo);
-        ;
+
         if (mXMagic != null) {
             mXMagic.setAudioMute(true);
         }
+        getSelectedMusic().setText(musicInfo.name +" - "+musicInfo.artistName);
+        getSelectedMusic().check();
         // 更新音乐Pannel
         getRecordMusicPannel().setMusicInfo(musicInfo);
         getRecordMusicPannel().setVisibility(View.VISIBLE);
@@ -458,6 +461,8 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         getRecordRightLayout().setMusicIconEnable(false);
         // 开始录制后不能切换屏比
         getRecordRightLayout().setAspectIconEnable(false);
+
+        getSelectedMusic().hide();
 
         // 对齐抖音，有BGM时候，录制为静音
         if (RecordMusicManager.getInstance().isChooseMusic()) {
@@ -1089,4 +1094,12 @@ public class UGCKitVideoRecord extends AbsVideoRecordUI implements
         this.mHostFragment = mHostFragment;
     }
 
+    public void pauseMusic(){
+        RecordMusicManager.getInstance().stopPreviewMusic();
+    }
+    public void playMusic(){
+        if(RecordMusicManager.getInstance().isChooseMusic()){
+            RecordMusicManager.getInstance().startPreviewMusic();
+        }
+    }
 }

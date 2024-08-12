@@ -97,4 +97,15 @@
         android:id="@+id/titleBar_layout"
         android:layout_width="match_parent"
         android:layout_height="55dp" />
+
+    <com.tencent.qcloud.ugckit.module.record.SelectedMusic
+        android:id="@+id/selected_music"
+        android:layout_width="180dp"
+        android:layout_height="32dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        />
+
+
 </RelativeLayout>

@@ -482,5 +482,7 @@
     <string name="emoji">Emoticon</string>
     <string name="menyimpan_video">Save Video</string>
     <string name="terapkan">Apply</string>
+    <string name="gunakan">Use</string>
+    <string name="mengunduh">Downloading</string>
 
 </resources>

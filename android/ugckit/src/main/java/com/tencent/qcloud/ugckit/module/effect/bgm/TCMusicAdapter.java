@@ -51,17 +51,17 @@ public class TCMusicAdapter extends BaseRecyclerAdapter<TCMusicAdapter.LinearMus
 
         holder.btnUse.setMax(100);
         if (info.status == TCMusicInfo.STATE_UNDOWNLOAD) {
-            holder.btnUse.setText("Gunakan");
+            holder.btnUse.setText(mContext.getString(R.string.gunakan));
             holder.btnUse.setState(SampleProgressButton.STATE_NORMAL);
             holder.btnUse.setNormalColor(Color.parseColor("#FF0025"));
             holder.btnUse.setTextColor(Color.parseColor("#FF0025"));
         } else if (info.status == TCMusicInfo.STATE_DOWNLOADED) {
-            holder.btnUse.setText("Gunakan");
+            holder.btnUse.setText(mContext.getString(R.string.gunakan));
             holder.btnUse.setState(SampleProgressButton.STATE_NORMAL);
             holder.btnUse.setNormalColor(Color.parseColor("#FF0025"));
             holder.btnUse.setTextColor(Color.parseColor("#FF0025"));
         } else if (info.status == TCMusicInfo.STATE_DOWNLOADING) {
-            holder.btnUse.setText("Mengunduh");
+            holder.btnUse.setText(mContext.getString(R.string.mengunduh));
             holder.btnUse.setState(SampleProgressButton.STATE_PROGRESS);
             holder.btnUse.setProgress(info.progress);
             holder.btnUse.setNormalColor(Color.parseColor("#FF0025"));

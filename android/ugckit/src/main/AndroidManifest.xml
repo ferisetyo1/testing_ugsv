@@ -26,6 +26,7 @@
     <application>
         <activity
             android:name=".module.effect.bgm.TCMusicActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
     </application>
 </manifest>

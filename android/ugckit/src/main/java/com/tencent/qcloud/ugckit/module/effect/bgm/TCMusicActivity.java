@@ -32,7 +32,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener,TCMusicAdapter.OnClickSubItemListener {
     private final String TAG = "TCMusicActivity";
 
     private LinearLayout mLayoutBack;
@@ -195,78 +195,7 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
         mRecyclerView.addItemDecoration(new SpaceItemDecoration(5));
 
         mTCMusicAdapter = new TCMusicAdapter(this, mTCMusicInfoList);
-        mTCMusicAdapter.setOnClickSubItemListener(new TCMusicAdapter.OnClickSubItemListener() {
-            @Override
-            public void onClickUseBtn(SampleProgressButton button, int position) {
-                TCMusicInfo musicInfo = mTCMusicInfoList.get(position);
-                if (musicInfo.status == TCMusicInfo.STATE_UNDOWNLOAD) {
-                    musicInfo.status = TCMusicInfo.STATE_DOWNLOADING;
-                    mTCMusicAdapter.updateItem(position, musicInfo);
-                    downloadMusic(position);
-                } else if (musicInfo.status == TCMusicInfo.STATE_DOWNLOADED) {
-                    backToEditActivity(position, musicInfo.localPath);
-                }
-            }
-
-            @Override
-            public void onClickPlayBtn(int position) {
-                TCMusicInfo musicInfo = mTCMusicInfoList.get(position);
-                try {
-                    if (selectedMusic != -1 && selectedMusic != position) {
-                        TCMusicInfo prevmusicInfo = mTCMusicInfoList.get(selectedMusic);
-                        if (prevmusicInfo.statusMusic != TCMusicInfo.MUSIC_STATE_STOP) {
-                            prevmusicInfo.statusMusic = TCMusicInfo.MUSIC_STATE_STOP;
-                            mTCMusicAdapter.updateItem(selectedMusic, prevmusicInfo);
-                        }
-                    }
-                    if (player.isPlaying()) {
-                        countDownTimer.cancel();
-                        countDownTimer.onFinish();
-                    }
-                    player.reset();
-                    if (musicInfo.localPath.isEmpty()) {
-                        player.setDataSource(musicInfo.url);
-                    } else {
-                        player.setDataSource(musicInfo.localPath);
-                    }
-                    player.prepare();
-                    selectedMusic = position;
-                    countDownTimer = new CountDownTimer(10000, 1000) {
-                        @Override
-                        public void onTick(long l) {
-
-                        }
-
-                        @Override
-                        public void onFinish() {
-                            if (player != null && player.isPlaying()) {
-                                player.stop();
-                                musicInfo.statusMusic = TCMusicInfo.MUSIC_STATE_STOP;
-                                mTCMusicAdapter.updateItem(selectedMusic, musicInfo);
-                            }
-                        }
-                    };
-                    player.setOnPreparedListener((player1) -> {
-                        player1.start();
-                        countDownTimer.start();
-                        musicInfo.statusMusic = TCMusicInfo.MUSIC_STATE_PLAYING;
-                        mTCMusicAdapter.updateItem(selectedMusic, musicInfo);
-                    });
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onClickStop(int position) {
-                if (player.isPlaying()) {
-                    countDownTimer.cancel();
-                    countDownTimer.onFinish();
-                }
-            }
-        });
+        mTCMusicAdapter.setOnClickSubItemListener(this);
         mRecyclerView.setAdapter(mTCMusicAdapter);
         mEmptyView = findViewById(R.id.tv_bgm_empty);
         mClearText = findViewById(R.id.clear_text);
@@ -302,6 +231,7 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
         Intent intent = new Intent();
         intent.putExtra(UGCKitConstants.MUSIC_POSITION, position);
         intent.putExtra(UGCKitConstants.MUSIC_PATH, path);
+        intent.putExtra(UGCKitConstants.MUSIC_ARTIST, mTCMusicInfoList.get(position).artistName);
         intent.putExtra(UGCKitConstants.MUSIC_NAME, mTCMusicInfoList.get(position).name);
         intent.putExtra(UGCKitConstants.MUSIC_ID, mTCMusicInfoList.get(position).id);
         setResult(UGCKitConstants.ACTIVITY_MUSIC_REQUEST_CODE, intent);
@@ -355,5 +285,94 @@ public class TCMusicActivity extends Activity implements SwipeRefreshLayout.OnRe
         }
     }
 
+    @Override
+    public void onClickUseBtn(SampleProgressButton button, int position) {
+        TCMusicInfo musicInfo = mTCMusicInfoList.get(position);
+        if (musicInfo.status == TCMusicInfo.STATE_UNDOWNLOAD) {
+            musicInfo.status = TCMusicInfo.STATE_DOWNLOADING;
+            mTCMusicAdapter.updateItem(position, musicInfo);
+            downloadMusic(position);
+        } else if (musicInfo.status == TCMusicInfo.STATE_DOWNLOADED) {
+            backToEditActivity(position, musicInfo.localPath);
+        }
+    }
 
+    @Override
+    public void onClickPlayBtn(int position) {
+        TCMusicInfo musicInfo = mTCMusicInfoList.get(position);
+        try {
+            if (selectedMusic != -1 && selectedMusic != position) {
+                TCMusicInfo prevmusicInfo = mTCMusicInfoList.get(selectedMusic);
+                if (prevmusicInfo.statusMusic != TCMusicInfo.MUSIC_STATE_STOP) {
+                    prevmusicInfo.statusMusic = TCMusicInfo.MUSIC_STATE_STOP;
+                    mTCMusicAdapter.updateItem(selectedMusic, prevmusicInfo);
+                }
+            }
+            if (player.isPlaying()) {
+                countDownTimer.cancel();
+                countDownTimer.onFinish();
+            }
+            player.reset();
+            if (musicInfo.localPath.isEmpty()) {
+                player.setDataSource(musicInfo.url);
+            } else {
+                player.setDataSource(musicInfo.localPath);
+            }
+            player.prepare();
+            selectedMusic = position;
+            countDownTimer = new CountDownTimer(10000, 1000) {
+                @Override
+                public void onTick(long l) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    if (player != null && player.isPlaying()) {
+                        player.stop();
+                        musicInfo.statusMusic = TCMusicInfo.MUSIC_STATE_STOP;
+                        mTCMusicAdapter.updateItem(selectedMusic, musicInfo);
+                    }
+                }
+            };
+            player.setOnPreparedListener((player1) -> {
+                player1.start();
+                countDownTimer.start();
+                musicInfo.statusMusic = TCMusicInfo.MUSIC_STATE_PLAYING;
+                mTCMusicAdapter.updateItem(selectedMusic, musicInfo);
+            });
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onClickStop(int position) {
+        if (player.isPlaying()) {
+            countDownTimer.cancel();
+            countDownTimer.onFinish();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try{
+            if (player!=null){
+                if (player.isPlaying()) {
+                    countDownTimer.cancel();
+                    countDownTimer.onFinish();
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

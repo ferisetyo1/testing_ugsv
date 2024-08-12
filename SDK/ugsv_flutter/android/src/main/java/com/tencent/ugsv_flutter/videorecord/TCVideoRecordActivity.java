@@ -164,6 +164,7 @@ public class TCVideoRecordActivity extends FragmentActivity
             MusicInfo musicInfo = new MusicInfo();
             musicInfo.id = musicId;
             musicInfo.name = musicName;
+            musicInfo.artistName = musicArtist;
             musicInfo.path = localPath;
             musicInfo.position = -1;
 
@@ -282,6 +283,7 @@ public class TCVideoRecordActivity extends FragmentActivity
         musicInfo.id = data.getIntExtra(UGCKitConstants.MUSIC_ID, -1);
         musicInfo.path = data.getStringExtra(UGCKitConstants.MUSIC_PATH);
         musicInfo.name = data.getStringExtra(UGCKitConstants.MUSIC_NAME);
+        musicInfo.artistName = data.getStringExtra(UGCKitConstants.MUSIC_ARTIST);
         musicInfo.position = data.getIntExtra(UGCKitConstants.MUSIC_POSITION, -1);
 
         mUGCKitVideoRecord.setRecordMusicInfo(musicInfo);
@@ -332,5 +334,17 @@ public class TCVideoRecordActivity extends FragmentActivity
             intent.setData(uri);
             startActivity(intent);
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mUGCKitVideoRecord.pauseMusic();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mUGCKitVideoRecord.playMusic();
     }
 }

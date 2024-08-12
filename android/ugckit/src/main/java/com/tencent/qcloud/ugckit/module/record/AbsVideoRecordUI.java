@@ -18,19 +18,20 @@ import com.tencent.rtmp.ui.TXCloudVideoView;
 
 public abstract class AbsVideoRecordUI extends RelativeLayout implements IVideoRecordKit {
 
-    private TitleBarLayout        mTitleBar;
-    private TXCloudVideoView      mVideoView;
-    private ScrollFilterView      mScrollFilterView;
-    private RecordRightLayout     mRecordRightLayout;
-    private RecordBottomLayout    mRecordBottomLayout;
-    private RelativeLayout        mTencentEffectPanel;
-    private BeautyPanel           mBeautyPanel;
-    private FilterPanel           mFilterPanel;
-    private RecordMusicPannel     mRecordMusicPannel;
-    private SoundEffectsPannel    mSoundEffectsPannel;
-    private ImageSnapShotView     mImageSnapShotView;
-    private RecordPauseSnapView   mRecordPauseSnapView;
-    private ImageView             mTEInfoImg;
+    private TitleBarLayout mTitleBar;
+    private TXCloudVideoView mVideoView;
+    private ScrollFilterView mScrollFilterView;
+    private RecordRightLayout mRecordRightLayout;
+    private RecordBottomLayout mRecordBottomLayout;
+    private RelativeLayout mTencentEffectPanel;
+    private BeautyPanel mBeautyPanel;
+    private FilterPanel mFilterPanel;
+    private RecordMusicPannel mRecordMusicPannel;
+    private SoundEffectsPannel mSoundEffectsPannel;
+    private ImageSnapShotView mImageSnapShotView;
+    private RecordPauseSnapView mRecordPauseSnapView;
+    private ImageView mTEInfoImg;
+    private SelectedMusic mSelectedMusic;
 
     public AbsVideoRecordUI(Context context) {
         super(context);
@@ -52,6 +53,7 @@ public abstract class AbsVideoRecordUI extends RelativeLayout implements IVideoR
 
         mTitleBar = (TitleBarLayout) findViewById(R.id.titleBar_layout);
         mVideoView = (TXCloudVideoView) findViewById(R.id.video_view);
+        mSelectedMusic = (SelectedMusic) findViewById(R.id.selected_music);
 
         mRecordRightLayout = (RecordRightLayout) findViewById(R.id.record_right_layout);
         mRecordBottomLayout = (RecordBottomLayout) findViewById(R.id.record_bottom_layout);
@@ -129,7 +131,11 @@ public abstract class AbsVideoRecordUI extends RelativeLayout implements IVideoR
         return mRecordPauseSnapView;
     }
 
-//    @Override
+    public SelectedMusic getSelectedMusic() {
+        return mSelectedMusic;
+    }
+
+    //    @Override
 //    public void disableRecordSpeed() {
 //        mRecordBottomLayout.disableRecordSpeed();
 //    }
@@ -163,7 +169,6 @@ public abstract class AbsVideoRecordUI extends RelativeLayout implements IVideoR
     public void disableBeauty() {
         mRecordRightLayout.disableBeauty();
     }
-
 
 
 }
