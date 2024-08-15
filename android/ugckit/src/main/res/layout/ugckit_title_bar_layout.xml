@@ -4,7 +4,8 @@
     tools:background="#000000"
     android:id="@+id/page_title_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <LinearLayout
         android:id="@+id/page_title_left_group"
